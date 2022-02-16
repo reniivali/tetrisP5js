@@ -1,0 +1,377 @@
+var canWid = 400/1.5;
+var canHei = 800/1.5;
+
+var dGrav = .01;
+var grav = .01;
+var keyDown = false;
+var sDgrav;
+var SDF = 17;
+var score = 00;
+
+var lock = 0;
+var keyLeft = false;
+var keyRight= false;
+var das = 0;
+var dasA = 10;
+var ghostY = [19,19,19,19];
+var bag = [];
+var ghostblock=[];
+
+var stopped = true;
+
+
+var board =['d',0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                1,1,1,1,1,1,1,1,1,1];
+
+var fallingBlock = [];
+
+var Tmino = [{x:5, y:0},{x:6, y:0},{x:6, y:-1},{x:7, y:0}]
+var Imino = [{x:5, y:0},{x:5, y:-1},{x:5, y:-2},{x:5, y:-3}];
+var Smino = [{x:5, y:0},{x:6, y:0},{x:6, y:-1},{x:7, y:-1}];
+var Zmino = [{x:5, y:-1},{x:6, y:-1},{x:6, y:0},{x:7, y:0}];
+var Jmino = [{x:4, y:0},{x:5, y:0},{x:5, y:-1},{x:5, y:-2}];
+var Lmino = [{x:5, y:0},{x:5, y:-1},{x:5, y:-2},{x:6, y:0}];
+var Omino = [{x:5, y:0},{x:5, y:-1},{x:6, y:-1},{x:6, y: 0}];
+
+var Tmino1 = [{x:5, y:0},{x:6, y:0},{x:5, y:1},{x:5, y:-1}];
+var Tmino2 = [{x:5, y:0},{x:6, y:0},{x:6, y:1},{x:7, y:0}];
+var Tmino3 = [{x:5, y:0},{x:4, y:0},{x:5, y:1},{x:5, y:-1}];
+
+var Imino1 = [{x:5, y:0},{x:6, y:0},{x:7, y:0},{x:8, y:0}];
+
+
+
+function randNum(min, max) {return Math.floor(Math.random() * (max + 1 - min) + min);}
+
+function setup() {
+    createCanvas(canWid, canHei);
+    blockReset();
+}
+
+function draw() { if (!stopped) {
+    drawBoard();
+    gravity();
+
+    //CALCULATE the SDF and apply it to the gravity if the down arrow is pressed
+    sDgrav = dGrav * SDF;
+    if (keyDown) {grav=sDgrav; score++;} else {grav = sDgrav/SDF;}
+
+    //MOVE THE PEICES WHEN KEYS ARE PRESSED
+    if (keyLeft) {das ++; if (das > dasA) {moveL();}}
+    if (keyRight) {das ++; if (das > dasA) {moveR();}}
+
+    drawPiece();
+    drawGhost();
+}}
+
+function drawBoard() {
+    stroke(100);
+    strokeWeight(3);
+    let ind = 1;
+    for (let i=0; i < 20; i++) {
+        for (let j=0; j < 10; j++) {
+            if (board[ind] == 1) {fill(150,0,0);} if (board[ind] == 0) {fill(10,10,10);}
+            rect(j*canWid/10, i*canHei/20, canWid/10, canHei/20);
+            //console.log(ind);
+            ind++;
+        }
+    }
+}
+
+function drawPiece() {
+    fill(150,0,0);
+    strokeWeight(5);
+    stroke(100);
+    for (let i=0; i < 4; i++) {rect((fallingBlock[i].x-1)*canWid/10, (fallingBlock[i].y-1)*canHei/20, canWid/10, canHei/20);}
+}
+
+function drawGhost() {
+    ghostblock = Array(fallingBlock.length).fill();
+    for (let i = 0; i < fallingBlock.length; i++) {
+        ghostblock[i] = {x: fallingBlock[i].x, y: Math.floor(fallingBlock[i].y)};
+    }
+    let lowestY = Math.max(...ghostblock.slice(0,4).map(x => x.y));
+    console.log("gamer" + lowestY);
+    outer: while( lowestY < 19 ) {
+        for ( let i = 0; i < 4; i++) {
+            //console.log(`asda ${ghostblock[i].y} ${ghostblock[i].x}`);
+            if (board[((ghostblock[i].y+1)*10) + ghostblock[i].x] == 1) break outer;
+        }
+        for ( let i = 0; i < 5; i++ ) {
+            ghostblock[i].y++;
+        }
+        lowestY++;
+    }
+    fill('rgba(150,0,0,.5)');
+    noStroke();
+    for (i=0; i < 4; i++) {rect((fallingBlock[i].x-1)*canWid/10, ghostblock[i].y*canHei/20, canWid/10, canHei/20);}
+}
+
+//GRAVITY
+function gravity() {
+    let doLock = false;
+    for (i=0; i < 5; i++) {fallingBlock[i].y += grav;}
+    let dumBlock = [];
+    for (i=0; i < 4; i++) {
+        const {x, y} = fallingBlock[i];
+        dumBlock.push({x, y});
+    }
+    for (i=0; i < 5; i++) {
+        let done = false;
+        if (board[(Math.floor(dumBlock[0].y)*10)+dumBlock[0].x] == 1 || Math.floor(dumBlock[0].y) >= 20) {
+            fallingBlock[i].y -= grav; doLock = true; done = true;
+        }
+        if (board[(Math.floor(dumBlock[1].y)*10)+dumBlock[1].x] == 1 && !done || Math.floor(dumBlock[1].y) == 20 && !done) {
+            fallingBlock[i].y -= grav; doLock = true; done = true;
+        }
+        if (board[(Math.floor(dumBlock[2].y)*10)+dumBlock[2].x] == 1 && !done || Math.floor(dumBlock[2].y) == 20 && !done) {
+            fallingBlock[i].y -= grav; doLock = true; done = true;
+        }
+        if (board[(Math.floor(dumBlock[3].y)*10)+dumBlock[3].x] == 1 && !done || Math.floor(dumBlock[3].y) == 20 && !done) {
+            fallingBlock[i].y -= grav; doLock = true; done = true;
+        }
+    }
+    if (doLock) {lock++;} else {lock = 0;}
+    if (lock == 30) {
+        let lines = 0;
+        for (let i = 0; i < 4; i++) {board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] = 1;}
+        blockReset();
+        ghostY = [19,19,19,19];
+        lock = 0;
+        for (let i=0; i < 20; i++) {
+            let lineClear = true;
+            let line = []
+            for (let j=1; j < 11; j++) {line.push(board[(i*10)+j]);}
+            for (let j=0; j<10; j++) {if (line[j] == 0) {lineClear=false;}}
+            if (lineClear) {
+                for (let j = 1; j< 11; j++) {board.splice((i*10)+1,1)}
+                for (let j = 1; j< 11; j++) {board.splice(j,0,0)}
+                lines++;
+            }
+        }
+        if (lines == 1) {score += 200;}
+        if (lines == 2) {score += 300;}
+        if (lines == 3) {score += 500;}
+        if (lines == 4) {score += 1000;}
+    }
+}
+
+function hardDrop() {
+    for (i=0; i < 4; i++) {board[(Math.floor(ghostblock[i].y)*10)+fallingBlock[i].x] = 1;}
+    score += 100;
+    blockReset();
+    lock = 0;
+    for (let i=0; i < 20; i++) {
+        let lineClear = true;
+        let line = []
+        for (let j=1; j < 11; j++) {line.push(board[(i*10)+j]);}
+        for (let j=0; j<10; j++) {if (line[j] == 0) {lineClear=false;}}
+        if (lineClear) {
+            for (let j = 1; j< 11; j++) {board.splice((i*10)+1,1)}
+            for (let j = 1; j< 11; j++) {board.splice(j,0,0)}
+        }
+    }
+}
+
+function blockReset() {
+    fallingBlock.splice(0,fallingBlock.length);
+    if (bag.length > 0) {
+        let piece = bag.splice(0,1)
+        switch (+piece) {
+            case 1:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Tmino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 6, y: 0}, 1, 0);
+            break;
+            case 2:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Imino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5, y: -1}, 2, 0);
+            break;
+            case 3:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Smino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5, y: 0}, 3, 0);            
+            break;
+            case 4:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Zmino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5, y: 0}, 4, 0);
+            break;
+            case 5:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Jmino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5, y: 0}, 5, 0);
+            break;
+            case 6:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Lmino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5, y: 0}, 6, 0);
+            break;
+            case 7:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Omino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5.5, y: -.5}, 7, 0);
+            break;
+        }
+        for (i = 0; i < 4; i++) {
+            if (board[(Math.floor(fallingBlock[i].y+1)*10)+fallingBlock[1].x] == 1) {
+                reset();
+            }
+        }
+    } else {
+        uniListGen(bag,7,1,7);
+        blockReset();
+    }
+}
+
+function uniListGen(list, length, min, max) {
+    let run = false;
+    if (max + 1 - min < length) {console.log("too small you pleb");} else {run = true}
+    if (run) {
+        let unfiltlist = [];
+        for (let i = min; i < max + 1; i++) {unfiltlist.push(i);}
+        for (let i = 0; i < length; i++) {
+            let indexnum = randNum(0, unfiltlist.length - 1);
+            list.push(unfiltlist[indexnum]);
+            unfiltlist.splice(indexnum, 1);
+        }
+    }
+    return list;
+}
+
+function reset () {
+    bag = [];
+    board =['d',0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                1,1,1,1,1,1,1,1,1,1];
+    blockReset();
+    drawBoard();
+    stopped = true;
+    alert("Game Over :(");
+}
+
+function moveL() {
+    for (let i=0; i < 5; i++) {fallingBlock[i].x--;}
+    if (board[(Math.floor(fallingBlock[0].y)*10)+fallingBlock[0].x] == 1 || fallingBlock[0].x <= 0) {for (let i=0; i < 5; i++) {fallingBlock[i].x++}}
+}
+
+function moveR() {
+    for (let i=0; i < 5; i++) {fallingBlock[i].x++;}
+    if (board[(Math.floor(fallingBlock[0].y)*10)+fallingBlock[3].x] == 1 || fallingBlock[3].x >= 11) {for (let i=0; i < 5; i++) {fallingBlock[i].x--}}
+}
+
+function rotClock() {
+    const { x: rx, y: ry } = fallingBlock[4];
+    for ( let i = 0; i < 4; i++ ) {
+        const { x, y } = fallingBlock[i];
+        fallingBlock[i].x = -(y - ry) + rx;
+        fallingBlock[i].y = (x - rx) + ry;
+    }
+
+    for (let i = 0; i < 4; i++) {
+        if (fallingBlock[i].x >= 11) {
+            for (let i = 0; i < 4; i++) {
+                fallingBlock[i].x--;
+            }
+        } else if (fallingBlock[i].x <= 0) {
+            for (let i = 0; i < 4; i++) {
+                fallingBlock[i].x++;
+            }
+        }
+    }
+}
+
+function rotCount() {
+    const { x: rx, y: ry } = fallingBlock[4];
+    for ( let i = 0; i < 4; i++ ) {
+        const { x, y } = fallingBlock[i];
+        fallingBlock[i].x = (y - ry) + rx;
+        fallingBlock[i].y = -(x - rx) + ry;
+    }
+
+    for (let i = 0; i < 4; i++) {
+        if (fallingBlock[i].x >= 11) {
+            for (let i = 0; i < 4; i++) {
+                fallingBlock[i].x--;
+            }
+        } else if (fallingBlock[i].x <= 0) {
+            for (let i = 0; i < 4; i++) {
+                fallingBlock[i].x++;
+            }
+        }
+    }
+}
+
+$(document).ready(function() {
+    //DETECT KEYS
+    window.onkeydown = function(e) {
+        if (e.keyCode == 75) {keyDown = true;}
+        if (e.keyCode == 74) {keyLeft = true; moveL();}
+        if (e.keyCode == 76) {keyRight= true; moveR();}
+        if (e.keyCode == 32) {hardDrop();}
+        if (e.keyCode == 87) {rotClock();}
+        if (e.keyCode == 65) {rotCount();}
+    }
+    window.onkeyup = function(e) {
+        if (e.keyCode == 75) {keyDown = false;}
+        if (e.keyCode == 74) {keyLeft = false; das = 0}
+        if (e.keyCode == 76) {keyRight= false; das = 0}
+    }
+
+    function updateText() {
+        $('#score').html("Score: " + score.toLocaleString('de'));
+    }
+    setInterval(updateText, 1000/60);
+});
