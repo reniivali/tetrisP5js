@@ -45,18 +45,12 @@ var board =['d',0,0,0,0,0,0,0,0,0,0,
 var fallingBlock = [];
 
 var Tmino = [{x:5, y:0},{x:6, y:0},{x:6, y:-1},{x:7, y:0}]
-var Imino = [{x:5, y:0},{x:5, y:-1},{x:5, y:-2},{x:5, y:-3}];
+var Imino = [{x:4, y:0},{x:5, y:0},{x:6, y:0},{x:7, y:0}];
 var Smino = [{x:5, y:0},{x:6, y:0},{x:6, y:-1},{x:7, y:-1}];
 var Zmino = [{x:5, y:-1},{x:6, y:-1},{x:6, y:0},{x:7, y:0}];
 var Jmino = [{x:4, y:0},{x:5, y:0},{x:5, y:-1},{x:5, y:-2}];
 var Lmino = [{x:5, y:0},{x:5, y:-1},{x:5, y:-2},{x:6, y:0}];
 var Omino = [{x:5, y:0},{x:5, y:-1},{x:6, y:-1},{x:6, y: 0}];
-
-var Tmino1 = [{x:5, y:0},{x:6, y:0},{x:5, y:1},{x:5, y:-1}];
-var Tmino2 = [{x:5, y:0},{x:6, y:0},{x:6, y:1},{x:7, y:0}];
-var Tmino3 = [{x:5, y:0},{x:4, y:0},{x:5, y:1},{x:5, y:-1}];
-
-var Imino1 = [{x:5, y:0},{x:6, y:0},{x:7, y:0},{x:8, y:0}];
 
 
 
@@ -330,12 +324,12 @@ function reset () {
 
 function moveL() {
     for (let i=0; i < 5; i++) {fallingBlock[i].x--;}
-    if (board[(Math.floor(fallingBlock[0].y)*10)+fallingBlock[0].x] == 1 || fallingBlock[0].x <= 0) {for (let i=0; i < 5; i++) {fallingBlock[i].x++}}
+    for(let i=0; i < 4; i++) {if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] == 1 || fallingBlock[i].x <= 0) {for (let i=0; i < 5; i++) {fallingBlock[i].x++}}}
 }
 
 function moveR() {
     for (let i=0; i < 5; i++) {fallingBlock[i].x++;}
-    if (board[(Math.floor(fallingBlock[0].y)*10)+fallingBlock[3].x] == 1 || fallingBlock[3].x >= 11) {for (let i=0; i < 5; i++) {fallingBlock[i].x--}}
+    for(let i=0; i < 4; i++) {if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] == 1 || fallingBlock[i].x >= 11) {for (let i=0; i < 5; i++) {fallingBlock[i].x--}}}
 }
 
 function rotClock() {
@@ -393,21 +387,23 @@ var prevKey = null;
 
 $(document).ready(function() {
     //DETECT KEYS
-    window.onkeydown = function(e) {
-        //console.log("You pressed key code: " + e.keyCode);
-        if (e.keyCode == 40) {keyDown = true;}
-        keyCheck(37, function() {keyLeft = true; moveL();}, e.keyCode, e.repeat);
-        keyCheck(39, function() {keyRight = true; moveR();}, e.keyCode, e.repeat);
-        keyCheck(32, function() {hardDrop();}, e.keyCode, e.repeat);
-        keyCheck(90, function() {rotClock();}, e.keyCode, e.repeat);
-        keyCheck(88, function() {rotCount();}, e.keyCode, e.repeat);
+    if (!stopped) {
+        window.onkeydown = function(e) {
+            //console.log("You pressed key code: " + e.keyCode);
+            if (e.keyCode == 40) {keyDown = true;}
+            keyCheck(37, function() {keyLeft = true; moveL();}, e.keyCode, e.repeat);
+            keyCheck(39, function() {keyRight = true; moveR();}, e.keyCode, e.repeat);
+            keyCheck(32, function() {hardDrop();}, e.keyCode, e.repeat);
+            keyCheck(90, function() {rotClock();}, e.keyCode, e.repeat);
+            keyCheck(88, function() {rotCount();}, e.keyCode, e.repeat);
 
-        prevKey = e.keyCode;
-    }
-    window.onkeyup = function(e) {
-        if (e.keyCode == 40) {keyDown = false;}
-        if (e.keyCode == 37) {keyLeft = false; das = 0}
-        if (e.keyCode == 39) {keyRight= false; das = 0}
+            prevKey = e.keyCode;
+        }
+        window.onkeyup = function(e) {
+            if (e.keyCode == 40) {keyDown = false;}
+            if (e.keyCode == 37) {keyLeft = false; das = 0}
+            if (e.keyCode == 39) {keyRight= false; das = 0}
+        }
     }
 
     function updateText() {
