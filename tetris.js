@@ -62,6 +62,26 @@ var Imino1 = [{x:5, y:0},{x:6, y:0},{x:7, y:0},{x:8, y:0}];
 
 function randNum(min, max) {return Math.floor(Math.random() * (max + 1 - min) + min);}
 
+function colorPick(num) {
+    if (num == 1) {return('rgb(150,0,150)');}
+    if (num == 2) {return('rgb(0,150,150)');}
+    if (num == 3) {return('rgb(150,0,0)');}
+    if (num == 4) {return('rgb(0,150,0)');}
+    if (num == 5) {return('rgb(150,200,0)');}
+    if (num == 6) {return('rgb(0,0,150)');}
+    if (num == 7) {return('rgb(150,150,0)');}
+}
+
+function colorG(num) {
+    if (num == 1) {return('rgba(150,0,150,.5)');}
+    if (num == 2) {return('rgba(0,150,150,.5)');}
+    if (num == 3) {return('rgba(150,0,0,.5)');}
+    if (num == 4) {return('rgba(0,150,0,.5)');}
+    if (num == 5) {return('rgba(150,200,0,.5)');}
+    if (num == 6) {return('rgba(0,0,150,.5)');}
+    if (num == 7) {return('rgba(150,150,0,.5)');}
+}
+
 function setup() {
     createCanvas(canWid, canHei);
     blockReset();
@@ -89,7 +109,7 @@ function drawBoard() {
     let ind = 1;
     for (let i=0; i < 20; i++) {
         for (let j=0; j < 10; j++) {
-            if (board[ind] == 1) {fill(150,0,0);} if (board[ind] == 0) {fill(10,10,10);}
+            if (board[ind] >= 1) {fill(colorPick(board[ind]));} if (board[ind] == 0) {fill(10,10,10);}
             rect(j*canWid/10, i*canHei/20, canWid/10, canHei/20);
             //console.log(ind);
             ind++;
@@ -98,7 +118,7 @@ function drawBoard() {
 }
 
 function drawPiece() {
-    fill(150,0,0);
+    fill(colorPick(fallingBlock[5]));
     strokeWeight(5);
     stroke(100);
     for (let i=0; i < 4; i++) {rect((fallingBlock[i].x-1)*canWid/10, (fallingBlock[i].y-1)*canHei/20, canWid/10, canHei/20);}
@@ -110,18 +130,18 @@ function drawGhost() {
         ghostblock[i] = {x: fallingBlock[i].x, y: Math.floor(fallingBlock[i].y)};
     }
     let lowestY = Math.max(...ghostblock.slice(0,4).map(x => x.y));
-    console.log("gamer" + lowestY);
+    //console.log("gamer" + lowestY);
     outer: while( lowestY < 19 ) {
         for ( let i = 0; i < 4; i++) {
             //console.log(`asda ${ghostblock[i].y} ${ghostblock[i].x}`);
-            if (board[((ghostblock[i].y+1)*10) + ghostblock[i].x] == 1) break outer;
+            if (board[((ghostblock[i].y+1)*10) + ghostblock[i].x] >= 1) break outer;
         }
         for ( let i = 0; i < 5; i++ ) {
             ghostblock[i].y++;
         }
         lowestY++;
     }
-    fill('rgba(150,0,0,.5)');
+    fill(colorG(fallingBlock[5]));
     noStroke();
     for (i=0; i < 4; i++) {rect((fallingBlock[i].x-1)*canWid/10, ghostblock[i].y*canHei/20, canWid/10, canHei/20);}
 }
@@ -137,23 +157,23 @@ function gravity() {
     }
     for (i=0; i < 5; i++) {
         let done = false;
-        if (board[(Math.floor(dumBlock[0].y)*10)+dumBlock[0].x] == 1 || Math.floor(dumBlock[0].y) >= 20) {
+        if (board[(Math.floor(dumBlock[0].y)*10)+dumBlock[0].x] >= 1 || Math.floor(dumBlock[0].y) >= 20) {
             fallingBlock[i].y -= grav; doLock = true; done = true;
         }
-        if (board[(Math.floor(dumBlock[1].y)*10)+dumBlock[1].x] == 1 && !done || Math.floor(dumBlock[1].y) == 20 && !done) {
+        if (board[(Math.floor(dumBlock[1].y)*10)+dumBlock[1].x] >= 1 && !done || Math.floor(dumBlock[1].y) == 20 && !done) {
             fallingBlock[i].y -= grav; doLock = true; done = true;
         }
-        if (board[(Math.floor(dumBlock[2].y)*10)+dumBlock[2].x] == 1 && !done || Math.floor(dumBlock[2].y) == 20 && !done) {
+        if (board[(Math.floor(dumBlock[2].y)*10)+dumBlock[2].x] >= 1 && !done || Math.floor(dumBlock[2].y) == 20 && !done) {
             fallingBlock[i].y -= grav; doLock = true; done = true;
         }
-        if (board[(Math.floor(dumBlock[3].y)*10)+dumBlock[3].x] == 1 && !done || Math.floor(dumBlock[3].y) == 20 && !done) {
+        if (board[(Math.floor(dumBlock[3].y)*10)+dumBlock[3].x] >= 1 && !done || Math.floor(dumBlock[3].y) == 20 && !done) {
             fallingBlock[i].y -= grav; doLock = true; done = true;
         }
     }
     if (doLock) {lock++;} else {lock = 0;}
     if (lock == 30) {
         let lines = 0;
-        for (let i = 0; i < 4; i++) {board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] = 1;}
+        for (let i = 0; i < 4; i++) {board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] = fallingBlock[5];}
         blockReset();
         ghostY = [19,19,19,19];
         lock = 0;
@@ -176,7 +196,8 @@ function gravity() {
 }
 
 function hardDrop() {
-    for (i=0; i < 4; i++) {board[(Math.floor(ghostblock[i].y)*10)+fallingBlock[i].x] = 1;}
+    let lines = 0;
+    for (i=0; i < 4; i++) {board[(Math.floor(ghostblock[i].y)*10)+fallingBlock[i].x] = fallingBlock[5];}
     score += 100;
     blockReset();
     lock = 0;
@@ -188,8 +209,13 @@ function hardDrop() {
         if (lineClear) {
             for (let j = 1; j< 11; j++) {board.splice((i*10)+1,1)}
             for (let j = 1; j< 11; j++) {board.splice(j,0,0)}
+            lines++;
         }
     }
+    if (lines == 1) {score += 200;}
+    if (lines == 2) {score += 300;}
+    if (lines == 3) {score += 500;}
+    if (lines == 4) {score += 1000;}
 }
 
 function blockReset() {
@@ -354,20 +380,34 @@ function rotCount() {
     }
 }
 
+function keyCheck(key, runfunk, eK, eR) {
+    let allowed = true;
+    if (eR != undefined) {
+        allowed = !eR;
+    }
+    if (!allowed && prevKey == key) {return;}
+    if (eK == key) {runfunk();}
+}
+
+var prevKey = null;
+
 $(document).ready(function() {
     //DETECT KEYS
     window.onkeydown = function(e) {
-        if (e.keyCode == 75) {keyDown = true;}
-        if (e.keyCode == 74) {keyLeft = true; moveL();}
-        if (e.keyCode == 76) {keyRight= true; moveR();}
-        if (e.keyCode == 32) {hardDrop();}
-        if (e.keyCode == 87) {rotClock();}
-        if (e.keyCode == 65) {rotCount();}
+        //console.log("You pressed key code: " + e.keyCode);
+        if (e.keyCode == 40) {keyDown = true;}
+        keyCheck(37, function() {keyLeft = true; moveL();}, e.keyCode, e.repeat);
+        keyCheck(39, function() {keyRight = true; moveR();}, e.keyCode, e.repeat);
+        keyCheck(32, function() {hardDrop();}, e.keyCode, e.repeat);
+        keyCheck(90, function() {rotClock();}, e.keyCode, e.repeat);
+        keyCheck(88, function() {rotCount();}, e.keyCode, e.repeat);
+
+        prevKey = e.keyCode;
     }
     window.onkeyup = function(e) {
-        if (e.keyCode == 75) {keyDown = false;}
-        if (e.keyCode == 74) {keyLeft = false; das = 0}
-        if (e.keyCode == 76) {keyRight= false; das = 0}
+        if (e.keyCode == 40) {keyDown = false;}
+        if (e.keyCode == 37) {keyLeft = false; das = 0}
+        if (e.keyCode == 39) {keyRight= false; das = 0}
     }
 
     function updateText() {
