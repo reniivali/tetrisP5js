@@ -67,9 +67,9 @@ function colorPick(num) {
     if (num == 2) {return('rgb(0,150,150)');}
     if (num == 3) {return('rgb(150,0,0)');}
     if (num == 4) {return('rgb(0,150,0)');}
-    if (num == 5) {return('rgb(150,200,0)');}
+    if (num == 5) {return('rgb(204,102,0)');}
     if (num == 6) {return('rgb(0,0,150)');}
-    if (num == 7) {return('rgb(150,150,0)');}
+    if (num == 7) {return('rgb(150,200,0)');}
 }
 
 function colorG(num) {
@@ -77,9 +77,9 @@ function colorG(num) {
     if (num == 2) {return('rgba(0,150,150,.5)');}
     if (num == 3) {return('rgba(150,0,0,.5)');}
     if (num == 4) {return('rgba(0,150,0,.5)');}
-    if (num == 5) {return('rgba(150,200,0,.5)');}
+    if (num == 5) {return('rgba(204,102,0,.5)');}
     if (num == 6) {return('rgba(0,0,150,.5)');}
-    if (num == 7) {return('rgba(150,150,0,.5)');}
+    if (num == 7) {return('rgba(150,200,0,.5)');}
 }
 
 function setup() {
