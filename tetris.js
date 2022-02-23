@@ -93,6 +93,8 @@ function draw() { if (!stopped) {
     if (keyLeft) {das ++; if (das > dasA) {moveL();}}
     if (keyRight) {das ++; if (das > dasA) {moveR();}}
 
+    pieceCheck();
+
     drawPiece();
     drawGhost();
 }}
@@ -381,6 +383,35 @@ function keyCheck(key, runfunk, eK, eR) {
     }
     if (!allowed && prevKey == key) {return;}
     if (eK == key && !stopped) {runfunk();}
+}
+
+function pieceCheck() {
+    out:for (let i = 0; i < 4; i++) {
+        //check for collisions if there are, move left
+        if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 || fallingBlock[i].x >= 11) {
+            for (let j = 0; j < 4; j++) {
+                fallingBlock[j].x--;
+            }
+            console.log("WAS INSIDE, MOVING LEFT");
+            if (!board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 && !fallingBlock[i].x >= 11) {break out;}
+            console.log("UNBROKEN, RESTORING POSITION");
+            for (let j = 0; j < 4; j++) {
+                fallingBlock[j].x++;
+            }
+        }
+
+        if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 || fallingBlock[i].x <= 0) {
+            for (let j = 0; j < 4; j++) {
+                fallingBlock[j].x++;
+            }
+            console.log("WAS INSIDE, MOVING RIGHT");
+            if (!board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 && !fallingBlock[i].x <= 0) {break out;}
+            console.log("UNBROKEN, RESTORING POSITION");
+            for (let j = 0; j < 4; j++) {
+                fallingBlock[j].x--;
+            }
+        }
+    }
 }
 
 var prevKey = null;
