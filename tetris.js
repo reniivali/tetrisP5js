@@ -380,14 +380,13 @@ function keyCheck(key, runfunk, eK, eR) {
         allowed = !eR;
     }
     if (!allowed && prevKey == key) {return;}
-    if (eK == key) {runfunk();}
+    if (eK == key && !stopped) {runfunk();}
 }
 
 var prevKey = null;
 
 $(document).ready(function() {
     //DETECT KEYS
-    if (!stopped) {
         window.onkeydown = function(e) {
             //console.log("You pressed key code: " + e.keyCode);
             if (e.keyCode == 40) {keyDown = true;}
@@ -404,7 +403,6 @@ $(document).ready(function() {
             if (e.keyCode == 37) {keyLeft = false; das = 0}
             if (e.keyCode == 39) {keyRight= false; das = 0}
         }
-    }
 
     function updateText() {
         $('#score').html("Score: " + score.toLocaleString('de'));
