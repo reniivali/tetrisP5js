@@ -439,7 +439,7 @@ $(document).ready(function() {
         }
 
     function updateText() {
-        $('#score').html("Score: " + score.toLocaleString('de'));
+        $('#score').html("Score: " + Math.floor(score).toLocaleString('de'));
     }
     setInterval(updateText, 1000/60);
 });
