@@ -58,12 +58,27 @@
                 margin-top: 2px;
                 margin-bottom: 2px;
                 margin-right: 2px;
-                width: 40%;
+                width: 30%;
                 transition: all, .2s;
                 font-family: 'DejaVu', monospace;
                 color: white;
             }
 
+            input {
+                border-style: solid;
+                border-width: 2.5px;
+                border-color:#8d8d8d;
+                background-color: #1f1f1f;
+                border-radius: 2px;
+                padding: 1px;
+                margin: 2px;
+                width: 10%;
+                font-family: 'DejaVu', monospace;
+                color: white;
+                transition: all, .2s;
+            }
+
+            input:hover {background-color: #464646; border-radius: 10px; box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);}
             button:hover {background-color: #464646; border-radius: 10px; box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); transform: scale(1.05);}
         </style>
     </head>
@@ -73,6 +88,20 @@
             <p>a somewhat ok tetris clone for a project.</p>
             <button onclick="if (!stopped) {stopped=true;} else {stopped=false}">Start or stop</button>
             <h2 id=score>Score: 0</h2>
+
+            <h4>---------</h4>
+            <h3>Settings</h3>
+            <p style="display: inline">DAS [in frames] (default: 10):</p>
+            <input type="number" value="10" id="das">
+            <button onclick="dasA = $('#das').val();">apply DAS</button>
+            <br>
+            <p style="display: inline">ARR [in frames] (default: 8):</p>
+            <input type="number" value="8" id="arr">
+            <button onclick="arr = $('#arr').val(); arrtemp = $('#arr').val();">apply ARR</button>
+            <br>
+            <p style="display: inline">SDF [in frames] (default: 17):</p>
+            <input type="number" value="17" id="sdf">
+            <button onclick="SDF = $('#sdf').val();">apply SDF</button>
         </div>
     </body>
 </html>

@@ -13,6 +13,8 @@ var keyLeft = false;
 var keyRight= false;
 var das = 0;
 var dasA = 10;
+var arr=8;
+var arrtmp = 8;
 var ghostY = [19,19,19,19];
 var bag = [];
 var ghostblock=[];
@@ -90,8 +92,8 @@ function draw() { if (!stopped) {
     if (keyDown) {grav=sDgrav; score++;} else {grav = sDgrav/SDF;}
 
     //MOVE THE PEICES WHEN KEYS ARE PRESSED
-    if (keyLeft) {das ++; if (das > dasA) {moveL();}}
-    if (keyRight) {das ++; if (das > dasA) {moveR();}}
+    if (keyLeft) {das ++; if (das > dasA) {if (arrtmp < arr) {arrtmp++;} else {arrtmp = 0; moveL();}}}
+    if (keyRight) {das ++; if (das > dasA) {if (arrtmp < arr) {arrtmp++;} else {arrtmp = 0; moveR();}}}
 
     pieceCheck();
 
@@ -431,8 +433,8 @@ $(document).ready(function() {
         }
         window.onkeyup = function(e) {
             if (e.keyCode == 40) {keyDown = false;}
-            if (e.keyCode == 37) {keyLeft = false; das = 0}
-            if (e.keyCode == 39) {keyRight= false; das = 0}
+            if (e.keyCode == 37) {keyLeft = false; das = 0; arrtmp = arr;}
+            if (e.keyCode == 39) {keyRight= false; das = 0; arrtmp = arr;}
         }
 
     function updateText() {
