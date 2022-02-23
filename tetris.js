@@ -196,7 +196,8 @@ function gravity() {
 function hardDrop() {
     let lines = 0;
     for (i=0; i < 4; i++) {board[(Math.floor(ghostblock[i].y)*10)+fallingBlock[i].x] = fallingBlock[5];}
-    score += 100;
+    let lowestY = Math.max(...ghostblock.slice(0,4).map(x => x.y));
+    score += 100/lowestY;
     blockReset();
     lock = 0;
     for (let i=0; i < 20; i++) {
