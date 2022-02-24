@@ -37,8 +37,8 @@
                 display: block;
                 position: absoulute;
                 margin-top: 10px;
-                width: 30%;
-                height: 400px;
+                width: 400px;
+                height: auto;
                 border-style: solid;
                 border-color: rgb(127.5,127.5,127.5);
                 border-width: 3px;
@@ -78,6 +78,20 @@
                 transition: all, .2s;
             }
 
+            #holdQ {
+                display: block;
+                position: absolute;
+                margin-top: -10px;
+                color: white;
+                padding: 10px;
+                font-family: 'DejaVu', monospace;
+                margin-left: 425px;
+            }
+
+            #defaultCanvas0 {
+                position: absolute;
+                margin-left: 650px;
+            }
             input:hover {background-color: #464646; border-radius: 10px; box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);}
             button:hover {background-color: #464646; border-radius: 10px; box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); transform: scale(1.05);}
         </style>
@@ -95,13 +109,14 @@
             <input type="number" value="10" id="das">
             <button onclick="dasA = $('#das').val();">apply DAS</button>
             <br>
-            <p style="display: inline">ARR [in frames] (default: 8):</p>
-            <input type="number" value="8" id="arr">
+            <p style="display: inline">ARR [in frames] (default: 1):</p>
+            <input type="number" value="1" id="arr">
             <button onclick="arr = $('#arr').val(); arrtemp = $('#arr').val();">apply ARR</button>
             <br>
             <p style="display: inline">SDF [in frames] (default: 17):</p>
             <input type="number" value="17" id="sdf">
             <button onclick="SDF = $('#sdf').val();">apply SDF</button>
         </div>
+        <div id="holdQ"></div>
     </body>
 </html>

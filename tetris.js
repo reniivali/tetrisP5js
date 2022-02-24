@@ -13,14 +13,16 @@ var keyLeft = false;
 var keyRight= false;
 var das = 0;
 var dasA = 10;
-var arr=8;
-var arrtmp = 8;
+var arr=1;
+var arrtmp = 1;
 var ghostY = [19,19,19,19];
 var bag = [];
 var ghostblock=[];
 
 var stopped = true;
 
+var heldP = 0;
+var doHold = true 
 
 var board =['d',0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,
@@ -58,6 +60,16 @@ var Omino = [{x:5, y:0},{x:5, y:-1},{x:6, y:-1},{x:6, y: 0}];
 
 function randNum(min, max) {return Math.floor(Math.random() * (max + 1 - min) + min);}
 
+function findM(num) {
+    if (num == 1) {return(Tmino);}
+    if (num == 2) {return(Imino);}
+    if (num == 3) {return(Smino);}
+    if (num == 4) {return(Zmino);}
+    if (num == 5) {return(Jmino);}
+    if (num == 6) {return(Lmino);}
+    if (num == 7) {return(Omino);}
+}
+
 function colorPick(num) {
     if (num == 1) {return('rgb(150,0,150)');}
     if (num == 2) {return('rgb(0,150,150)');}
@@ -80,7 +92,7 @@ function colorG(num) {
 
 function setup() {
     createCanvas(canWid, canHei);
-    blockReset();
+    blockReset(true);
 }
 
 function draw() { if (!stopped) {
@@ -95,11 +107,11 @@ function draw() { if (!stopped) {
     if (keyLeft) {das ++; if (das > dasA) {if (arrtmp < arr) {arrtmp++;} else {arrtmp = 0; moveL();}}}
     if (keyRight) {das ++; if (das > dasA) {if (arrtmp < arr) {arrtmp++;} else {arrtmp = 0; moveR();}}}
 
-    pieceCheck();
+    //pieceCheck();
 
     drawPiece();
     drawGhost();
-}}
+} else {fill(10,10,10); rect(0,0,canWid,canHei); fill(225,225,225); textSize(50); text('Paused',canWid/2-100,canHei/2);}}
 
 function drawBoard() {
     stroke(100);
@@ -109,7 +121,6 @@ function drawBoard() {
         for (let j=0; j < 10; j++) {
             if (board[ind] >= 1) {fill(colorPick(board[ind]));} if (board[ind] == 0) {fill(10,10,10);}
             rect(j*canWid/10, i*canHei/20, canWid/10, canHei/20);
-            //console.log(ind);
             ind++;
         }
     }
@@ -172,9 +183,10 @@ function gravity() {
     if (lock == 30) {
         let lines = 0;
         for (let i = 0; i < 4; i++) {board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] = fallingBlock[5];}
-        blockReset();
+        blockReset(true);
         ghostY = [19,19,19,19];
         lock = 0;
+        doHold = true;
         for (let i=0; i < 20; i++) {
             let lineClear = true;
             let line = []
@@ -198,8 +210,9 @@ function hardDrop() {
     for (i=0; i < 4; i++) {board[(Math.floor(ghostblock[i].y)*10)+fallingBlock[i].x] = fallingBlock[5];}
     let lowestY = Math.max(...ghostblock.slice(0,4).map(x => x.y));
     score += 100/lowestY;
-    blockReset();
+    blockReset(true);
     lock = 0;
+    doHold = true;
     for (let i=0; i < 20; i++) {
         let lineClear = true;
         let line = []
@@ -217,11 +230,11 @@ function hardDrop() {
     if (lines == 4) {score += 1000;}
 }
 
-function blockReset() {
+function blockReset(m) {
     fallingBlock.splice(0,fallingBlock.length);
     if (bag.length > 0) {
-        let piece = bag.splice(0,1)
-        switch (+piece) {
+        let pieceN = bag.splice(0,1)
+        switch (+pieceN) {
             case 1:
                 for (i=0; i < 4; i++) {
                     const {x, y} = Tmino[i];
@@ -273,13 +286,13 @@ function blockReset() {
             break;
         }
         for (i = 0; i < 4; i++) {
-            if (board[(Math.floor(fallingBlock[i].y+1)*10)+fallingBlock[1].x] == 1) {
+            if (board[(Math.floor(fallingBlock[i].y+1)*10)+fallingBlock[i].x] == 1) {
                 reset();
             }
         }
     } else {
         uniListGen(bag,7,1,7);
-        blockReset();
+        blockReset(m);
     }
 }
 
@@ -321,20 +334,22 @@ function reset () {
                 0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,
                 1,1,1,1,1,1,1,1,1,1];
-    blockReset();
+    blockReset(true);
     drawBoard();
+    score = 0;
+    heldP = 0;
     stopped = true;
     alert("Game Over :(");
 }
 
 function moveL() {
     for (let i=0; i < 5; i++) {fallingBlock[i].x--;}
-    for(let i=0; i < 4; i++) {if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] == 1 || fallingBlock[i].x <= 0) {for (let i=0; i < 5; i++) {fallingBlock[i].x++}}}
+    for(let i=0; i < 4; i++) {if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 || fallingBlock[i].x <= 0) {for (let i=0; i < 5; i++) {fallingBlock[i].x++}}}
 }
 
 function moveR() {
     for (let i=0; i < 5; i++) {fallingBlock[i].x++;}
-    for(let i=0; i < 4; i++) {if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] == 1 || fallingBlock[i].x >= 11) {for (let i=0; i < 5; i++) {fallingBlock[i].x--}}}
+    for(let i=0; i < 4; i++) {if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 || fallingBlock[i].x >= 11) {for (let i=0; i < 5; i++) {fallingBlock[i].x--}}}
 }
 
 function rotClock() {
@@ -417,6 +432,80 @@ function pieceCheck() {
     }
 }
 
+function hold() {if (doHold) {
+    if (heldP == 0) {
+        heldP = +fallingBlock[5];
+        blockReset(true);
+        doHold = false;
+    } else {
+        let tempH = heldP.valueOf();
+        heldP = fallingBlock[5].valueOf();
+        fallingBlock.splice(0,fallingBlock.length);
+        switch (tempH) { 
+            case 1:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Tmino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 6, y: 0}, 1, 0);
+            break;
+            case 2:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Imino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5, y: -1}, 2, 0);
+            break;
+            case 3:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Smino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5, y: 0}, 3, 0);            
+            break;
+            case 4:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Zmino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5, y: 0}, 4, 0);
+            break;
+            case 5:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Jmino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5, y: 0}, 5, 0);
+            break;
+            case 6:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Lmino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5, y: 0}, 6, 0);
+            break;
+            case 7:
+                for (i=0; i < 4; i++) {
+                    const {x, y} = Omino[i];
+                    fallingBlock.push({x, y});
+                }
+                fallingBlock.push({x: 5.5, y: -.5}, 7, 0);
+            break;
+        }
+        doHold = false;
+    }
+}}
+
+function pD(sk,y,p) {if (!p == 0) {
+    let h = 20
+    let pie = findM(p);
+    for (let i = 0; i < 4; i++) {
+        sk.fill(colorPick(+p));
+        if (!doHold) {sk.fill(30,30,30);}
+        sk.rect((pie[i].x-1.5)*h,((pie[i].y+1)+y)*h,h,h);
+    }
+}}
+
 var prevKey = null;
 
 $(document).ready(function() {
@@ -429,6 +518,7 @@ $(document).ready(function() {
             keyCheck(32, function() {hardDrop();}, e.keyCode, e.repeat);
             keyCheck(90, function() {rotClock();}, e.keyCode, e.repeat);
             keyCheck(88, function() {rotCount();}, e.keyCode, e.repeat);
+            keyCheck(67, function() {hold();}, e.keyCode, e.repeat);
 
             prevKey = e.keyCode;
         }
@@ -442,4 +532,19 @@ $(document).ready(function() {
         $('#score').html("Score: " + Math.floor(score).toLocaleString('de'));
     }
     setInterval(updateText, 1000/60);
+    
+    const s = (sket) => {
+        sket.setup = () => {
+            sket.createCanvas(200,100);
+        };
+        sket.draw = () => {if (!stopped) {
+            sket.background(0);
+            sket.fill(200);
+            sket.textSize(20);
+            sket.text("Hold", 10, 20);
+            pD(sket, 1.5, heldP);
+        } else {sket.fill(10,10,10); sket.rect(0,0,200,100);}};
+    };
+
+    let holdQ = new p5(s, 'holdQ');
 });
