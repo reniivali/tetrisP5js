@@ -56,7 +56,7 @@ var Jmino = [{x:4, y:0},{x:5, y:0},{x:5, y:-1},{x:5, y:-2}];
 var Lmino = [{x:5, y:0},{x:5, y:-1},{x:5, y:-2},{x:6, y:0}];
 var Omino = [{x:5, y:0},{x:5, y:-1},{x:6, y:-1},{x:6, y: 0}];
 
-
+function preload() {dv = loadFont('DejaVu.ttf');}
 
 function randNum(min, max) {return Math.floor(Math.random() * (max + 1 - min) + min);}
 
@@ -95,7 +95,7 @@ function setup() {
     blockReset(true);
 }
 
-function draw() { if (!stopped) {
+function draw() { textFont(dv); if (!stopped) {
     drawBoard();
     gravity();
 
@@ -540,6 +540,7 @@ $(document).ready(function() {
         sket.draw = () => {if (!stopped) {
             sket.background(0);
             sket.fill(200);
+            sket.textFont(dv);
             sket.textSize(20);
             sket.text("Hold", 10, 20);
             pD(sket, 1.5, heldP);
