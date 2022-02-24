@@ -1,13 +1,11 @@
 var canWid = 400/1.5;
 var canHei = 800/1.5;
-
 var dGrav = .01;
 var grav = .01;
 var keyDown = false;
 var sDgrav;
 var SDF = 17;
 var score = 00;
-
 var lock = 0;
 var keyLeft = false;
 var keyRight= false;
@@ -17,36 +15,36 @@ var arr=1;
 var arrtmp = 1;
 var ghostY = [19,19,19,19];
 var bag = [];
+var bag2 = [];
 var ghostblock=[];
-
 var stopped = true;
-
 var heldP = 0;
-var doHold = true 
-
-var board =['d',0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                1,1,1,1,1,1,1,1,1,1];
-
+var doHold = true
 var fallingBlock = [];
+
+var board = [
+    'd',0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        1,1,1,1,1,1,1,1,1,1
+    ];
 
 var Tmino = [{x:5, y:0},{x:6, y:0},{x:6, y:-1},{x:7, y:0}]
 var Imino = [{x:4, y:0},{x:5, y:0},{x:6, y:0},{x:7, y:0}];
@@ -291,7 +289,11 @@ function blockReset(m) {
             }
         }
     } else {
-        uniListGen(bag,7,1,7);
+        if (bag2.length == 0) {uniListGen(bag,7,1,7); uniListGen(bag2,7,1,7);} else {
+            bag = bag2.splice(0,bag2.length);
+            uniListGen(bag2,7,1,7);
+        }
+        console.log("BAG: " + bag + " " + bag2);
         blockReset(m);
     }
 }
@@ -313,6 +315,7 @@ function uniListGen(list, length, min, max) {
 
 function reset () {
     bag = [];
+    bag2 = [];
     board =['d',0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0,
@@ -496,15 +499,26 @@ function hold() {if (doHold) {
     }
 }}
 
-function pD(sk,y,p) {if (!p == 0) {
+function pD(sk,y,p,holdB) {if (!p == 0) {
     let h = 20
     let pie = findM(p);
     for (let i = 0; i < 4; i++) {
         sk.fill(colorPick(+p));
-        if (!doHold) {sk.fill(30,30,30);}
+        if (!doHold && holdB) {sk.fill(30,30,30);}
         sk.rect((pie[i].x-1.5)*h,((pie[i].y+1)+y)*h,h,h);
     }
 }}
+
+function drawNextQ(sk) {
+    let tempN = [];
+    let j = 1.5;
+    for (let i = 0; i < bag.length; i++) {tempN.push(bag[i]);}
+    for (let i = 0; i < bag2.length; i++) {tempN.push(bag2[i]);}
+    for (let i = 0; i < 6; i++) {
+        pD(sk,j,tempN[i], false);
+        j += 3.5;
+    }
+}
 
 var prevKey = null;
 
@@ -538,14 +552,37 @@ $(document).ready(function() {
             sket.createCanvas(200,100);
         };
         sket.draw = () => {if (!stopped) {
-            sket.background(0);
+            sket.background(10);
             sket.fill(200);
             sket.textFont(dv);
             sket.textSize(20);
             sket.text("Hold", 10, 20);
-            pD(sket, 1.5, heldP);
+            sket.stroke(100);
+            sket.strokeWeight(3)
+            pD(sket, 1.5, heldP, true);
         } else {sket.fill(10,10,10); sket.rect(0,0,200,100);}};
     };
 
     let holdQ = new p5(s, 'holdQ');
+
+    const s2 = (sket) => {
+        sket.setup = () => {
+            sket.createCanvas(200,450);
+        };
+        sket.draw = () => {if (!stopped) {
+            sket.background(10);
+            sket.fill(200);
+            sket.textFont(dv);
+            sket.textSize(20);
+            noStroke();
+            sket.text("Next", 10, 20);
+            sket.stroke(100);
+            sket.strokeWeight(3)
+            //pD(sket, 1.5, calcNextPiece(1));
+            //pD(sket, 5, calcNextPiece(2));
+            drawNextQ(sket);
+        } else {sket.fill(10,10,10); sket.rect(0,0,200,500);}};
+    }
+
+    let nextQ = new p5(s2, 'nextQ');
 });
