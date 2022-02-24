@@ -578,8 +578,6 @@ $(document).ready(function() {
             sket.text("Next", 10, 20);
             sket.stroke(100);
             sket.strokeWeight(3)
-            //pD(sket, 1.5, calcNextPiece(1));
-            //pD(sket, 5, calcNextPiece(2));
             drawNextQ(sket);
         } else {sket.fill(10,10,10); sket.rect(0,0,200,500);}};
     }
