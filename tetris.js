@@ -556,6 +556,7 @@ $(document).ready(function() {
             sket.fill(200);
             sket.textFont(dv);
             sket.textSize(20);
+            sket.noStroke();
             sket.text("Hold", 10, 20);
             sket.stroke(100);
             sket.strokeWeight(3)
@@ -574,7 +575,7 @@ $(document).ready(function() {
             sket.fill(200);
             sket.textFont(dv);
             sket.textSize(20);
-            noStroke();
+            sket.noStroke();
             sket.text("Next", 10, 20);
             sket.stroke(100);
             sket.strokeWeight(3)
