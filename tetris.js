@@ -15,7 +15,6 @@ var das = 0;
 var dasA = 10;
 var arr=1;
 var arrtmp = 1;
-var ghostY = [19,19,19,19];
 var bag = [];
 var bag2 = [];
 var ghostblock=[];
@@ -31,6 +30,7 @@ var Zmino = [{x:5, y:-1},{x:6, y:-1},{x:6, y:0},{x:7, y:0}];
 var Jmino = [{x:4, y:0},{x:5, y:0},{x:5, y:-1},{x:5, y:-2}];
 var Lmino = [{x:5, y:0},{x:5, y:-1},{x:5, y:-2},{x:6, y:0}];
 var Omino = [{x:5, y:0},{x:5, y:-1},{x:6, y:-1},{x:6, y: 0}];
+var aTexTime = 0;
 
 function fillBoard() {
   for (let i = 0; i < (heightG*widthG); i++) {
@@ -172,26 +172,52 @@ function gravity() {
     }
     if (doLock) {lock++;} else {lock = 0;}
     if (lock == 30) {
-        let lines = 0;
-        for (let i = 0; i < 4; i++) {board[(Math.floor(fallingBlock[i].y)*widthG)+fallingBlock[i].x] = fallingBlock[5];}
-        blockReset(true);
-        lock = 0;
-        doHold = true;
-        for (let i=0; i < heightG; i++) {
-            let lineClear = true;
-            let line = []
-            for (let j=1; j < widthG+1; j++) {line.push(board[(i*10)+j]);}
-            for (let j=0; j<widthG; j++) {if (line[j] == 0) {lineClear=false;}}
-            if (lineClear) {
-                for (let j = 1; j< widthG+1; j++) {board.splice((i*10)+1,1)}
-                for (let j = 1; j< widthG+1; j++) {board.splice(j,0,0)}
-                lines++;
-            }
-        }
-        if (lines == 1) {score += 200;}
-        if (lines == 2) {score += 300;}
-        if (lines == 3) {score += 500;}
-        if (lines == 4) {score += 1000;}
+      let tSpin = false;
+      if (prevKey == 90 && fallingBlock[5] == 1 || prevKey == 88 && fallingBlock[5] == 1) {
+        $('#tsp').show();
+        aTexTime = 120;
+        tSpin = true;
+        score += 200;
+      }
+      let lines = 0;
+      for (let i = 0; i < 4; i++) {board[(Math.floor(fallingBlock[i].y)*widthG)+fallingBlock[i].x] = fallingBlock[5];}
+      blockReset(true);
+      lock = 0;
+      doHold = true;
+      for (let i=0; i < heightG; i++) {
+          let lineClear = true;
+          let line = []
+          for (let j=1; j < widthG+1; j++) {line.push(board[(i*10)+j]);}
+          for (let j=0; j<widthG; j++) {if (line[j] == 0) {lineClear=false;}}
+          if (lineClear) {
+            for (let j = 1; j< widthG+1; j++) {board.splice((i*10)+1,1)}
+            for (let j = 1; j< widthG+1; j++) {board.splice(j,0,0)}
+            lines++;
+          }
+      }
+      if (lines == 1) {
+        score += 200;
+        $('#sig').show();
+        aTexTime = 120;
+        if (tSpin) {score += 400}
+      }
+      if (lines == 2) {
+        score += 300;
+        $('#dob').show();
+        aTexTime = 120;
+        if (tSpin) {score += 800;}
+      }
+      if (lines == 3) {
+        score += 500;
+        $('#trp').show();
+        aTexTime = 120;
+        if (tSpin) {score += 1600;}
+      }
+      if (lines == 4) {
+        score += 1000;
+        $('#qwd').show();
+        aTexTime = 120;
+      }
     }
 }
 
@@ -214,10 +240,26 @@ function hardDrop() {
             lines++;
         }
     }
-    if (lines == 1) {score += 200;}
-    if (lines == 2) {score += 300;}
-    if (lines == 3) {score += 500;}
-    if (lines == 4) {score += 1000;}
+    if (lines == 1) {
+      score += 200;
+      $('#sig').show();
+      aTexTime = 120;
+    }
+    if (lines == 2) {
+      score += 300;
+      $('#dob').show();
+      aTexTime = 120;
+    }
+    if (lines == 3) {
+      score += 500;
+      $('#trp').show();
+      aTexTime = 120;
+    }
+    if (lines == 4) {
+      score += 1000;
+      $('#qwd').show();
+      aTexTime = 120;
+    }
 }
 
 function blockReset(m) {
@@ -517,6 +559,13 @@ $(document).ready(function() {
 
     function updateText() {
         $('#score').html("Score: " + Math.floor(score).toLocaleString('de'));
+        if (aTexTime > 0) {aTexTime --;} else {
+          $('#tsp').hide();
+          $('#sig').hide();
+          $('#dob').hide();
+          $('#trp').hide();
+          $('#qwd').hide();
+        }
     }
     setInterval(updateText, 1000/60);
     

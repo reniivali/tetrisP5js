@@ -22,7 +22,7 @@ body {
     border-style: solid;
     border-color: rgb(127.5,127.5,127.5);
     border-width: 3px;
-    margin-top: -600px;
+    margin-top: -500px;
 }
 
 .descCanv {
@@ -89,5 +89,26 @@ input {
     position: absolute;
     margin-left: 930px;
 }
+
+#defaultCanvas0 {position: absolute;}
+
+#actTxt {
+    display: block;
+    position: absolute;
+    margin-top: 200px;
+    margin-left: 435px;
+    width: 180px;
+    height: auto;
+    border-style: solid;
+    border-color: rgb(127.5,127.5,127.5);
+    border-width: 3px;
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    font-family: 'DejaVu', monospace;
+}
+
+h2 {padding: 0px;}
+
 input:hover {background-color: #464646; border-radius: 10px; box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);}
 button:hover {background-color: #464646; border-radius: 10px; box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); transform: scale(1.05);}

@@ -7,12 +7,19 @@
         <script src="tetris.js"></script>
         <link rel="stylesheet" href="style.css">
     </head>
+    <div id="actTxt">
+        <h2 id=score>Score: 0</h2>
+        <h2 id="tsp" style="display: none;">T-Spin</h2>
+        <h2 id="sig" style="display: none;">Single</h2>
+        <h2 id="dob" style="display: none;">Double</h2>
+        <h2 id="trp" style="display: none;">Triple</h2>
+        <h2 id="qwd" style="display: none;">Quad!!</h2>
+    </div>
     <body>
         <div class="descCanv">
             <h1>'Tetris'</h1>
             <p>a somewhat ok tetris clone for a project.</p>
-            <button onclick="if (!stopped) {stopped=true;} else {stopped=false}">Start or stop</button>
-            <h2 id=score>Score: 0</h2>
+            <button onclick="if (!stopped) {stopped=true;} else {stopped=false}">Play/Pause</button>
 
             <h4>---------</h4>
             <h4>Game Options</h4>
