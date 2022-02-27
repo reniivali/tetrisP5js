@@ -108,6 +108,18 @@ input {
     font-family: 'DejaVu', monospace;
 }
 
+#console {
+  display: none;
+  height: auto;
+  width: 90%
+  border-style: solid;
+  border-color: rgb(127.5,127.5,127.5);
+  border-width: 3px;
+  color: white;
+  padding: 10px;
+  height: 300px;
+  overflow: scroll;
+
 h2 {padding: 0px;}
 
 input:hover {background-color: #464646; border-radius: 10px; box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);}

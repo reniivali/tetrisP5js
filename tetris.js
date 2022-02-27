@@ -32,6 +32,8 @@ var Lmino = [{x:5, y:0},{x:5, y:-1},{x:5, y:-2},{x:6, y:0}];
 var Omino = [{x:5, y:0},{x:5, y:-1},{x:6, y:-1},{x:6, y: 0}];
 var aTexTime = 0;
 
+function jql(input) {$('#console').append(input + '<br>')}
+
 function fillBoard() {
   for (let i = 0; i < (heightG*widthG); i++) {
     board.push(0);
@@ -84,6 +86,13 @@ function colorG(num) {
 function setup() {
     createCanvas(canWid, canHei);
     blockReset(true);
+    
+    if (widthG*40 > 400) {
+    let calc = ((widthG*40)-400)/1.5;
+    calc += 930;
+    log(calc);
+    $('#defaultCanvas1').css("margin-left", calc + "px");
+  }
 }
 
 function draw() { textFont(dv); if (!stopped) {
@@ -187,10 +196,10 @@ function gravity() {
       for (let i=0; i < heightG; i++) {
           let lineClear = true;
           let line = []
-          for (let j=1; j < widthG+1; j++) {line.push(board[(i*10)+j]);}
+          for (let j=1; j < widthG+1; j++) {line.push(board[(i*widthG)+j]);}
           for (let j=0; j<widthG; j++) {if (line[j] == 0) {lineClear=false;}}
           if (lineClear) {
-            for (let j = 1; j< widthG+1; j++) {board.splice((i*10)+1,1)}
+            for (let j = 1; j< widthG+1; j++) {board.splice((i*widthG)+1,1)}
             for (let j = 1; j< widthG+1; j++) {board.splice(j,0,0)}
             lines++;
           }
@@ -232,10 +241,10 @@ function hardDrop() {
     for (let i=0; i < heightG; i++) {
         let lineClear = true;
         let line = []
-        for (let j=1; j < widthG+1; j++) {line.push(board[(i*10)+j]);}
-        for (let j=0; j<widthG; j++) {if (line[j] == 0) {lineClear=false;}}
+        for (let j=1; j < widthG+1; j++) {line.push(board[(i*widthG)+j]);}
+        for (let j=0; j < widthG; j++) {if (line[j] == 0) {lineClear=false;}}
         if (lineClear) {
-            for (let j = 1; j< widthG+1; j++) {board.splice((i*10)+1,1)}
+            for (let j = 1; j< widthG+1; j++) {board.splice((i*widthG)+1,1)}
             for (let j = 1; j< widthG+1; j++) {board.splice(j,0,0)}
             lines++;
         }
@@ -536,7 +545,7 @@ function drawNextQ(sk) {
 }
 
 var prevKey = null;
-
+  
 $(document).ready(function() {
     //DETECT KEYS
         window.onkeydown = function(e) {
