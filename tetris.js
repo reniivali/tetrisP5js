@@ -1,4 +1,4 @@
-var heightG = 30;
+var heightG =20;
 var widthG = 10;
 var canHei = (heightG*40)/1.5;
 var canWid = (widthG*40)/1.5;
@@ -38,7 +38,16 @@ function fillBoard() {
   }
 }
 
-function preload() {dv = loadFont('DejaVu.ttf'); fillBoard();}
+function preload() {
+  dv = loadFont('DejaVu.ttf'); 
+  fillBoard();
+  let tempH = +localStorage.getItem('boardH');
+  let tempW = +localStorage.getItem('boardW');
+  if (tempH >= 4) {heightG = tempH;}
+  if (tempW >= 4) {widthG = tempW;}
+  canHei = (heightG*40)/1.5;
+  canWid = (widthG*40)/1.5;
+}
 
 function randNum(min, max) {return Math.floor(Math.random() * (max + 1 - min) + min);}
 
