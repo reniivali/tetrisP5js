@@ -1,5 +1,7 @@
-var canWid = 400/1.5;
-var canHei = 800/1.5;
+var heightG = 30;
+var widthG = 10;
+var canHei = (heightG*40)/1.5;
+var canWid = (widthG*40)/1.5;
 var dGrav = .01;
 var grav = .01;
 var keyDown = false;
@@ -21,31 +23,7 @@ var stopped = true;
 var heldP = 0;
 var doHold = true
 var fallingBlock = [];
-
-var board = [
-    'd',0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        1,1,1,1,1,1,1,1,1,1
-    ];
-//uwu :3
+var board = ['d'];
 var Tmino = [{x:5, y:0},{x:6, y:0},{x:6, y:-1},{x:7, y:0}]
 var Imino = [{x:4, y:0},{x:5, y:0},{x:6, y:0},{x:7, y:0}];
 var Smino = [{x:5, y:0},{x:6, y:0},{x:6, y:-1},{x:7, y:-1}];
@@ -54,7 +32,13 @@ var Jmino = [{x:4, y:0},{x:5, y:0},{x:5, y:-1},{x:5, y:-2}];
 var Lmino = [{x:5, y:0},{x:5, y:-1},{x:5, y:-2},{x:6, y:0}];
 var Omino = [{x:5, y:0},{x:5, y:-1},{x:6, y:-1},{x:6, y: 0}];
 
-function preload() {dv = loadFont('DejaVu.ttf');}
+function fillBoard() {
+  for (let i = 0; i < (heightG*widthG); i++) {
+    board.push(0);
+  }
+}
+
+function preload() {dv = loadFont('DejaVu.ttf'); fillBoard();}
 
 function randNum(min, max) {return Math.floor(Math.random() * (max + 1 - min) + min);}
 
@@ -115,10 +99,10 @@ function drawBoard() {
     stroke(100);
     strokeWeight(3);
     let ind = 1;
-    for (let i=0; i < 20; i++) {
-        for (let j=0; j < 10; j++) {
+    for (let i=0; i < heightG; i++) {
+        for (let j=0; j < widthG; j++) {
             if (board[ind] >= 1) {fill(colorPick(board[ind]));} if (board[ind] == 0) {fill(10,10,10);}
-            rect(j*canWid/10, i*canHei/20, canWid/10, canHei/20);
+            rect(j*canWid/widthG, i*canHei/heightG, canWid/widthG, canHei/heightG);
             ind++;
         }
     }
@@ -128,7 +112,7 @@ function drawPiece() {
     fill(colorPick(fallingBlock[5]));
     strokeWeight(5);
     stroke(100);
-    for (let i=0; i < 4; i++) {rect((fallingBlock[i].x-1)*canWid/10, (fallingBlock[i].y-1)*canHei/20, canWid/10, canHei/20);}
+    for (let i=0; i < 4; i++) {rect((fallingBlock[i].x-1)*canWid/widthG, (fallingBlock[i].y-1)*canHei/heightG, canWid/widthG, canHei/heightG);}
 }
 
 function drawGhost() {
@@ -138,10 +122,10 @@ function drawGhost() {
     }
     let lowestY = Math.max(...ghostblock.slice(0,4).map(x => x.y));
     //console.log("gamer" + lowestY);
-    outer: while( lowestY < 19 ) {
+    outer: while( lowestY < heightG - 1 ) {
         for ( let i = 0; i < 4; i++) {
             //console.log(`asda ${ghostblock[i].y} ${ghostblock[i].x}`);
-            if (board[((ghostblock[i].y+1)*10) + ghostblock[i].x] >= 1) break outer;
+            if (board[((ghostblock[i].y+1)*widthG) + ghostblock[i].x] >= 1) break outer;
         }
         for ( let i = 0; i < 5; i++ ) {
             ghostblock[i].y++;
@@ -150,7 +134,7 @@ function drawGhost() {
     }
     fill(colorG(fallingBlock[5]));
     noStroke();
-    for (i=0; i < 4; i++) {rect((fallingBlock[i].x-1)*canWid/10, ghostblock[i].y*canHei/20, canWid/10, canHei/20);}
+    for (i=0; i < 4; i++) {rect((fallingBlock[i].x-1)*canWid/widthG, ghostblock[i].y*canHei/heightG, canWid/widthG, canHei/heightG);}
 }
 
 //GRAVITY
@@ -164,35 +148,34 @@ function gravity() {
     }
     for (i=0; i < 5; i++) {
         let done = false;
-        if (board[(Math.floor(dumBlock[0].y)*10)+dumBlock[0].x] >= 1 || Math.floor(dumBlock[0].y) >= 20) {
+        if (board[(Math.floor(dumBlock[0].y)*widthG)+dumBlock[0].x] >= 1 || Math.floor(dumBlock[0].y) >= heightG) {
             fallingBlock[i].y -= grav; doLock = true; done = true;
         }
-        if (board[(Math.floor(dumBlock[1].y)*10)+dumBlock[1].x] >= 1 && !done || Math.floor(dumBlock[1].y) == 20 && !done) {
+        if (board[(Math.floor(dumBlock[1].y)*widthG)+dumBlock[1].x] >= 1 && !done || Math.floor(dumBlock[1].y) == heightG && !done) {
             fallingBlock[i].y -= grav; doLock = true; done = true;
         }
-        if (board[(Math.floor(dumBlock[2].y)*10)+dumBlock[2].x] >= 1 && !done || Math.floor(dumBlock[2].y) == 20 && !done) {
+        if (board[(Math.floor(dumBlock[2].y)*widthG)+dumBlock[2].x] >= 1 && !done || Math.floor(dumBlock[2].y) == heightG && !done) {
             fallingBlock[i].y -= grav; doLock = true; done = true;
         }
-        if (board[(Math.floor(dumBlock[3].y)*10)+dumBlock[3].x] >= 1 && !done || Math.floor(dumBlock[3].y) == 20 && !done) {
+        if (board[(Math.floor(dumBlock[3].y)*widthG)+dumBlock[3].x] >= 1 && !done || Math.floor(dumBlock[3].y) == heightG && !done) {
             fallingBlock[i].y -= grav; doLock = true; done = true;
         }
     }
     if (doLock) {lock++;} else {lock = 0;}
     if (lock == 30) {
         let lines = 0;
-        for (let i = 0; i < 4; i++) {board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] = fallingBlock[5];}
+        for (let i = 0; i < 4; i++) {board[(Math.floor(fallingBlock[i].y)*widthG)+fallingBlock[i].x] = fallingBlock[5];}
         blockReset(true);
-        ghostY = [19,19,19,19];
         lock = 0;
         doHold = true;
-        for (let i=0; i < 20; i++) {
+        for (let i=0; i < heightG; i++) {
             let lineClear = true;
             let line = []
-            for (let j=1; j < 11; j++) {line.push(board[(i*10)+j]);}
-            for (let j=0; j<10; j++) {if (line[j] == 0) {lineClear=false;}}
+            for (let j=1; j < widthG+1; j++) {line.push(board[(i*10)+j]);}
+            for (let j=0; j<widthG; j++) {if (line[j] == 0) {lineClear=false;}}
             if (lineClear) {
-                for (let j = 1; j< 11; j++) {board.splice((i*10)+1,1)}
-                for (let j = 1; j< 11; j++) {board.splice(j,0,0)}
+                for (let j = 1; j< widthG+1; j++) {board.splice((i*10)+1,1)}
+                for (let j = 1; j< widthG+1; j++) {board.splice(j,0,0)}
                 lines++;
             }
         }
@@ -205,20 +188,20 @@ function gravity() {
 
 function hardDrop() {
     let lines = 0;
-    for (i=0; i < 4; i++) {board[(Math.floor(ghostblock[i].y)*10)+fallingBlock[i].x] = fallingBlock[5];}
+    for (i=0; i < 4; i++) {board[(Math.floor(ghostblock[i].y)*widthG)+fallingBlock[i].x] = fallingBlock[5];}
     let lowestY = Math.max(...ghostblock.slice(0,4).map(x => x.y));
     score += 100/lowestY;
     blockReset(true);
     lock = 0;
     doHold = true;
-    for (let i=0; i < 20; i++) {
+    for (let i=0; i < heightG; i++) {
         let lineClear = true;
         let line = []
-        for (let j=1; j < 11; j++) {line.push(board[(i*10)+j]);}
-        for (let j=0; j<10; j++) {if (line[j] == 0) {lineClear=false;}}
+        for (let j=1; j < widthG+1; j++) {line.push(board[(i*10)+j]);}
+        for (let j=0; j<widthG; j++) {if (line[j] == 0) {lineClear=false;}}
         if (lineClear) {
-            for (let j = 1; j< 11; j++) {board.splice((i*10)+1,1)}
-            for (let j = 1; j< 11; j++) {board.splice(j,0,0)}
+            for (let j = 1; j< widthG+1; j++) {board.splice((i*10)+1,1)}
+            for (let j = 1; j< widthG+1; j++) {board.splice(j,0,0)}
             lines++;
         }
     }
@@ -316,28 +299,9 @@ function uniListGen(list, length, min, max) {
 function reset () {
     bag = [];
     bag2 = [];
-    board =['d',0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,0,0,0,
-                1,1,1,1,1,1,1,1,1,1];
+    board =['d'];
     blockReset(true);
+    fillBoard();
     drawBoard();
     score = 0;
     heldP = 0;
@@ -347,12 +311,12 @@ function reset () {
 
 function moveL() {
     for (let i=0; i < 5; i++) {fallingBlock[i].x--;}
-    for(let i=0; i < 4; i++) {if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 || fallingBlock[i].x <= 0) {for (let i=0; i < 5; i++) {fallingBlock[i].x++}}}
+    for(let i=0; i < 4; i++) {if (board[(Math.floor(fallingBlock[i].y)*widthG)+fallingBlock[i].x] >= 1 || fallingBlock[i].x <= 0) {for (let i=0; i < 5; i++) {fallingBlock[i].x++}}}
 }
 
 function moveR() {
     for (let i=0; i < 5; i++) {fallingBlock[i].x++;}
-    for(let i=0; i < 4; i++) {if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 || fallingBlock[i].x >= 11) {for (let i=0; i < 5; i++) {fallingBlock[i].x--}}}
+    for(let i=0; i < 4; i++) {if (board[(Math.floor(fallingBlock[i].y)*widthG)+fallingBlock[i].x] >= 1 || fallingBlock[i].x >= widthG+1) {for (let i=0; i < 5; i++) {fallingBlock[i].x--}}}
 }
 
 function rotClock() {
@@ -363,8 +327,8 @@ function rotClock() {
         fallingBlock[i].y = (x - rx) + ry;
     }
 
-    for (let i = 0; i < 4; i++) {
-        if (fallingBlock[i].x >= 11) {
+    felA:for (let i = 0; i < 4; i++) {
+        if (fallingBlock[i].x >= widthG+1) {
             for (let i = 0; i < 4; i++) {
                 fallingBlock[i].x--;
             }
@@ -385,7 +349,7 @@ function rotCount() {
     }
 
     for (let i = 0; i < 4; i++) {
-        if (fallingBlock[i].x >= 11) {
+        if (fallingBlock[i].x >= widthG+1) {
             for (let i = 0; i < 4; i++) {
                 fallingBlock[i].x--;
             }
@@ -406,7 +370,7 @@ function keyCheck(key, runfunk, eK, eR) {
     if (eK == key && !stopped) {runfunk();}
 }
 
-function pieceCheck() {
+/*function pieceCheck() {
     out:for (let i = 0; i < 4; i++) {
         //check for collisions if there are, move left
         if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 || fallingBlock[i].x >= 11) {
@@ -433,7 +397,7 @@ function pieceCheck() {
             }
         }
     }
-}
+}*/
 
 function hold() {if (doHold) {
     if (heldP == 0) {
