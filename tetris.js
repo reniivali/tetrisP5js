@@ -807,11 +807,11 @@ function drawNextQ(sk) {
 var prevKey = null;
 
 $(document).ready(function () {
-  $('setHeight').click(function() {
+  $('#setHeight').click(function() {
     localStorage.setItem('boardH', JSON.stringify($('#bHi').val()))
   });
   
-  $('setWidth').click(function() {
+  $('#setWidth').click(function() {
     localStorage.setItem('boardW', JSON.stringify($('#bWi').val()))
   });
   
