@@ -88,8 +88,8 @@ function preload() {
   if (tempW >= 4 && tempH != null) {
     widthG = tempW;
   }
-  jql("Actual Width, height: " + widthG + ", " + heightG);
-  jql("temp width, height: " + tempW + ", " + tempH);
+  console.log("Actual Width, height: " + widthG + ", " + heightG);
+  console.log("temp width, height: " + tempW + ", " + tempH);
   canHei = (heightG * 40) / 1.5;
   canWid = (widthG * 40) / 1.5;
 }
