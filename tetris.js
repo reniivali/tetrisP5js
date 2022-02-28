@@ -80,8 +80,8 @@ function fillBoard() {
 function preload() {
   dv = loadFont("DejaVu.ttf");
   fillBoard();
-  let tempH = parseInt(localStorage.getItem(boardH), 10);
-  let tempW = parseInt(localStorage.getItem(boardW), 10);
+  let tempH = parseInt(localStorage.getItem('boardH'));
+  let tempW = parseInt(localStorage.getItem('boardW'));
   if (tempH >= 4 && tempH != null) {
     heightG = tempH;
   }
@@ -808,11 +808,11 @@ var prevKey = null;
 
 $(document).ready(function () {
   $('#setHeight').click(function() {
-    localStorage.setItem('boardH', JSON.stringify($('#bHi').val()))
+    localStorage.setItem('boardH', $('#bHi').val())
   });
   
   $('#setWidth').click(function() {
-    localStorage.setItem('boardW', JSON.stringify($('#bWi').val()))
+    localStorage.setItem('boardW', $('#bWi').val())
   });
   
   jql("width:height " + widthG + heightG)
