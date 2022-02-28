@@ -1,53 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Tetris</title>
-        <script src="jquery.js"></script>
-        <script src="p5.js"></script>
-        <script src="tetris.js"></script>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <div id="actTxt">
-        <h2 id=score>Score: 0</h2>
-        <h2 id="tsp" style="display: none;">T-Spin</h2>
-        <h2 id="sig" style="display: none;">Single</h2>
-        <h2 id="dob" style="display: none;">Double</h2>
-        <h2 id="trp" style="display: none;">Triple</h2>
-        <h2 id="qwd" style="display: none;">Quad!!</h2>
-    </div>
-    <body>
-        <div class="descCanv">
-            <h1>'Tetris'</h1>
-            <p>a somewhat ok tetris clone for a project.</p>
-            <button onclick="if (!stopped) {stopped=true;} else {stopped=false}">Play/Pause</button>
+  <head>
+    <title>Tetris</title>
+    <script src="jquery.js"></script>
+    <script src="p5.js"></script>
+    <script src="tetris.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <div id="actTxt">
+    <h2 id="score">Score: 0</h2>
+    <h2 id="tsp" style="display: none">T-Spin</h2>
+    <h2 id="sig" style="display: none">Single</h2>
+    <h2 id="dob" style="display: none">Double</h2>
+    <h2 id="trp" style="display: none">Triple</h2>
+    <h2 id="qwd" style="display: none">Quad!!</h2>
+  </div>
+  <body>
+    <div class="descCanv">
+      <h1>'Tetris'</h1>
+      <p>a somewhat ok tetris clone for a project.</p>
+      <button onclick="if (!stopped) {stopped=true;} else {stopped=false}">
+        Play/Pause
+      </button>
 
-            <h4>---------</h4>
-            <h4>Game Options</h4>
-            <h5>Note changing board height and width requires a reload to apply</h5>
-            <p style="display: inline">Board Height</p>
-            <input type="number" value="20" id="bHi">
-            <button onclick="localStorage.setItem('boardH', JSON.stringify($('#bHi').val()))">Set</button>
-            <br>
-            <p style="display: inline">Board Width</p>
-            <input type="number" value="10" id="bWi">
-            <button onclick="localStorage.setItem('boardW', JSON.stringify($('#bWi').val()))">Set</button>
-            
-            <h3>Settings</h3>
-            <p>Values in frames</p>
-            <p style="display: inline">DAS (default: 10):</p>
-            <input type="number" value="10" id="das">
-            <button onclick="dasA = $('#das').val();">apply DAS</button>
-            <br>
-            <p style="display: inline">ARR (default: 1):</p>
-            <input type="number" value="1" id="arr">
-            <button onclick="arr = $('#arr').val(); arrtemp = $('#arr').val();">apply ARR</button>
-            <br>
-            <p style="display: inline">SDF (default: 17):</p>
-            <input type="number" value="17" id="sdf">
-            <button onclick="SDF = $('#sdf').val();">apply SDF</button>
-            <div id="console"></div>
-        </div>
-        <div id="holdQ"></div>
-        <div id="nextQ"></div>
-    </body>
+      <h4>---------</h4>
+      <h4>Game Options</h4>
+      <h5>Note changing board height and width requires a reload to apply</h5>
+      <p style="display: inline">Board Height</p>
+      <input type="number" value="20" id="bHi" />
+      <button
+        onclick="localStorage.setItem('boardH', JSON.stringify($('#bHi').val()))"
+      >
+        Set
+      </button>
+      <br />
+      <p style="display: inline">Board Width</p>
+      <input type="number" value="10" id="bWi" />
+      <button
+        onclick="localStorage.setItem('boardW', JSON.stringify($('#bWi').val()))"
+      >
+        Set
+      </button>
+
+      <h3>Settings</h3>
+      <p>Values in frames</p>
+      <p style="display: inline">DAS (default: 10):</p>
+      <input type="number" value="10" id="das" />
+      <button onclick="dasA = $('#das').val();">apply DAS</button>
+      <br />
+      <p style="display: inline">ARR (default: 1):</p>
+      <input type="number" value="1" id="arr" />
+      <button onclick="arr = $('#arr').val(); arrtemp = $('#arr').val();">
+        apply ARR
+      </button>
+      <br />
+      <p style="display: inline">SDF (default: 17):</p>
+      <input type="number" value="17" id="sdf" />
+      <button onclick="SDF = $('#sdf').val();">apply SDF</button>
+      <div id="console"></div>
+    </div>
+    <div id="holdQ"></div>
+    <div id="nextQ"></div>
+  </body>
 </html>
