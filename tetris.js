@@ -1,5 +1,5 @@
 var heightG = 20;
-var widthG = 10;
+var widthG = 20;
 var canHei = (heightG * 40) / 1.5;
 var canWid = (widthG * 40) / 1.5;
 var dGrav = 0.01;
@@ -68,7 +68,7 @@ var Omino = [
 var aTexTime = 0;
 
 function jql(input) {
-  $("#console").append(input + "<br>");
+  $("#console").append("<p>" + input + "</p>");
 }
 
 function fillBoard() {
@@ -82,14 +82,14 @@ function preload() {
   fillBoard();
   let tempH = JSON.parse(localStorage.getItem("boardH"));
   let tempW = JSON.parse(localStorage.getItem("boardW"));
-  if (tempH >= 4) {
+  if (tempH >= 4 && tempH != undefined) {
     heightG = tempH;
   }
-  if (tempW >= 4) {
+  if (tempW >= 4 && tempH != undefined) {
     widthG = tempW;
   }
-  console.log("Actual Width, height: " + widthG + ", " + heightG);
-  console.log("temp width, height: " + tempW + ", " + tempH);
+  jql("Actual Width, height: " + widthG + ", " + heightG);
+  jql("temp width, height: " + tempW + ", " + tempH);
   canHei = (heightG * 40) / 1.5;
   canWid = (widthG * 40) / 1.5;
 }
@@ -807,6 +807,16 @@ function drawNextQ(sk) {
 var prevKey = null;
 
 $(document).ready(function () {
+  $('setHeight').click(function {
+    localStorage.setItem('boardH', JSON.stringify($('#bHi').val()))
+  });
+  
+  $('setWidth').click(function() {
+    localStorage.setItem('boardW', JSON.stringify($('#bWi').val()))
+  });
+  
+  jql("width:height " + widthG + heightG)
+  
   //DETECT KEYS
   window.onkeydown = function (e) {
     //console.log("You pressed key code: " + e.keyCode);

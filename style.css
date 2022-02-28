@@ -131,7 +131,7 @@ input {
 }
 
 #console {
-  display: none;
+  /*display: none;*/
   height: auto;
   width: 90%;
   border-style: solid;
