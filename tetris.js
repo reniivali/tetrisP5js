@@ -1,3 +1,4 @@
+var hidden = false;
 var heightG = 20;
 var widthG = 10;
 var canHei = (heightG * 40) / 1.5;
@@ -22,6 +23,7 @@ var stopped = true;
 var heldP = 0;
 var doHold = true;
 var fallingBlock = [];
+var defLoc;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -177,7 +179,7 @@ function setup() {
   if (widthG * 40 > 400) {
     let calc = (widthG * 40 - 400) / 1.5;
     calc += 930;
-    log(calc);
+    defLoc = +calc;
     $("#defaultCanvas1").css("margin-left", calc + "px");
   }
 }
@@ -815,7 +817,25 @@ $(document).ready(function () {
     localStorage.setItem('boardW', $('#bWi').val())
   });
   
-  jql("width:height " + widthG + heightG)
+  $('#hideShow').click(function() {
+    if (!hidden) {
+      $('.descCanv').hide();
+      $('.p5Canvas').css("margin-top", "20px"); 
+      $('#defaultCanvas0').css("margin-left", "-425px");
+      $('#defaultCanvas2').css("margin-left", "230px");
+      $("#defaultCanvas1").css("margin-left", (defLoc-415) + "px");
+      $('#actTxt').css("margin-left", "10px");
+      hidden = true;
+    } else {
+      $('.descCanv').show();
+      $('.p5Canvas').css("margin-top", "-500px");
+      $('#defaultCanvas0').css("margin-left", "auto");
+      $('#defaultCanvas2').css("margin-left", "650px");
+      $("#defaultCanvas1").css("margin-left", defLoc + "px");
+      $('#actTxt').css("margin-left", "435px");
+      hidden = false;
+    }
+  })
   
   //DETECT KEYS
   window.onkeydown = function (e) {
