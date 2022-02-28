@@ -441,7 +441,7 @@ function hardDrop() {
   for (let i = 0; i < heightG; i++) {
     let lineClear = true;
     let line = [];
-    for (let j = 1; j < widthG + 1; j++) {
+    for (let j = 1; j <= widthG; j++) {
       line.push(board[i * widthG + j]);
     }
     for (let j = 0; j < widthG; j++) {
@@ -450,10 +450,10 @@ function hardDrop() {
       }
     }
     if (lineClear) {
-      for (let j = 1; j < widthG + 1; j++) {
+      for (let j = 1; j <= widthG; j++) {
         board.splice(i * widthG + 1, 1);
         console.log(
-          "spliced value" + i * widthG + 1 + "for the " + j + "th time"
+          "spliced value " + i * widthG + 1 + " for the " + j + "th time"
         );
       }
       for (let j = 0; j < widthG + 0; j++) {
