@@ -80,8 +80,8 @@ function fillBoard() {
 function preload() {
   dv = loadFont("DejaVu.ttf");
   fillBoard();
-  let tempH = JSON.parse(localStorage.getItem("boardH"));
-  let tempW = JSON.parse(localStorage.getItem("boardW"));
+  let tempH = parseInt(localStorage.getItem("boardH"), 10);
+  let tempW = parseInt(localStorage.getItem("boardW"), 10);
   if (tempH >= 4 && tempH != null) {
     heightG = tempH;
   }
