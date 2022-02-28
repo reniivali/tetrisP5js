@@ -1,5 +1,5 @@
 var heightG = 20;
-var widthG = 20;
+var widthG = 10;
 var canHei = (heightG * 40) / 1.5;
 var canWid = (widthG * 40) / 1.5;
 var dGrav = 0.01;
@@ -82,10 +82,10 @@ function preload() {
   fillBoard();
   let tempH = JSON.parse(localStorage.getItem("boardH"));
   let tempW = JSON.parse(localStorage.getItem("boardW"));
-  if (tempH >= 4 && tempH != undefined) {
+  if (tempH >= 4 && tempH != null) {
     heightG = tempH;
   }
-  if (tempW >= 4 && tempH != undefined) {
+  if (tempW >= 4 && tempH != null) {
     widthG = tempW;
   }
   jql("Actual Width, height: " + widthG + ", " + heightG);
@@ -807,7 +807,7 @@ function drawNextQ(sk) {
 var prevKey = null;
 
 $(document).ready(function () {
-  $('setHeight').click(function {
+  $('setHeight').click(function() {
     localStorage.setItem('boardH', JSON.stringify($('#bHi').val()))
   });
   
