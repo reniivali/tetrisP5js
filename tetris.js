@@ -223,8 +223,6 @@ function draw() {
       }
     }
 
-    //pieceCheck();
-
     drawPiece();
     drawGhost();
   } else {
@@ -454,9 +452,6 @@ function hardDrop() {
     if (lineClear) {
       for (let j = 1; j <= widthG; j++) {
         board.splice(i * widthG + 1, 1);
-        console.log(
-          "spliced value " + i * widthG + 1 + " for the " + j + "th time"
-        );
       }
       for (let j = 0; j < widthG + 0; j++) {
         board.splice(j, 0, 0);
@@ -609,6 +604,7 @@ function moveL() {
       }
     }
   }
+  pieceCheck();
 }
 
 function moveR() {
@@ -625,6 +621,7 @@ function moveR() {
       }
     }
   }
+  pieceCheck();
 }
 
 function rotClock() {
@@ -682,16 +679,14 @@ function keyCheck(key, runfunk, eK, eR) {
   }
 }
 
-/*function pieceCheck() {
+function pieceCheck() {
     out:for (let i = 0; i < 4; i++) {
         //check for collisions if there are, move left
         if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 || fallingBlock[i].x >= 11) {
             for (let j = 0; j < 4; j++) {
                 fallingBlock[j].x--;
             }
-            console.log("WAS INSIDE, MOVING LEFT");
             if (!board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 && !fallingBlock[i].x >= 11) {break out;}
-            console.log("UNBROKEN, RESTORING POSITION");
             for (let j = 0; j < 4; j++) {
                 fallingBlock[j].x++;
             }
@@ -701,15 +696,13 @@ function keyCheck(key, runfunk, eK, eR) {
             for (let j = 0; j < 4; j++) {
                 fallingBlock[j].x++;
             }
-            console.log("WAS INSIDE, MOVING RIGHT");
             if (!board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 && !fallingBlock[i].x <= 0) {break out;}
-            console.log("UNBROKEN, RESTORING POSITION");
             for (let j = 0; j < 4; j++) {
                 fallingBlock[j].x--;
             }
         }
     }
-}*/
+}
 
 function hold() {
   if (doHold) {
