@@ -82,8 +82,8 @@ function fillBoard() {
 function preload() {
   dv = loadFont("DejaVu.ttf");
   fillBoard();
-  let tempH = parseInt(localStorage.getItem('boardH'));
-  let tempW = parseInt(localStorage.getItem('boardW'));
+  let tempH = parseInt(localStorage.getItem("boardH"));
+  let tempW = parseInt(localStorage.getItem("boardW"));
   if (tempH >= 4 && tempH != null) {
     heightG = tempH;
   }
@@ -809,34 +809,34 @@ function drawNextQ(sk) {
 var prevKey = null;
 
 $(document).ready(function () {
-  $('#setHeight').click(function() {
-    localStorage.setItem('boardH', $('#bHi').val())
+  $("#setHeight").click(function () {
+    localStorage.setItem("boardH", $("#bHi").val());
   });
-  
-  $('#setWidth').click(function() {
-    localStorage.setItem('boardW', $('#bWi').val())
+
+  $("#setWidth").click(function () {
+    localStorage.setItem("boardW", $("#bWi").val());
   });
-  
-  $('#hideShow').click(function() {
+
+  $("#hideShow").click(function () {
     if (!hidden) {
-      $('.descCanv').hide();
-      $('.p5Canvas').css("margin-top", "20px"); 
-      $('#defaultCanvas0').css("margin-left", "-425px");
-      $('#defaultCanvas2').css("margin-left", "230px");
-      $("#defaultCanvas1").css("margin-left", (defLoc-415) + "px");
-      $('#actTxt').css("margin-left", "10px");
+      $(".descCanv").hide();
+      $(".p5Canvas").css("margin-top", "20px");
+      $("#defaultCanvas0").css("margin-left", "-425px");
+      $("#defaultCanvas2").css("margin-left", "230px");
+      $("#defaultCanvas1").css("margin-left", defLoc - 415 + "px");
+      $("#actTxt").css("margin-left", "10px");
       hidden = true;
     } else {
-      $('.descCanv').show();
-      $('.p5Canvas').css("margin-top", "-500px");
-      $('#defaultCanvas0').css("margin-left", "auto");
-      $('#defaultCanvas2').css("margin-left", "650px");
+      $(".descCanv").show();
+      $(".p5Canvas").css("margin-top", "-500px");
+      $("#defaultCanvas0").css("margin-left", "auto");
+      $("#defaultCanvas2").css("margin-left", "650px");
       $("#defaultCanvas1").css("margin-left", defLoc + "px");
-      $('#actTxt').css("margin-left", "435px");
+      $("#actTxt").css("margin-left", "435px");
       hidden = false;
     }
-  })
-  
+  });
+
   //DETECT KEYS
   window.onkeydown = function (e) {
     //console.log("You pressed key code: " + e.keyCode);
