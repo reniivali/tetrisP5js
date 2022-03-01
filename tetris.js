@@ -8,7 +8,7 @@ var grav = 0.01;
 var keyDown = false;
 var sDgrav;
 var SDF = 17;
-var score = 00;
+var score = 0;
 var lock = 0;
 var keyLeft = false;
 var keyRight = false;
@@ -771,7 +771,7 @@ function hold() {
 }
 
 function pD(sk, y, p, holdB) {
-  if (!p == 0) {
+  if (p != 0) {
     let h = 20;
     let pie = findM(p);
     for (let i = 0; i < 4; i++) {
