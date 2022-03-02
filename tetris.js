@@ -127,7 +127,7 @@ function findM(num) {
 }
 
 function colorPick(num) {
-  if (!rainbpwBlock) {
+  if (!rainbowBlock) {
     if (num == 1) {
       return "rgb(150,0,150)";
     }
@@ -150,12 +150,12 @@ function colorPick(num) {
       return "rgb(150,200,0)";
     }
   } else {
-    return: "hsla("+ rainbowPlace +" 100%, 50%, 1)";
+    return "hsla("+ rainbowPlace +" 100%, 50%, 1)";
   }
 }
 
 function colorG(num) {
-  if (!rainbpwBlock) {
+  if (!rainbowBlock) {
     if (num == 1) {
       return "rgba(150,0,150,.5)";
     }
@@ -178,7 +178,7 @@ function colorG(num) {
       return "rgba(150,200,0,.5)";
     }
   } else {
-    return: "hsla("+ rainbowPlace +" 100%, 50%, .5)";
+    return "hsla("+ rainbowPlace +" 100%, 50%, .5)";
   }
 }
 
