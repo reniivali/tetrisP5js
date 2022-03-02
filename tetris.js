@@ -129,25 +129,25 @@ function findM(num) {
 function colorPick(num) {
   if (!rainbowBlock) {
     if (num == 1) {
-      return "hsl(300,100,80)";
+      return "rgb(150,0,150)";
     }
     if (num == 2) {
-      return "hsl(180,100,83)";
+      return "rgb(0,150,150)";
     }
     if (num == 3) {
-      return "hsl(128,100,81)";
+      return "rgb(150,0,0)";
     }
     if (num == 4) {
-      return "hsl(1,100,89)";
+      return "rgb(0,150,0)";
     }
     if (num == 5) {
-      return "hsl(29,100,92)";
+      return "rgb(204,102,0)";
     }
     if (num == 6) {
-      return "hsl(240,100,87)";
+      return "rgb(0,0,150)";
     }
     if (num == 7) {
-      return "hsl(62,100,100)";
+      return "rgb(150,200,0)";
     }
   } else {
     return "hsla("+ rainbowPlace +" 100%, 50%, 1)";
@@ -157,25 +157,25 @@ function colorPick(num) {
 function colorG(num) {
   if (!rainbowBlock) {
     if (num == 1) {
-      return "hsla(300,100,80,.5)";
+      return "rgba(150,0,150,.5)";
     }
     if (num == 2) {
-      return "hsla(180,100,83,.5)";
+      return "rgba(0,150,150,.5)";
     }
     if (num == 3) {
-      return "hsla(128,100,81,.5)";
+      return "rgba(150,0,0,.5)";
     }
     if (num == 4) {
-      return "hsla(1,100,89,.5)";
+      return "rgba(0,150,0,.5)";
     }
     if (num == 5) {
-      return "hsla(29,100,92,.5)";
+      return "rgba(204,102,0,.5)";
     }
     if (num == 6) {
-      return "hsla(240,100,87,.5)";
+      return "rgba(0,0,150,.5)";
     }
     if (num == 7) {
-      return "hsla(62,100,100,.5)";
+      return "rgba(150,200,0,.5)";
     }
   } else {
     return "hsla("+ rainbowPlace +" 100%, 50%, .5)";
@@ -195,7 +195,6 @@ function setup() {
 }
 
 function draw() {
-  colorMode(HSL);
   textFont(dv);
   if (!stopped) {
     drawBoard();
@@ -245,9 +244,9 @@ function draw() {
       }
     }
   } else {
-    fill(0, 0, 3);
+    fill(10, 10, 10);
     rect(0, 0, canWid, canHei);
-    hsl(210,14,100);
+    fill(225, 225, 225);
     textSize(50);
     text("Paused", canWid / 2 - 100, canHei / 2);
   }
@@ -265,7 +264,7 @@ function drawBoard() {
         rad = 5;
       }
       if (board[ind] == 0) {
-        fill(0, 0, 3);
+        fill(10, 10, 10);
         rad = 5;
       }
       rect(
@@ -950,7 +949,6 @@ $(document).ready(function () {
     };
     sket.draw = () => {
       if (!stopped) {
-        sket.colorMode(HSL);
         sket.background(10);
         sket.fill(200);
         sket.textFont(dv);
@@ -961,7 +959,7 @@ $(document).ready(function () {
         sket.strokeWeight(3);
         pD(sket, 1.5, heldP, true);
       } else {
-        sket.fill(0, 0, 3);
+        sket.fill(10, 10, 10);
         sket.rect(0, 0, 200, 100);
       }
     };
@@ -975,7 +973,6 @@ $(document).ready(function () {
     };
     sket.draw = () => {
       if (!stopped) {
-        sket.colorMode(HSL);
         sket.background(10);
         sket.fill(200);
         sket.textFont(dv);
@@ -986,7 +983,7 @@ $(document).ready(function () {
         sket.strokeWeight(3);
         drawNextQ(sket);
       } else {
-        sket.fill(0, 0, 3);
+        sket.fill(10, 10, 10);
         sket.rect(0, 0, 200, 500);
       }
     };
