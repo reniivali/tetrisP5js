@@ -24,6 +24,8 @@ var heldP = 0;
 var doHold = true;
 var fallingBlock = [];
 var defLoc;
+var rainbowBlock = false;
+var rainbowPlace = 0;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -125,50 +127,58 @@ function findM(num) {
 }
 
 function colorPick(num) {
-  if (num == 1) {
-    return "rgb(150,0,150)";
-  }
-  if (num == 2) {
-    return "rgb(0,150,150)";
-  }
-  if (num == 3) {
-    return "rgb(150,0,0)";
-  }
-  if (num == 4) {
-    return "rgb(0,150,0)";
-  }
-  if (num == 5) {
-    return "rgb(204,102,0)";
-  }
-  if (num == 6) {
-    return "rgb(0,0,150)";
-  }
-  if (num == 7) {
-    return "rgb(150,200,0)";
+  if (!rainbpwBlock) {
+    if (num == 1) {
+      return "rgb(150,0,150)";
+    }
+    if (num == 2) {
+      return "rgb(0,150,150)";
+    }
+    if (num == 3) {
+      return "rgb(150,0,0)";
+    }
+    if (num == 4) {
+      return "rgb(0,150,0)";
+    }
+    if (num == 5) {
+      return "rgb(204,102,0)";
+    }
+    if (num == 6) {
+      return "rgb(0,0,150)";
+    }
+    if (num == 7) {
+      return "rgb(150,200,0)";
+    }
+  } else {
+    return: "hsla("+ rainbowPlace +" 100%, 50%, 1)";
   }
 }
 
 function colorG(num) {
-  if (num == 1) {
-    return "rgba(150,0,150,.5)";
-  }
-  if (num == 2) {
-    return "rgba(0,150,150,.5)";
-  }
-  if (num == 3) {
-    return "rgba(150,0,0,.5)";
-  }
-  if (num == 4) {
-    return "rgba(0,150,0,.5)";
-  }
-  if (num == 5) {
-    return "rgba(204,102,0,.5)";
-  }
-  if (num == 6) {
-    return "rgba(0,0,150,.5)";
-  }
-  if (num == 7) {
-    return "rgba(150,200,0,.5)";
+  if (!rainbpwBlock) {
+    if (num == 1) {
+      return "rgba(150,0,150,.5)";
+    }
+    if (num == 2) {
+      return "rgba(0,150,150,.5)";
+    }
+    if (num == 3) {
+      return "rgba(150,0,0,.5)";
+    }
+    if (num == 4) {
+      return "rgba(0,150,0,.5)";
+    }
+    if (num == 5) {
+      return "rgba(204,102,0,.5)";
+    }
+    if (num == 6) {
+      return "rgba(0,0,150,.5)";
+    }
+    if (num == 7) {
+      return "rgba(150,200,0,.5)";
+    }
+  } else {
+    return: "hsla("+ rainbowPlace +" 100%, 50%, .5)";
   }
 }
 
@@ -225,6 +235,14 @@ function draw() {
 
     drawPiece();
     drawGhost();
+    
+    if (rainbowBlock) {
+      if (rainbowPlace < 360) {
+        rainbowPlace++;
+      } else {
+        rainbowPlace = 0;
+      }
+    }
   } else {
     fill(10, 10, 10);
     rect(0, 0, canWid, canHei);
