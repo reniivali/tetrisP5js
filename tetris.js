@@ -240,17 +240,21 @@ function drawBoard() {
   let ind = 1;
   for (let i = 0; i < heightG; i++) {
     for (let j = 0; j < widthG; j++) {
+      let rad;
       if (board[ind] >= 1) {
         fill(colorPick(board[ind]));
+        rad = 5;
       }
       if (board[ind] == 0) {
         fill(10, 10, 10);
+        rad = 0;
       }
       rect(
         (j * canWid) / widthG,
         (i * canHei) / heightG,
         canWid / widthG,
-        canHei / heightG
+        canHei / heightG,
+        rad,rad,rad,rad
       );
       ind++;
     }
