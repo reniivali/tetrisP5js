@@ -247,7 +247,7 @@ function drawBoard() {
       }
       if (board[ind] == 0) {
         fill(10, 10, 10);
-        rad = 0;
+        rad = 5;
       }
       rect(
         (j * canWid) / widthG,
@@ -270,7 +270,8 @@ function drawPiece() {
       ((fallingBlock[i].x - 1) * canWid) / widthG,
       ((fallingBlock[i].y - 1) * canHei) / heightG,
       canWid / widthG,
-      canHei / heightG
+      canHei / heightG,
+      5,5,5,5
     );
   }
 }
@@ -300,7 +301,8 @@ function drawGhost() {
       ((fallingBlock[i].x - 1) * canWid) / widthG,
       (ghostblock[i].y * canHei) / heightG,
       canWid / widthG,
-      canHei / heightG
+      canHei / heightG,
+      5,5,5,5
     );
   }
 }
