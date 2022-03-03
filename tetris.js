@@ -667,8 +667,34 @@ function blockReset(m) {
     for (i = 0; i < 4; i++) {
       if (
         board[Math.floor(fallingBlock[i].y + 1) * 10 + fallingBlock[i].x] == 1
-      ) {
-        reset();
+      ) { 
+        if (!zone) {reset();} else {
+        let lines = 0;
+        zoneCharge = 0;
+        zone = false;
+        zoneTT = 60;
+        for (let i = 0; i < heightG; i++) {
+          let lineClear = true;
+          let line = [];
+          for (let j = 1; j < widthG + 1; j++) {
+            line.push(board[i * widthG + j]);
+          }
+          for (let j = 0; j < widthG; j++) {
+            if (line[j] < 8) {
+              lineClear = false;
+            }
+          }
+          if (lineClear) {
+            for (let j = 1; j < widthG + 1; j++) {
+              board.splice(i * widthG + 1, 1);
+            }
+            for (let j = 0; j < widthG + 0; j++) {
+              board.splice(j, 0, 0);
+            }
+            lines++;
+          }
+        }
+        score += 10 ^ lines;
       }
     }
   } else {
