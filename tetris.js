@@ -150,7 +150,7 @@ function colorPick(num) {
       return "rgb(150,200,0)";
     }
   } else {
-    return "rgb("+ rainbowPlace +"0,0)";
+    return (rainbowPlace + ", 0, 0");
   }
 }
 
@@ -178,7 +178,7 @@ function colorG(num) {
       return "rgba(150,200,0,.5)";
     }
   } else {
-    return "rgb("+ rainbowPlace +" 0,0)";
+    return (rainbowPlace", 0, 0, .5");
   }
 }
 
