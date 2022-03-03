@@ -172,3 +172,34 @@ button:hover {
   display: block;
   margin: auto;
 }
+
+progress {
+  margin: 0px auto;
+  padding: 2px;
+  width: 100%;
+  max-width: 500px;
+  background: rgb(36,36,36);
+  border: 3px solid #8d8d8d;
+  border-radius: 20px;
+  height: 20px;
+}
+
+progress::-webkit-progress-bar {
+    background: rgb(36,36,36);
+    border-radius: 3px;
+}
+
+progress::-webkit-progress-value {
+    background: repeating-linear-gradient(
+      135deg,
+      #036ffc,
+      #036ffc 20px,
+      #1163cf 20px,
+      #1163cf 40px
+    );
+    border-radius: 20px;
+    -webkit-transition : width 1s ease;
+       -moz-transition : width 1s ease;
+         -o-transition : width 1s ease;
+            transition : width 1s ease;
+}

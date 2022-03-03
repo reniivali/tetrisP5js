@@ -30,6 +30,7 @@ var zoneCharge = 0;
 var zoneTT = 60;
 var zone = false;
 var zoneFac;
+var gravD;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -307,8 +308,13 @@ function draw() {
             lines++;
           }
         }
-        score += 10 ^ lines;
+        let scoreAD = 0;
+        for (let i = 0; i < lines; i++) {
+          scoreAD += 100;
+        }
+        score += scoreAD;
         zone = false;
+        grav = gravD;
       }
     }
     
@@ -486,6 +492,8 @@ function gravity() {
     blockReset(true);
     lock = 0;
     doHold = true;
+    let tempZonePush = [];
+    let boardSPCVS = [];
     for (let i = 0; i < heightG; i++) {
       let lineClear = true;
       let line = [];
@@ -499,22 +507,32 @@ function gravity() {
       }
       if (lineClear) {
         for (let j = 1; j < widthG + 1; j++) {
-          board.splice(i * widthG + 1, 1);
+          if (!zone) {board.splice(i * widthG + 1, 1);} else {
+            boardSPCVS.push(i * widthG + j);
+          }
         }
         if (!zone) {
           for (let j = 0; j < widthG + 0; j++) {
             board.splice(j, 0, 0);
           }
+          zoneCharge += 0.125;
         } else {
           let LL = +line.length;
           for (let j = 0; j < LL; j++) {
-            board.push(+line.splice(0, 1) + 7);
+            tempZonePush.push(+line.splice(0, 1) + 7);
           }
         }
         lines++;
-        zoneCharge += 0.125;
       }
     }
+    for (i = boardSPCVS.length - 1; i >= 0; i--) {
+      board.splice(boardSPCVS[i],1);
+    }
+    let TZPL = tempZonePush.length;
+    for (i = 0; i < TZPL; i++) {
+      board.push(+tempZonePush.splice(0,1))
+    }
+    
     if (lines == 1) {
       score += 200;
       $("#sig").show();
@@ -558,6 +576,8 @@ function hardDrop() {
   blockReset(true);
   lock = 0;
   doHold = true;
+  let tempZonePush = [];
+  let boardSPCVS = [];
   for (let i = 0; i < heightG; i++) {
     let lineClear = true;
     let line = [];
@@ -571,21 +591,30 @@ function hardDrop() {
     }
     if (lineClear) {
       for (let j = 1; j <= widthG; j++) {
-        board.splice(i * widthG + 1, 1);
+        if (!zone) {board.splice(i * widthG + 1, 1);} else {
+          boardSPCVS.push(i * widthG + j);
+        }
       }
       if (!zone) {
         for (let j = 0; j < widthG + 0; j++) {
           board.splice(j, 0, 0);
         }
+        zoneCharge += 0.125;
       } else {
         let LL = +line.length;
         for (let j = 0; j < LL; j++) {
-          board.push(+line.splice(0, 1) + 7);
+          tempZonePush.push(+line.splice(0, 1) + 7);
         }
       }
       lines++;
-      zoneCharge += 0.125;
     }
+  }
+  for (i = boardSPCVS.length - 1; i >= 0; i--) {
+    board.splice(boardSPCVS[i],1);
+  }
+  let TZPL = tempZonePush.length;
+  for (i = 0; i < TZPL; i++) {
+    board.push(+tempZonePush.splice(0,1))
   }
   if (lines == 1) {
     score += 200;
@@ -676,12 +705,12 @@ function blockReset(m) {
       blockReset(m)
     }
     //Check for game over
-    for (i = 0; i < 4; i++) {
+    let lines = 0;
+    zoneCOut:for (i = 0; i < 4; i++) {
       if (
         board[Math.floor(fallingBlock[i].y + 1) * 10 + fallingBlock[i].x] == 1
       ) { 
         if (!zone) {reset();} else {
-        let lines = 0;
         zoneCharge = 0;
         zone = false;
         zoneTT = 60;
@@ -706,7 +735,13 @@ function blockReset(m) {
             lines++;
           }
         }
-        score += 10 ^ lines;
+        grav = +gravD;
+        let scoreAD = 0;
+        for (let i = 0; i < lines; i++) {
+          scoreAD += 100;
+        }
+        score += scoreAD;
+        break zoneCOut;
         }
       }
     }
@@ -951,7 +986,7 @@ function pD(sk, y, p, holdB) {
       if (!doHold && holdB) {
         sk.fill(30, 30, 30);
       }
-      sk.rect((pie[i].x - 1.5) * h, (pie[i].y + 1 + y) * h, h, h);
+      sk.rect((pie[i].x - 1.5) * h, (pie[i].y + 1 + y) * h, h, h,5,5,5,5);
     }
   }
 }
@@ -988,7 +1023,7 @@ $(document).ready(function () {
       $(".p5Canvas").css("margin-top", "20px");
       $("#defaultCanvas0").css("margin-left", "-425px");
       $("#defaultCanvas2").css("margin-left", "230px");
-      $("#defaultCanvas1").css("margin-left", defLoc - 415 + "px");
+      $("#defaultCanvas1").css("margin-left", (+defLoc - 415) + "px");
       $("#actTxt").css("margin-left", "10px");
       hidden = true;
     } else {
@@ -1063,6 +1098,8 @@ $(document).ready(function () {
       function () {
         if (!zone && zoneCharge >= 1) {
           zone = true;
+          gravD = +grav;
+          grav = 0;
         }
       },
       e.keyCode,
@@ -1089,6 +1126,7 @@ $(document).ready(function () {
 
   function updateText() {
     $("#score").html("Score: " + Math.floor(score).toLocaleString("de"));
+    $("#zoneChargeMet").attr("value", zoneCharge);
     if (aTexTime > 0) {
       aTexTime--;
     } else {
@@ -1097,7 +1135,6 @@ $(document).ready(function () {
       $("#dob").hide();
       $("#trp").hide();
       $("#qwd").hide();
-      $("#zoneChargeMet").attr("value", zoneCharge);
     }
   }
   setInterval(updateText, 1000 / 60);
