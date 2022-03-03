@@ -663,6 +663,17 @@ function blockReset(m) {
         }
         fallingBlock.push({ x: 5.5, y: -0.5 }, 7, 0);
         break;
+    } else {
+      if (bag2.length == 0) {
+        uniListGen(bag, 7, 1, 7);
+        uniListGen(bag2, 7, 1, 7);
+      } else {
+        bag = bag2.splice(0, bag2.length);
+        uniListGen(bag2, 7, 1, 7);
+      }
+    }
+    console.log("BAG: " + bag + " " + bag2);
+    blockReset(m);
     }
     for (i = 0; i < 4; i++) {
       if (
@@ -695,20 +706,9 @@ function blockReset(m) {
           }
         }
         score += 10 ^ lines;
+        }
       }
-    } else {
-    if (bag2.length == 0) {
-      uniListGen(bag, 7, 1, 7);
-      uniListGen(bag2, 7, 1, 7);
-    } else {
-      bag = bag2.splice(0, bag2.length);
-      uniListGen(bag2, 7, 1, 7);
     }
-    console.log("BAG: " + bag + " " + bag2);
-    blockReset(m);
-  }
-}
-}
 }
 
 function uniListGen(list, length, min, max) {
