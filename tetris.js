@@ -99,8 +99,8 @@ function preload() {
   console.log("temp width, height: " + tempW + ", " + tempH);
   canHei = (heightG * 40) / 1.5;
   canWid = (widthG * 40) / 1.5;
-  
-  zoneFac = 0.2/(widthG/20);
+
+  zoneFac = 0.2 / (widthG / 10);
 }
 
 function randNum(min, max) {
@@ -274,10 +274,13 @@ function draw() {
         rainbowPlace = 15;
       }
     }
-    
+
     //ZONE CODE
     if (zone) {
-      if (zoneCharge >= zoneFac) {zoneCharge -= zoneFac;} else {
+      let lines = 0;
+      if (zoneCharge >= zoneFac) {
+        zoneCharge -= zoneFac;
+      } else {
         for (let i = 0; i < heightG; i++) {
           let lineClear = true;
           let line = [];
@@ -299,8 +302,13 @@ function draw() {
             lines++;
           }
         }
-        score += 10^lines;
+        score += 10 ^ lines;
+        zone = false;
       }
+    }
+
+    if (zoneCharge >= 4) {
+      zoneCharge = 4;
     }
   } else {
     fill(10, 10, 10);
@@ -313,7 +321,9 @@ function draw() {
 
 function drawBoard() {
   stroke(100);
-  if (zone) {stroke(150);}
+  if (zone) {
+    stroke(150);
+  }
   strokeWeight(3);
   let ind = 1;
   for (let i = 0; i < heightG; i++) {
@@ -489,7 +499,7 @@ function gravity() {
         } else {
           let LL = +line.length;
           for (let j = 0; j < LL; j++) {
-            board.push(line.splice(0,1));
+            board.push(+line.splice(0, 1) + 7);
           }
         }
         lines++;
@@ -561,7 +571,7 @@ function hardDrop() {
       } else {
         let LL = +line.length;
         for (let j = 0; j < LL; j++) {
-          board.push(line.splice(0,1) + 7);
+          board.push(+line.splice(0, 1) + 7);
         }
       }
       lines++;
@@ -1011,11 +1021,16 @@ $(document).ready(function () {
       e.keyCode,
       e.repeat
     );
-    keyCheck(83, function () {
-      if (!zone && zoneCharge >= 1) {
-        zone = true;
-      }
-    });
+    keyCheck(
+      83,
+      function () {
+        if (!zone && zoneCharge >= 1) {
+          zone = true;
+        }
+      },
+      e.keyCode,
+      e.repeat
+    );
 
     prevKey = e.keyCode;
   };
@@ -1092,13 +1107,21 @@ $(document).ready(function () {
         sket.noFill();
         sket.strokeWeight(4);
         sket.stroke(100);
-        sket.rect(400, 10, 180, 20,5,5,5,5);
+        sket.rect(400, 10, 180, 20, 5, 5, 5, 5);
         sket.noStroke();
         sket.fill(200);
-        if (zoneCharge >= 1) {sket.rect(400,10,45,20,5,0,5,0);}
-        if (zoneCharge >= 2) {sket.rect(400,55,45,20);}
-        if (zoneCharge >= 3) {sket.rect(400,100,45,20);}
-        if (zoneCharge >= 4) {sket.rect(400,145,45,20,0,5,0,5);}
+        if (zoneCharge >= 1) {
+          sket.rect(400, 10, 45, 20, 5, 0, 5, 0);
+        }
+        if (zoneCharge >= 2) {
+          sket.rect(400, 55, 45, 20);
+        }
+        if (zoneCharge >= 3) {
+          sket.rect(400, 100, 45, 20);
+        }
+        if (zoneCharge >= 4) {
+          sket.rect(400, 145, 45, 20, 0, 5, 0, 5);
+        }
       } else {
         sket.fill(10, 10, 10);
         sket.rect(0, 0, 200, 500);
