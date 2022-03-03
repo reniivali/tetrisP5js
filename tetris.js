@@ -278,7 +278,7 @@ function draw() {
     if (zoneTT > 0) {
       zoneTT -= 1;
     }
-    
+
     if (zone) {
       let lines = 0;
       if (zoneCharge >= zoneFac && zoneTT == 0) {
@@ -317,7 +317,7 @@ function draw() {
         zoneLT = 600;
       }
     }
-    
+
     if (zoneTT == 0) {
       zoneTT = 60;
     }
@@ -507,7 +507,9 @@ function gravity() {
       }
       if (lineClear) {
         for (let j = 1; j < widthG + 1; j++) {
-          if (!zone) {board.splice(i * widthG + 1, 1);} else {
+          if (!zone) {
+            board.splice(i * widthG + 1, 1);
+          } else {
             boardSPCVS.push(i * widthG + j);
           }
         }
@@ -527,13 +529,13 @@ function gravity() {
       }
     }
     for (i = boardSPCVS.length - 1; i >= 0; i--) {
-      board.splice(boardSPCVS[i],1);
+      board.splice(boardSPCVS[i], 1);
     }
     let TZPL = tempZonePush.length;
     for (i = 0; i < TZPL; i++) {
-      board.push(+tempZonePush.splice(0,1))
+      board.push(+tempZonePush.splice(0, 1));
     }
-    
+
     if (lines == 1) {
       score += 200;
       $("#sig").show();
@@ -592,7 +594,9 @@ function hardDrop() {
     }
     if (lineClear) {
       for (let j = 1; j <= widthG; j++) {
-        if (!zone) {board.splice(i * widthG + 1, 1);} else {
+        if (!zone) {
+          board.splice(i * widthG + 1, 1);
+        } else {
           boardSPCVS.push(i * widthG + j);
         }
       }
@@ -612,11 +616,11 @@ function hardDrop() {
     }
   }
   for (i = boardSPCVS.length - 1; i >= 0; i--) {
-    board.splice(boardSPCVS[i],1);
+    board.splice(boardSPCVS[i], 1);
   }
   let TZPL = tempZonePush.length;
   for (i = 0; i < TZPL; i++) {
-    board.push(+tempZonePush.splice(0,1))
+    board.push(+tempZonePush.splice(0, 1));
   }
   if (lines == 1) {
     score += 200;
@@ -694,25 +698,27 @@ function blockReset(m) {
         }
         fallingBlock.push({ x: 5.5, y: -0.5 }, 7, 0);
         break;
-      } 
-    } else {
-      if (bag2.length == 0) {
-        uniListGen(bag, 7, 1, 7);
-        uniListGen(bag2, 7, 1, 7);
-      } else {
-        bag = bag2.splice(0, bag2.length);
-        uniListGen(bag2, 7, 1, 7);
-      }
-      console.log("BAG: " + bag + " " + bag2);
-      blockReset(m)
     }
-    //Check for game over
-    let lines = 0;
-    zoneCOut:for (i = 0; i < 4; i++) {
-      if (
-        board[Math.floor(fallingBlock[i].y + 1) * 10 + fallingBlock[i].x] == 1
-      ) { 
-        if (!zone) {reset();} else {
+  } else {
+    if (bag2.length == 0) {
+      uniListGen(bag, 7, 1, 7);
+      uniListGen(bag2, 7, 1, 7);
+    } else {
+      bag = bag2.splice(0, bag2.length);
+      uniListGen(bag2, 7, 1, 7);
+    }
+    console.log("BAG: " + bag + " " + bag2);
+    blockReset(m);
+  }
+  //Check for game over
+  let lines = 0;
+  zoneCOut: for (i = 0; i < 4; i++) {
+    if (
+      board[Math.floor(fallingBlock[i].y + 1) * 10 + fallingBlock[i].x] == 1
+    ) {
+      if (!zone) {
+        reset();
+      } else {
         zoneCharge = 0;
         zone = false;
         zoneTT = 60;
@@ -745,9 +751,9 @@ function blockReset(m) {
         }
         score += scoreAD;
         break zoneCOut;
-        }
       }
     }
+  }
 }
 
 function uniListGen(list, length, min, max) {
@@ -989,7 +995,7 @@ function pD(sk, y, p, holdB) {
       if (!doHold && holdB) {
         sk.fill(30, 30, 30);
       }
-      sk.rect((pie[i].x - 1.5) * h, (pie[i].y + 1 + y) * h, h, h,5,5,5,5);
+      sk.rect((pie[i].x - 1.5) * h, (pie[i].y + 1 + y) * h, h, h, 5, 5, 5, 5);
     }
   }
 }
@@ -1026,7 +1032,7 @@ $(document).ready(function () {
       $(".p5Canvas").css("margin-top", "20px");
       $("#defaultCanvas0").css("margin-left", "-425px");
       $("#defaultCanvas2").css("margin-left", "230px");
-      $("#defaultCanvas1").css("margin-left", (+defLoc - 415) + "px");
+      $("#defaultCanvas1").css("margin-left", +defLoc - 415 + "px");
       $("#actTxt").css("margin-left", "10px");
       hidden = true;
     } else {
@@ -1141,10 +1147,14 @@ $(document).ready(function () {
       $("#qwd").hide();
     }
     if (zone) {
-      $('#zoneL').show();
-      $('#zoneL').html("Zone Lines: " + zoneLines);
+      $("#zoneL").show();
+      $("#zoneL").html("Zone Lines: " + zoneLines);
     } else {
-      if (zoneLT < 1) {$('#zoneL').hide();} else {zoneLT--;}
+      if (zoneLT < 1) {
+        $("#zoneL").hide();
+      } else {
+        zoneLT--;
+      }
     }
   }
   setInterval(updateText, 1000 / 60);
