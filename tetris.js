@@ -696,8 +696,7 @@ function blockReset(m) {
         }
         score += 10 ^ lines;
       }
-    }
-  } else {
+    } else {
     if (bag2.length == 0) {
       uniListGen(bag, 7, 1, 7);
       uniListGen(bag2, 7, 1, 7);
