@@ -672,9 +672,9 @@ function blockReset(m) {
         bag = bag2.splice(0, bag2.length);
         uniListGen(bag2, 7, 1, 7);
       }
+      console.log("BAG: " + bag + " " + bag2);
+      blockReset(m)
     }
-    console.log("BAG: " + bag + " " + bag2);
-    blockReset(m);
     //Check for game over
     for (i = 0; i < 4; i++) {
       if (
