@@ -663,6 +663,7 @@ function blockReset(m) {
         }
         fallingBlock.push({ x: 5.5, y: -0.5 }, 7, 0);
         break;
+      } 
     } else {
       if (bag2.length == 0) {
         uniListGen(bag, 7, 1, 7);
@@ -674,7 +675,7 @@ function blockReset(m) {
     }
     console.log("BAG: " + bag + " " + bag2);
     blockReset(m);
-    }
+    //Check for game over
     for (i = 0; i < 4; i++) {
       if (
         board[Math.floor(fallingBlock[i].y + 1) * 10 + fallingBlock[i].x] == 1
