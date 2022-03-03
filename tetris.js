@@ -99,8 +99,6 @@ function preload() {
   if (tempW >= 4 && tempH != null) {
     widthG = tempW;
   }
-  console.log("Actual Width, height: " + widthG + ", " + heightG);
-  console.log("temp width, height: " + tempW + ", " + tempH);
   canHei = (heightG * 40) / 1.5;
   canWid = (widthG * 40) / 1.5;
 
@@ -220,13 +218,10 @@ function colorG(num) {
 function setup() {
   createCanvas(canWid, canHei);
   blockReset(true);
-
-  if (widthG * 40 > 400) {
-    let calc = (widthG * 40 - 400) / 1.5;
-    calc += 930;
-    defLoc = +calc;
-    $("#defaultCanvas1").css("margin-left", calc + "px");
-  }
+  let calc = (widthG * 40 - 400) / 1.5;
+  calc += 930;
+  defLoc = +calc;
+  $("#defaultCanvas1").css("margin-left", calc + "px");
 }
 
 function draw() {
