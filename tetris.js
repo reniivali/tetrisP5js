@@ -28,6 +28,7 @@ var rainbowBlock = false;
 var rainbowPlace = 15;
 var zoneCharge = 0;
 var zone = false;
+var zoneFac;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -53,16 +54,16 @@ var Zmino = [
   { x: 6, y: 0 },
   { x: 7, y: 0 },
 ];
-var Jmino = [
+var Lmino = [
   { x: 4, y: 0 },
   { x: 5, y: 0 },
-  { x: 5, y: -1 },
-  { x: 5, y: -2 },
+  { x: 6, y: -1 },
+  { x: 6, y: 0 },
 ];
-var Lmino = [
+var Jmino = [
+  { x: 4, y: 0 },
+  { x: 4, y: -1 },
   { x: 5, y: 0 },
-  { x: 5, y: -1 },
-  { x: 5, y: -2 },
   { x: 6, y: 0 },
 ];
 var Omino = [
@@ -98,6 +99,8 @@ function preload() {
   console.log("temp width, height: " + tempW + ", " + tempH);
   canHei = (heightG * 40) / 1.5;
   canWid = (widthG * 40) / 1.5;
+  
+  zoneFac = 0.2/(widthG/20);
 }
 
 function randNum(min, max) {
@@ -150,6 +153,27 @@ function colorPick(num) {
     }
     if (num == 7) {
       return "rgb(255, 255, 0)";
+    }
+    if (num == 8) {
+      return "rgb(195, 138, 204)";
+    }
+    if (num == 9) {
+      return "rgb(139, 221, 221)";
+    }
+    if (num == 10) {
+      return "rgb(171, 226, 170)";
+    }
+    if (num == 11) {
+      return "rgb(229, 169, 169)";
+    }
+    if (num == 12) {
+      return "rgb(224, 192, 150)";
+    }
+    if (num == 13) {
+      return "rgb(174, 158, 214)";
+    }
+    if (num == 14) {
+      return "rgb(255, 255, 183)";
     }
   } else {
     let tempS = "rgb(";
@@ -250,6 +274,34 @@ function draw() {
         rainbowPlace = 15;
       }
     }
+    
+    //ZONE CODE
+    if (zone) {
+      if (zoneCharge >= zoneFac) {zoneCharge -= zoneFac;} else {
+        for (let i = 0; i < heightG; i++) {
+          let lineClear = true;
+          let line = [];
+          for (let j = 1; j < widthG + 1; j++) {
+            line.push(board[i * widthG + j]);
+          }
+          for (let j = 0; j < widthG; j++) {
+            if (line[j] < 8) {
+              lineClear = false;
+            }
+          }
+          if (lineClear) {
+            for (let j = 1; j < widthG + 1; j++) {
+              board.splice(i * widthG + 1, 1);
+            }
+            for (let j = 0; j < widthG + 0; j++) {
+              board.splice(j, 0, 0);
+            }
+            lines++;
+          }
+        }
+        score += 10^lines;
+      }
+    }
   } else {
     fill(10, 10, 10);
     rect(0, 0, canWid, canHei);
@@ -261,6 +313,7 @@ function draw() {
 
 function drawBoard() {
   stroke(100);
+  if (zone) {stroke(150);}
   strokeWeight(3);
   let ind = 1;
   for (let i = 0; i < heightG; i++) {
@@ -440,6 +493,7 @@ function gravity() {
           }
         }
         lines++;
+        zoneCharge += 0.125;
       }
     }
     if (lines == 1) {
@@ -504,14 +558,14 @@ function hardDrop() {
         for (let j = 0; j < widthG + 0; j++) {
           board.splice(j, 0, 0);
         }
-        } else {
-          let LL = +line.length;
-          for (let j = 0; j < LL; j++) {
-            board.push(line.splice(0,1) + 7);
-          }
+      } else {
+        let LL = +line.length;
+        for (let j = 0; j < LL; j++) {
+          board.push(line.splice(0,1) + 7);
         }
-        lines++;
       }
+      lines++;
+      zoneCharge += 0.125;
     }
   }
   if (lines == 1) {
@@ -866,7 +920,7 @@ function drawNextQ(sk) {
   }
   for (let i = 0; i < 6; i++) {
     pD(sk, j, tempN[i], false);
-    j += 3.5;
+    j += 2.5;
   }
 }
 
@@ -957,6 +1011,11 @@ $(document).ready(function () {
       e.keyCode,
       e.repeat
     );
+    keyCheck(83, function () {
+      if (!zone && zoneCharge >= 1) {
+        zone = true;
+      }
+    });
 
     prevKey = e.keyCode;
   };
@@ -1029,6 +1088,17 @@ $(document).ready(function () {
         sket.stroke(100);
         sket.strokeWeight(3);
         drawNextQ(sket);
+        //ZONE MODE METER
+        sket.noFill();
+        sket.strokeWeight(4);
+        sket.stroke(100);
+        sket.rect(400, 10, 180, 20,5,5,5,5);
+        sket.noStroke();
+        sket.fill(200);
+        if (zoneCharge >= 1) {sket.rect(400,10,45,20,5,0,5,0);}
+        if (zoneCharge >= 2) {sket.rect(400,55,45,20);}
+        if (zoneCharge >= 3) {sket.rect(400,100,45,20);}
+        if (zoneCharge >= 4) {sket.rect(400,145,45,20,0,5,0,5);}
       } else {
         sket.fill(10, 10, 10);
         sket.rect(0, 0, 200, 500);
