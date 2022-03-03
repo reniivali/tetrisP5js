@@ -27,6 +27,7 @@ var defLoc;
 var rainbowBlock = false;
 var rainbowPlace = 15;
 var zoneCharge = 0;
+var zoneTT = 60;
 var zone = false;
 var zoneFac;
 var board = ["d"];
@@ -276,11 +277,15 @@ function draw() {
     }
 
     //ZONE CODE
+    if (zoneTT > 0) {
+      zoneTT -= 1;
+    }
+    
     if (zone) {
       let lines = 0;
-      if (zoneCharge >= zoneFac) {
+      if (zoneCharge >= zoneFac && zoneTT == 0) {
         zoneCharge -= zoneFac;
-      } else {
+      } else if (zoneCharge < zoneFac) {
         for (let i = 0; i < heightG; i++) {
           let lineClear = true;
           let line = [];
@@ -305,6 +310,10 @@ function draw() {
         score += 10 ^ lines;
         zone = false;
       }
+    }
+    
+    if (zoneTT == 0) {
+      zoneTT = 60;
     }
 
     if (zoneCharge >= 4) {
