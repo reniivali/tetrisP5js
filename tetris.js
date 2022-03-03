@@ -25,7 +25,7 @@ var doHold = true;
 var fallingBlock = [];
 var defLoc;
 var rainbowBlock = false;
-var rainbowPlace = 0;
+var rainbowPlace = 15;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -150,7 +150,7 @@ function colorPick(num) {
       return "rgb(150,200,0)";
     }
   } else {
-    return "hsla("+ rainbowPlace +" 100%, 50%, 1)";
+    return "rgb("+ rainbowPlace +"0,0)";
   }
 }
 
@@ -178,7 +178,7 @@ function colorG(num) {
       return "rgba(150,200,0,.5)";
     }
   } else {
-    return "hsla("+ rainbowPlace +" 100%, 50%, .5)";
+    return "rgb("+ rainbowPlace +" 0,0)";
   }
 }
 
@@ -237,10 +237,10 @@ function draw() {
     drawGhost();
     
     if (rainbowBlock) {
-      if (rainbowPlace < 360) {
+      if (rainbowPlace < 255) {
         rainbowPlace++;
       } else {
-        rainbowPlace = 0;
+        rainbowPlace = 15;
       }
     }
   } else {
