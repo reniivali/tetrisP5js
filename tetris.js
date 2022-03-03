@@ -26,6 +26,8 @@ var fallingBlock = [];
 var defLoc;
 var rainbowBlock = false;
 var rainbowPlace = 15;
+var zoneCharge = 0;
+var zone = false;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -129,59 +131,61 @@ function findM(num) {
 function colorPick(num) {
   if (!rainbowBlock) {
     if (num == 1) {
-      return "rgb(150,0,150)";
+      return "rgb(186, 0, 211)";
     }
     if (num == 2) {
-      return "rgb(0,150,150)";
+      return "rgb(0, 229, 229)";
     }
     if (num == 3) {
-      return "rgb(150,0,0)";
+      return "rgb(3, 221, 0)";
     }
     if (num == 4) {
-      return "rgb(0,150,0)";
+      return "rgb(219, 0, 0)";
     }
     if (num == 5) {
-      return "rgb(204,102,0)";
+      return "rgb(229, 133, 0)";
     }
     if (num == 6) {
-      return "rgb(0,0,150)";
+      return "rgb(53, 0, 178)";
     }
     if (num == 7) {
-      return "rgb(150,200,0)";
+      return "rgb(255, 255, 0)";
     }
   } else {
     let tempS = "rgb(";
     tempS += JSON.stringify(rainbowPlace);
     tempS += ",0,0)";
-    return tempS+;
+    return tempS;
   }
 }
 
 function colorG(num) {
   if (!rainbowBlock) {
     if (num == 1) {
-      return "rgba(150,0,150,.5)";
+      return "rgba(186,0,211,.5)";
     }
     if (num == 2) {
-      return "rgba(0,150,150,.5)";
+      return "rgba(0,229,229,.5)";
     }
     if (num == 3) {
-      return "rgba(150,0,0,.5)";
+      return "rgba(3,221,0,.5)";
     }
     if (num == 4) {
-      return "rgba(0,150,0,.5)";
+      return "rgba(219,0,0,.5)";
     }
     if (num == 5) {
-      return "rgba(204,102,0,.5)";
+      return "rgba(229,113,0,.5)";
     }
     if (num == 6) {
-      return "rgba(0,0,150,.5)";
+      return "rgba(53,0,178,.5)";
     }
     if (num == 7) {
-      return "rgba(150,200,0,.5)";
+      return "rgba(255,255,0,.5)";
     }
   } else {
-    return JSON.stringify(rainbowPlace) + ", 0, 0, .5";
+    let tempS = "rgb(";
+    tempS += rainbowPlace;
+    tempS += ",0,0,.5)";
   }
 }
 
@@ -417,7 +421,7 @@ function gravity() {
         line.push(board[i * widthG + j]);
       }
       for (let j = 0; j < widthG; j++) {
-        if (line[j] == 0) {
+        if (line[j] == 0 || line[j] > 7) {
           lineClear = false;
         }
       }
@@ -425,8 +429,15 @@ function gravity() {
         for (let j = 1; j < widthG + 1; j++) {
           board.splice(i * widthG + 1, 1);
         }
-        for (let j = 0; j < widthG + 0; j++) {
-          board.splice(j, 0, 0);
+        if (!zone) {
+          for (let j = 0; j < widthG + 0; j++) {
+            board.splice(j, 0, 0);
+          }
+        } else {
+          let LL = +line.length;
+          for (let j = 0; j < LL; j++) {
+            board.push(line.splice(0,1));
+          }
         }
         lines++;
       }
@@ -481,7 +492,7 @@ function hardDrop() {
       line.push(board[i * widthG + j]);
     }
     for (let j = 0; j < widthG; j++) {
-      if (line[j] == 0) {
+      if (line[j] == 0 || line[j] > 7) {
         lineClear = false;
       }
     }
@@ -489,10 +500,18 @@ function hardDrop() {
       for (let j = 1; j <= widthG; j++) {
         board.splice(i * widthG + 1, 1);
       }
-      for (let j = 0; j < widthG + 0; j++) {
-        board.splice(j, 0, 0);
+      if (!zone) {
+        for (let j = 0; j < widthG + 0; j++) {
+          board.splice(j, 0, 0);
+        }
+        } else {
+          let LL = +line.length;
+          for (let j = 0; j < LL; j++) {
+            board.push(line.splice(0,1) + 7);
+          }
+        }
+        lines++;
       }
-      lines++;
     }
   }
   if (lines == 1) {
