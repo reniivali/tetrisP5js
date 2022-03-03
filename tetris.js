@@ -708,6 +708,8 @@ function blockReset(m) {
     blockReset(m);
   }
 }
+}
+}
 
 function uniListGen(list, length, min, max) {
   let run = false;
