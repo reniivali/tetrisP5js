@@ -150,7 +150,10 @@ function colorPick(num) {
       return "rgb(150,200,0)";
     }
   } else {
-    return JSON.stringify(rainbowPlace) + ", 0, 0";
+    let tempS = "rgb(";
+    tempS += JSON.stringify(rainbowPlace);
+    tempS += ",0,0)";
+    return tempS+;
   }
 }
 
