@@ -1069,6 +1069,7 @@ $(document).ready(function () {
       $("#dob").hide();
       $("#trp").hide();
       $("#qwd").hide();
+      $("#zoneChargeMet").attr("value", zoneCharge);
     }
   }
   setInterval(updateText, 1000 / 60);
