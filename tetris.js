@@ -29,6 +29,8 @@ var rainbowPlace = 15;
 var zoneCharge = 0;
 var zoneTT = 60;
 var zone = false;
+var zoneLines = 0;
+var zoneLT = 0;
 var zoneFac;
 var gravD;
 var board = ["d"];
@@ -287,6 +289,7 @@ function draw() {
       if (zoneCharge >= zoneFac && zoneTT == 0) {
         zoneCharge -= zoneFac;
       } else if (zoneCharge < zoneFac) {
+        zoneCharge = 0;
         for (let i = 0; i < heightG; i++) {
           let lineClear = true;
           let line = [];
@@ -310,11 +313,13 @@ function draw() {
         }
         let scoreAD = 0;
         for (let i = 0; i < lines; i++) {
-          scoreAD += 100;
+          scoreAD += 1000;
         }
         score += scoreAD;
         zone = false;
         grav = gravD;
+        zoneLines = 0;
+        zoneLT = 600;
       }
     }
     
@@ -521,6 +526,7 @@ function gravity() {
           for (let j = 0; j < LL; j++) {
             tempZonePush.push(+line.splice(0, 1) + 7);
           }
+          zoneLines++;
         }
         lines++;
       }
@@ -605,6 +611,7 @@ function hardDrop() {
         for (let j = 0; j < LL; j++) {
           tempZonePush.push(+line.splice(0, 1) + 7);
         }
+        zoneLines++;
       }
       lines++;
     }
@@ -736,9 +743,10 @@ function blockReset(m) {
           }
         }
         grav = +gravD;
+        zoneLT = 600;
         let scoreAD = 0;
         for (let i = 0; i < lines; i++) {
-          scoreAD += 100;
+          scoreAD += 2000;
         }
         score += scoreAD;
         break zoneCOut;
@@ -1070,7 +1078,7 @@ $(document).ready(function () {
       e.repeat
     );
     keyCheck(
-      90,
+      88,
       function () {
         rotClock();
       },
@@ -1078,7 +1086,7 @@ $(document).ready(function () {
       e.repeat
     );
     keyCheck(
-      88,
+      90,
       function () {
         rotCount();
       },
@@ -1096,10 +1104,11 @@ $(document).ready(function () {
     keyCheck(
       83,
       function () {
-        if (!zone && zoneCharge >= 1) {
+        if (!zone && zoneCharge > 0) {
           zone = true;
           gravD = +grav;
           grav = 0;
+          zoneLines = 0;
         }
       },
       e.keyCode,
@@ -1135,6 +1144,12 @@ $(document).ready(function () {
       $("#dob").hide();
       $("#trp").hide();
       $("#qwd").hide();
+    }
+    if (zone) {
+      $('#zoneL').show();
+      $('#zoneL').html("Zone Lines: " + zoneLines);
+    } else {
+      if (zoneLT < 1) {$('#zoneL').hide();} else {zoneLT--;}
     }
   }
   setInterval(updateText, 1000 / 60);
