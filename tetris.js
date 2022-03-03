@@ -150,7 +150,7 @@ function colorPick(num) {
       return "rgb(150,200,0)";
     }
   } else {
-    return (rainbowPlace + ", 0, 0");
+    return JSON.stringify(rainbowPlace) + ", 0, 0";
   }
 }
 
@@ -178,7 +178,7 @@ function colorG(num) {
       return "rgba(150,200,0,.5)";
     }
   } else {
-    return (rainbowPlace", 0, 0, .5");
+    return JSON.stringify(rainbowPlace) + ", 0, 0, .5";
   }
 }
 
@@ -235,7 +235,7 @@ function draw() {
 
     drawPiece();
     drawGhost();
-    
+
     if (rainbowBlock) {
       if (rainbowPlace < 255) {
         rainbowPlace++;
@@ -272,7 +272,10 @@ function drawBoard() {
         (i * canHei) / heightG,
         canWid / widthG,
         canHei / heightG,
-        rad,rad,rad,rad
+        rad,
+        rad,
+        rad,
+        rad
       );
       ind++;
     }
@@ -289,7 +292,10 @@ function drawPiece() {
       ((fallingBlock[i].y - 1) * canHei) / heightG,
       canWid / widthG,
       canHei / heightG,
-      5,5,5,5
+      5,
+      5,
+      5,
+      5
     );
   }
 }
@@ -320,7 +326,10 @@ function drawGhost() {
       (ghostblock[i].y * canHei) / heightG,
       canWid / widthG,
       canHei / heightG,
-      5,5,5,5
+      5,
+      5,
+      5,
+      5
     );
   }
 }
@@ -704,28 +713,44 @@ function keyCheck(key, runfunk, eK, eR) {
 }
 
 function pieceCheck() {
-    out:for (let i = 0; i < 4; i++) {
-        //check for collisions if there are, move left
-        if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 || fallingBlock[i].x >= 11) {
-            for (let j = 0; j < 4; j++) {
-                fallingBlock[j].x--;
-            }
-            if (!board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 && !fallingBlock[i].x >= 11) {break out;}
-            for (let j = 0; j < 4; j++) {
-                fallingBlock[j].x++;
-            }
-        }
-
-        if (board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 || fallingBlock[i].x <= 0) {
-            for (let j = 0; j < 4; j++) {
-                fallingBlock[j].x++;
-            }
-            if (!board[(Math.floor(fallingBlock[i].y)*10)+fallingBlock[i].x] >= 1 && !fallingBlock[i].x <= 0) {break out;}
-            for (let j = 0; j < 4; j++) {
-                fallingBlock[j].x--;
-            }
-        }
+  out: for (let i = 0; i < 4; i++) {
+    //check for collisions if there are, move left
+    if (
+      board[Math.floor(fallingBlock[i].y) * 10 + fallingBlock[i].x] >= 1 ||
+      fallingBlock[i].x >= 11
+    ) {
+      for (let j = 0; j < 4; j++) {
+        fallingBlock[j].x--;
+      }
+      if (
+        !board[Math.floor(fallingBlock[i].y) * 10 + fallingBlock[i].x] >= 1 &&
+        !fallingBlock[i].x >= 11
+      ) {
+        break out;
+      }
+      for (let j = 0; j < 4; j++) {
+        fallingBlock[j].x++;
+      }
     }
+
+    if (
+      board[Math.floor(fallingBlock[i].y) * 10 + fallingBlock[i].x] >= 1 ||
+      fallingBlock[i].x <= 0
+    ) {
+      for (let j = 0; j < 4; j++) {
+        fallingBlock[j].x++;
+      }
+      if (
+        !board[Math.floor(fallingBlock[i].y) * 10 + fallingBlock[i].x] >= 1 &&
+        !fallingBlock[i].x <= 0
+      ) {
+        break out;
+      }
+      for (let j = 0; j < 4; j++) {
+        fallingBlock[j].x--;
+      }
+    }
+  }
 }
 
 function hold() {
