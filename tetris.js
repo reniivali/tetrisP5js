@@ -246,7 +246,7 @@ function draw() {
   textFont(dv);
   if (!stopped) {
     //draw the background image
-    image(bg, bg.width/2,0, bg.width/2, bg.width/2);
+    image(bg, -1740/2, 0, 3480/2, 2160/2);
     drawBoard();
     gravity();
 
@@ -383,13 +383,20 @@ function drawBoard() {
   let ind = 1;
   for (let i = 0; i < heightG; i++) {
     for (let j = 0; j < widthG; j++) {
+      noFill()
+      rect(
+        (j * canWid) / widthG,
+        (i * canHei) / heightG,
+        canWid / widthG,
+        canHei / heightG,
+      );
       let rad;
       if (board[ind] >= 1) {
         fill(colorPick(board[ind]));
         rad = 5;
       }
       if (board[ind] == 0) {
-        fill(10, 10, 10, .5);
+        fill('rgba(10, 10, 10, .7)');
         rad = 5;
       }
       rect(
