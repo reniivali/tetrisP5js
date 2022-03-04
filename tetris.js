@@ -33,6 +33,7 @@ var zoneLines = 0;
 var zoneLT = 0;
 var zoneFac;
 var gravD;
+var boardStroke = 100;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -78,21 +79,26 @@ var Omino = [
 ];
 var aTexTime = 0;
 
+//mostly redundant logging function for printing things to an HTML element for debugging without an inspect menu
 function jql(input) {
   $("#console").append("<p>" + input + "</p>");
 }
 
+//fill the board with a grid, so the game actually works.
 function fillBoard() {
   for (let i = 0; i < heightG * widthG; i++) {
     board.push(0);
   }
 }
 
+//run this function before ANYTHING loads
 function preload() {
   dv = loadFont("DejaVu.ttf");
   fillBoard();
+  //grab our board height and width from localstorage
   let tempH = parseInt(localStorage.getItem("boardH"));
   let tempW = parseInt(localStorage.getItem("boardW"));
+  //if they exist, and are both greater than four, set them to the grabbed local variables
   if (tempH >= 4 && tempH != null) {
     heightG = tempH;
   }
@@ -215,9 +221,12 @@ function colorG(num) {
   }
 }
 
+//set up the board canvas
 function setup() {
   createCanvas(canWid, canHei);
+  //call a block reset so we actually have a block to start with
   blockReset(true);
+  //calculate where the next queue should be, set it to the margin, and store it for later use.
   let calc = (widthG * 40 - 400) / 1.5;
   calc += 930;
   defLoc = +calc;
@@ -225,6 +234,7 @@ function setup() {
 }
 
 function draw() {
+  //use the custom font loaded in preload()
   textFont(dv);
   if (!stopped) {
     drawBoard();
@@ -239,7 +249,7 @@ function draw() {
       grav = sDgrav / SDF;
     }
 
-    //MOVE THE PEICES WHEN KEYS ARE PRESSED
+    //move the falling block when keys are pressed, in accordance with the set ARR
     if (keyLeft) {
       das++;
       if (das > dasA) {
@@ -266,6 +276,7 @@ function draw() {
     drawPiece();
     drawGhost();
 
+    //somewhat broken code for animating block colors
     if (rainbowBlock) {
       if (rainbowPlace < 255) {
         rainbowPlace++;
@@ -274,13 +285,15 @@ function draw() {
       }
     }
 
-    //ZONE CODE
+    //ZONE
+    //if our charge timer is running, subtract from it
     if (zoneTT > 0) {
       zoneTT -= 1;
     }
 
     if (zone) {
       let lines = 0;
+      //check to see if our zone charge is out; if it's not, subtract from it, if it is, clear the zone lines and update the score.
       if (zoneCharge >= zoneFac && zoneTT == 0) {
         zoneCharge -= zoneFac;
       } else if (zoneCharge < zoneFac) {
@@ -318,14 +331,17 @@ function draw() {
       }
     }
 
+    //if the zone 1s timer is over, restart it
     if (zoneTT == 0) {
       zoneTT = 60;
     }
 
+    //prevent the zone charge from going above 4 (the 'max' value)
     if (zoneCharge >= 4) {
       zoneCharge = 4;
     }
   } else {
+    //draw a paused signifier over the board if the game is stopped.
     fill(10, 10, 10);
     rect(0, 0, canWid, canHei);
     fill(225, 225, 225);
@@ -335,10 +351,15 @@ function draw() {
 }
 
 function drawBoard() {
-  stroke(100);
-  if (zone) {
-    stroke(150);
+  //animate board border color change when zone mode is activated or deactivated
+  if (zone && boardStroke < 150) {
+    boardStroke++;
   }
+  if (!zone  && boardStroke > 100) {
+    boardStroke--;
+  }
+
+  stroke(boardStroke);
   strokeWeight(3);
   let ind = 1;
   for (let i = 0; i < heightG; i++) {
@@ -390,12 +411,12 @@ function drawGhost() {
   for (let i = 0; i < fallingBlock.length; i++) {
     ghostblock[i] = { x: fallingBlock[i].x, y: Math.floor(fallingBlock[i].y) };
   }
+  //get the lowest y of the current ghostblock
   let lowestY = Math.max(...ghostblock.slice(0, 4).map((x) => x.y));
-  //console.log("gamer" + lowestY);
   outer: while (lowestY < heightG - 1) {
     for (let i = 0; i < 4; i++) {
-      //console.log(`asda ${ghostblock[i].y} ${ghostblock[i].x}`);
       if (board[(ghostblock[i].y + 1) * widthG + ghostblock[i].x] >= 1)
+        //if our ghostblock is on top of something, prevent it from going further down.
         break outer;
     }
     for (let i = 0; i < 5; i++) {
@@ -403,6 +424,8 @@ function drawGhost() {
     }
     lowestY++;
   }
+
+  //draw the actual ghost block
   fill(colorG(fallingBlock[5]));
   noStroke();
   for (i = 0; i < 4; i++) {
@@ -422,15 +445,18 @@ function drawGhost() {
 //GRAVITY
 function gravity() {
   let doLock = false;
+  //apply gravity
   for (i = 0; i < 5; i++) {
     fallingBlock[i].y += grav;
   }
+  //create a copy block on that position
   let dumBlock = [];
   for (i = 0; i < 4; i++) {
     const { x, y } = fallingBlock[i];
     dumBlock.push({ x, y });
   }
   for (i = 0; i < 5; i++) {
+    //if the dummyblock hits something, move it up
     let done = false;
     if (
       board[Math.floor(dumBlock[0].y) * widthG + dumBlock[0].x] >= 1 ||
@@ -469,11 +495,13 @@ function gravity() {
     }
   }
   if (doLock) {
+    //if we are locking in, add to the lock value
     lock++;
   } else {
     lock = 0;
   }
   if (lock == 30) {
+    //if the piece has fully locked in, put it into the board, and look for line clears.
     let tSpin = false;
     if (
       (prevKey == 90 && fallingBlock[5] == 1) ||
@@ -569,6 +597,7 @@ function gravity() {
 }
 
 function hardDrop() {
+  //refer to LOCK section of the gravity function
   let lines = 0;
   for (i = 0; i < 4; i++) {
     board[Math.floor(ghostblock[i].y) * widthG + fallingBlock[i].x] =
@@ -647,6 +676,7 @@ function hardDrop() {
 function blockReset(m) {
   fallingBlock.splice(0, fallingBlock.length);
   if (bag.length > 0) {
+    //find the correct piece index
     let pieceN = bag.splice(0, 1);
     switch (+pieceN) {
       case 1:
@@ -700,6 +730,7 @@ function blockReset(m) {
         break;
     }
   } else {
+    //add new bags when we run out
     if (bag2.length == 0) {
       uniListGen(bag, 7, 1, 7);
       uniListGen(bag2, 7, 1, 7);
@@ -719,6 +750,7 @@ function blockReset(m) {
       if (!zone) {
         reset();
       } else {
+        //if we're in the zone when we game over, end zone mode, don't game over
         zoneCharge = 0;
         zone = false;
         zoneTT = 60;
@@ -756,6 +788,8 @@ function blockReset(m) {
   }
 }
 
+//generate a unique list of random numbers, with no repeats
+//used for bag generation
 function uniListGen(list, length, min, max) {
   let run = false;
   if (max + 1 - min < length) {
@@ -866,7 +900,34 @@ function rotCount() {
   }
 }
 
+function rot180() {
+  const { x: rx, y: ry } = fallingBlock[4];
+  for (let i = 0; i < 4; i++) {
+    const { x, y } = fallingBlock[i];
+    fallingBlock[i].x = y - ry + rx;
+    fallingBlock[i].y = -(x - rx) + ry;
+  }
+  for (let i = 0; i < 4; i++) {
+    const { x, y } = fallingBlock[i];
+    fallingBlock[i].x = y - ry + rx;
+    fallingBlock[i].y = -(x - rx) + ry;
+  }
+
+  for (let i = 0; i < 4; i++) {
+    if (fallingBlock[i].x >= widthG + 1) {
+      for (let i = 0; i < 4; i++) {
+        fallingBlock[i].x--;
+      }
+    } else if (fallingBlock[i].x <= 0) {
+      for (let i = 0; i < 4; i++) {
+        fallingBlock[i].x++;
+      }
+    }
+  }
+}
+
 function keyCheck(key, runfunk, eK, eR) {
+  //function for overriding browser DAS, so we can use our own.
   let allowed = true;
   if (eR != undefined) {
     allowed = !eR;
@@ -986,6 +1047,7 @@ function hold() {
   }
 }
 
+//function for drawing preset pieces in a hold/nextQ format.
 function pD(sk, y, p, holdB) {
   if (p != 0) {
     let h = 20;
@@ -1052,6 +1114,16 @@ $(document).ready(function () {
     if (e.keyCode == 40) {
       keyDown = true;
     }
+    //180 rotate key check
+    keyCheck (
+      65, 
+      function () {
+        rot180();
+      }, 
+      e.keyCode, 
+      e.repeat
+    );
+    //move left key check
     keyCheck(
       37,
       function () {
@@ -1061,6 +1133,7 @@ $(document).ready(function () {
       e.keyCode,
       e.repeat
     );
+    //move right keycheck
     keyCheck(
       39,
       function () {
@@ -1070,6 +1143,7 @@ $(document).ready(function () {
       e.keyCode,
       e.repeat
     );
+    //hard drop keycheck
     keyCheck(
       32,
       function () {
@@ -1078,6 +1152,7 @@ $(document).ready(function () {
       e.keyCode,
       e.repeat
     );
+    //rotate clockwise keycheck
     keyCheck(
       88,
       function () {
@@ -1086,6 +1161,7 @@ $(document).ready(function () {
       e.keyCode,
       e.repeat
     );
+    //rotate counter-clockwise keycheck
     keyCheck(
       90,
       function () {
@@ -1094,6 +1170,7 @@ $(document).ready(function () {
       e.keyCode,
       e.repeat
     );
+    //hold keycheck
     keyCheck(
       67,
       function () {
@@ -1102,6 +1179,7 @@ $(document).ready(function () {
       e.keyCode,
       e.repeat
     );
+    //zone mode keycheck
     keyCheck(
       83,
       function () {
@@ -1118,6 +1196,8 @@ $(document).ready(function () {
 
     prevKey = e.keyCode;
   };
+
+  //key up events for left, right, and down
   window.onkeyup = function (e) {
     if (e.keyCode == 40) {
       keyDown = false;
@@ -1135,6 +1215,7 @@ $(document).ready(function () {
   };
 
   function updateText() {
+    //update text and elements in the HTML
     $("#score").html("Score: " + Math.floor(score).toLocaleString("de"));
     $("#zoneChargeMet").attr("value", zoneCharge);
     if (aTexTime > 0) {
@@ -1159,6 +1240,7 @@ $(document).ready(function () {
   }
   setInterval(updateText, 1000 / 60);
 
+  //create and use hold sketch
   const s = (sket) => {
     sket.setup = () => {
       sket.createCanvas(200, 100);
@@ -1183,6 +1265,7 @@ $(document).ready(function () {
 
   let holdQ = new p5(s, "holdQ");
 
+  //create and use next sketch
   const s2 = (sket) => {
     sket.setup = () => {
       sket.createCanvas(200, 450);
