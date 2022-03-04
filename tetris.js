@@ -10,6 +10,10 @@ var sDgrav;
 var SDF = 17;
 var score = 0;
 var lock = 0;
+var lockRot = 10;
+var clearLines = 0;
+var clearLinesD = 0;
+var level = 1;
 var keyLeft = false;
 var keyRight = false;
 var das = 0;
@@ -340,6 +344,14 @@ function draw() {
     if (zoneCharge >= 4) {
       zoneCharge = 4;
     }
+    
+    //if the cleared lines equals 10, double the gravity, and add 10 to the display cleared lines
+    if (clearLines >= 10) {
+      clearLines -= 10;
+      clearLinesD += 10;
+      level++;
+      grav += 0.01;
+    }
   } else {
     //draw a paused signifier over the board if the game is stopped.
     fill(10, 10, 10);
@@ -499,8 +511,9 @@ function gravity() {
     lock++;
   } else {
     lock = 0;
+    lockRot = 10;
   }
-  if (lock == 30) {
+  if (lock == 90) {
     //if the piece has fully locked in, put it into the board, and look for line clears.
     let tSpin = false;
     if (
@@ -545,6 +558,7 @@ function gravity() {
           for (let j = 0; j < widthG + 0; j++) {
             board.splice(j, 0, 0);
           }
+          clearLines++;
           zoneCharge += 0.125;
         } else {
           let LL = +line.length;
@@ -633,6 +647,7 @@ function hardDrop() {
         for (let j = 0; j < widthG + 0; j++) {
           board.splice(j, 0, 0);
         }
+        clearLines++;
         zoneCharge += 0.125;
       } else {
         let LL = +line.length;
@@ -859,6 +874,10 @@ function moveR() {
 }
 
 function rotClock() {
+  if (lockRot > 0) {
+    lock = 0;
+    lockRot -= 1;
+  }
   const { x: rx, y: ry } = fallingBlock[4];
   for (let i = 0; i < 4; i++) {
     const { x, y } = fallingBlock[i];
@@ -880,6 +899,10 @@ function rotClock() {
 }
 
 function rotCount() {
+  if (lockRot > 0) {
+    lock = 0;
+    lockRot -= 1;
+  }
   const { x: rx, y: ry } = fallingBlock[4];
   for (let i = 0; i < 4; i++) {
     const { x, y } = fallingBlock[i];
@@ -901,6 +924,10 @@ function rotCount() {
 }
 
 function rot180() {
+  if (lockRot > 0) {
+    lock = 0;
+    lockRot --;
+  }
   const { x: rx, y: ry } = fallingBlock[4];
   for (let i = 0; i < 4; i++) {
     const { x, y } = fallingBlock[i];
@@ -1218,6 +1245,8 @@ $(document).ready(function () {
     //update text and elements in the HTML
     $("#score").html("Score: " + Math.floor(score).toLocaleString("de"));
     $("#zoneChargeMet").attr("value", zoneCharge);
+    $("#lines").html("Lines: " + (clearLinesD + clearLines).toLocaleString("de"));
+    $("#level").html("Level: " + level.toLocaleString("de"));
     if (aTexTime > 0) {
       aTexTime--;
     } else {
