@@ -1,4 +1,5 @@
 var hidden = false;
+let bg;
 var heightG = 20;
 var widthG = 10;
 var canHei = (heightG * 40) / 1.5;
@@ -113,6 +114,9 @@ function preload() {
   canWid = (widthG * 40) / 1.5;
 
   zoneFac = 0.2 / (widthG / 10);
+  
+  //load our background image into the bg variable
+  bg = loadImage('assets/water.jpg');
 }
 
 function randNum(min, max) {
@@ -241,6 +245,8 @@ function draw() {
   //use the custom font loaded in preload()
   textFont(dv);
   if (!stopped) {
+    //draw the background image
+    image(bg, bg.width/2,0, bg.width/2, bg.width/2);
     drawBoard();
     gravity();
 
@@ -383,7 +389,7 @@ function drawBoard() {
         rad = 5;
       }
       if (board[ind] == 0) {
-        fill(10, 10, 10);
+        fill(10, 10, 10, .5);
         rad = 5;
       }
       rect(
