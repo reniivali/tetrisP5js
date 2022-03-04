@@ -249,7 +249,7 @@ function draw() {
     if (keyDown) {
       grav = sDgrav;
       score++;
-    } else {
+    } else if (!zone) {
       grav = sDgrav / SDF;
     }
 
@@ -351,6 +351,7 @@ function draw() {
       clearLinesD += 10;
       level++;
       grav += 0.01;
+      dGrav += 0.01;
     }
   } else {
     //draw a paused signifier over the board if the game is stopped.
