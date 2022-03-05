@@ -24,6 +24,7 @@
   </div>
   <body>
     <div class="descCanv">
+      <h2>Options</h2>
       <h4>Game</h4>
       <h5>Note changing board height and width requires a reload to apply</h5>
       <p style="display: inline">Board Height</p>
@@ -34,9 +35,11 @@
       <input type="number" value="10" id="bWi" />
       <button id = "setWidth">Set</button>
       <br />
-      <button onclick="if (!rainbowBlock) {rainbowBlock = true;} else {rainbowBlock = false;}">turn red cycle blocks on/off</button>
+      <button onclick="if (ghostColor) {ghostColor = false;} else {ghostColor = true}">Disable/Enable ghost block coloring</button>
+      <!-- COMMENTED OUT BECAUSE OF BUGS
+      <button onclick="if (!rainbowBlock) {rainbowBlock = true;} else {rainbowBlock = false;}">turn red cycle blocks on/off</button>-->
 
-      <h3>Settings</h3>
+      <h3>Handling</h3>
       <p>Values in frames</p>
       <p style="display: inline">DAS (default: 10):</p>
       <input type="number" value="10" id="das" />

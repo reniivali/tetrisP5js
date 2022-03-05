@@ -38,6 +38,7 @@ var zoneLines = 0;
 var zoneLT = 0;
 var zoneFac;
 var gravD;
+var ghostColor = true;
 var boardStroke = 100;
 var board = ["d"];
 var Tmino = [
@@ -452,7 +453,11 @@ function drawGhost() {
   }
 
   //draw the actual ghost block
-  fill(colorG(fallingBlock[5]));
+  if (ghostColor) {
+    fill(colorG(fallingBlock[5]));
+  } else {
+    fill('rgba(125,125,125,.5)');
+  }
   noStroke();
   for (i = 0; i < 4; i++) {
     rect(
