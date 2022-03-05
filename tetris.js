@@ -1,5 +1,5 @@
 var hidden = false;
-let bg;
+var bg;
 var heightG = 20;
 var widthG = 10;
 var canHei = (heightG * 40) / 1.5;
