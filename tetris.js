@@ -236,7 +236,7 @@ function setup() {
   blockReset(true);
   //calculate where the next queue should be, set it to the margin, and store it for later use.
   let calc = (widthG * 40 - 400) / 1.5;
-  calc += 930;
+  calc += 525;
   defLoc = +calc;
   $("#defaultCanvas1").css("margin-left", calc + "px");
 }

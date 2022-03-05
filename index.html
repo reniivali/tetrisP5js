@@ -9,7 +9,7 @@
   </head>
   <div id="actTxt">
     <button id="pp" onclick="if (!stopped) {stopped=true;} else {stopped=false;}">Play/Pause</button>
-    <button id="hideShow">Hide/Show menu</button>
+    <!--<button id="hideShow">Hide/Show menu</button>-->
     <h2 id="score">Score: 0</h2>
     <h2 id="lines">Lines: 0</h2>
     <h2 id="level">Level: 1</h2>
@@ -24,14 +24,7 @@
   </div>
   <body>
     <div class="descCanv">
-      <h1>'Tetris'</h1>
-      <p>a somewhat ok tetris clone for a project.</p>
-      <button onclick="if (!stopped) {stopped=true;} else {stopped=false;}">
-        Play/Pause
-      </button>
-
-      <h4>---------</h4>
-      <h4>Game Options</h4>
+      <h4>Game</h4>
       <h5>Note changing board height and width requires a reload to apply</h5>
       <p style="display: inline">Board Height</p>
       <input type="number" value="20" id="bHi" />
