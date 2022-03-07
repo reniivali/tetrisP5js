@@ -193,6 +193,9 @@ function colorPick(num) {
     if (num == 14) {
       return "rgb(255, 255, 183)";
     }
+    if (num == 15) {
+      return "rgb(30,30,30);"
+    }
   } else {
     let tempS = "rgb(";
     tempS += JSON.stringify(rainbowPlace);
@@ -603,6 +606,7 @@ function gravity() {
       aTexTime = 120;
       if (tSpin) {
         score += 400;
+        el_Garbagio(2, randNum(0 , widthG-1))
       }
     }
     if (lines == 2) {
@@ -611,6 +615,9 @@ function gravity() {
       aTexTime = 120;
       if (tSpin) {
         score += 800;
+        el_Garbagio(4, randNum(0 , widthG-1))
+      } else {
+        el_Garbagio(1, randNum(0 , widthG-1))
       }
     }
     if (lines == 3) {
@@ -619,12 +626,16 @@ function gravity() {
       aTexTime = 120;
       if (tSpin) {
         score += 1600;
+        el_Garbagio(6, randNum(0 , widthG-1))
+      } else {
+        el_Garbagio(2, randNum(0 , widthG-1))
       }
     }
     if (lines == 4) {
       score += 1000;
       $("#qwd").show();
       aTexTime = 120;
+      el_Garbagio(4, randNum(0 , widthG-1))
     }
   }
 }
@@ -694,16 +705,19 @@ function hardDrop() {
     score += 300;
     $("#dob").show();
     aTexTime = 120;
+    el_Garbagio(1, randNum(0 , widthG-1))
   }
   if (lines == 3) {
     score += 500;
     $("#trp").show();
     aTexTime = 120;
+    el_Garbagio(2, randNum(0 , widthG-1))
   }
   if (lines == 4) {
     score += 1000;
     $("#qwd").show();
     aTexTime = 120;
+    el_Garbagio(4, randNum(0 , widthG-1))
   }
 }
 
@@ -1124,6 +1138,19 @@ function drawNextQ(sk) {
 }
 
 var prevKey = null;
+
+function el_Garbagio (lines, openSpot) { if (backfire) {
+  for (i = 0 i; i < lines; i++) {
+    for (j = 0; j < widthG; j++) {
+      board.splice(j,0,0);
+      if (j != openSpot) {
+        board.push(15);
+      } else {
+        board.push(0);
+      }
+    }
+  }
+}}
 
 $(document).ready(function () {
   $("#setHeight").click(function () {
