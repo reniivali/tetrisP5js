@@ -362,9 +362,8 @@ function draw() {
     }
   } else {
     //draw a paused signifier over the board if the game is stopped.
-    fill(10, 10, 10);
-    rect(0, 0, canWid, canHei);
-    fill(225, 225, 225);
+    image(bg, -1740/2, 0, 3480/2, 2160/2);
+    fill(32, 32, 32);
     textSize(50);
     text("Paused", canWid / 2 - 100, canHei / 2);
   }
@@ -1307,6 +1306,9 @@ $(document).ready(function () {
       sket.createCanvas(200, 100);
     };
     sket.draw = () => {
+      sket.image(bg, -3480/2, 0, 3480/2, 2160/2);
+      sket.fill('rgba(10,10,10,.7)');
+      sket.rect(0,0,300,550);
       if (!stopped) {
         sket.background(10);
         sket.fill(200);
@@ -1317,9 +1319,6 @@ $(document).ready(function () {
         sket.stroke(100);
         sket.strokeWeight(3);
         pD(sket, 1.5, heldP, true);
-      } else {
-        sket.fill(10, 10, 10);
-        sket.rect(0, 0, 200, 100);
       }
     };
   };
@@ -1332,8 +1331,10 @@ $(document).ready(function () {
       sket.createCanvas(200, 450);
     };
     sket.draw = () => {
+      sket.image(bg, 0, 0, 3480/2, 2160/2);
+      sket.fill('rgba(10,10,10,.7)');
+      sket.rect(0,0,300,550);
       if (!stopped) {
-        sket.background(10);
         sket.fill(200);
         sket.textFont(dv);
         sket.textSize(20);
@@ -1342,28 +1343,6 @@ $(document).ready(function () {
         sket.stroke(100);
         sket.strokeWeight(3);
         drawNextQ(sket);
-        //ZONE MODE METER
-        sket.noFill();
-        sket.strokeWeight(4);
-        sket.stroke(100);
-        sket.rect(400, 10, 180, 20, 5, 5, 5, 5);
-        sket.noStroke();
-        sket.fill(200);
-        if (zoneCharge >= 1) {
-          sket.rect(400, 10, 45, 20, 5, 0, 5, 0);
-        }
-        if (zoneCharge >= 2) {
-          sket.rect(400, 55, 45, 20);
-        }
-        if (zoneCharge >= 3) {
-          sket.rect(400, 100, 45, 20);
-        }
-        if (zoneCharge >= 4) {
-          sket.rect(400, 145, 45, 20, 0, 5, 0, 5);
-        }
-      } else {
-        sket.fill(10, 10, 10);
-        sket.rect(0, 0, 200, 500);
       }
     };
   };
