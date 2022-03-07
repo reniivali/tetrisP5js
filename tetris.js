@@ -40,6 +40,7 @@ var zoneFac;
 var gravD;
 var ghostColor = true;
 var boardStroke = 100;
+var backfire = false;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -1306,11 +1307,10 @@ $(document).ready(function () {
       sket.createCanvas(200, 100);
     };
     sket.draw = () => {
-      sket.image(bg, -3480/2, 0, 3480/2, 2160/2);
-      sket.fill('rgba(10,10,10,.7)');
-      sket.rect(0,0,300,550);
+      sket.image(bg, 0, -900, 3480/2, 2160/2);
       if (!stopped) {
-        sket.background(10);
+        sket.fill('rgba(10,10,10,.7)');
+        sket.rect(0,0,300,550);
         sket.fill(200);
         sket.textFont(dv);
         sket.textSize(20);
@@ -1332,9 +1332,9 @@ $(document).ready(function () {
     };
     sket.draw = () => {
       sket.image(bg, 0, 0, 3480/2, 2160/2);
-      sket.fill('rgba(10,10,10,.7)');
-      sket.rect(0,0,300,550);
       if (!stopped) {
+        sket.fill('rgba(10,10,10,.7)');
+        sket.rect(0,0,300,550);
         sket.fill(200);
         sket.textFont(dv);
         sket.textSize(20);
