@@ -194,7 +194,10 @@ function colorPick(num) {
       return "rgb(255, 255, 183)";
     }
     if (num == 15) {
-      return "rgb(30,30,30);"
+      return "rgb(125,125,125)"
+    }
+    if (num == 22) {
+      return "rgb(50,50,50)"
     }
   } else {
     let tempS = "rgb(";
@@ -564,7 +567,7 @@ function gravity() {
         line.push(board[i * widthG + j]);
       }
       for (let j = 0; j < widthG; j++) {
-        if (line[j] == 0 || line[j] > 7) {
+        if (line[j] == 0 || line[j] > 7 && line[j] < 15) {
           lineClear = false;
         }
       }
@@ -661,7 +664,7 @@ function hardDrop() {
       line.push(board[i * widthG + j]);
     }
     for (let j = 0; j < widthG; j++) {
-      if (line[j] == 0 || line[j] > 7) {
+      if (line[j] == 0 || line[j] > 7 && line[j] < 15) {
         lineClear = false;
       }
     }
@@ -1139,10 +1142,11 @@ function drawNextQ(sk) {
 
 var prevKey = null;
 
-function el_Garbagio (lines, openSpot) { if (backfire) {
-  for (i = 0 i; i < lines; i++) {
+function el_Garbagio (CLL, openSpot) {if (backfire && !zone) {
+  for (i = 0; i < CLL; i++) {
+    console.log("BACKFIRING ONE LINE");
     for (j = 0; j < widthG; j++) {
-      board.splice(j,0,0);
+      board.splice(0,1);
       if (j != openSpot) {
         board.push(15);
       } else {
