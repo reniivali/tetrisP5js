@@ -92,7 +92,7 @@ function jql(input) {
 
 //fill the board with a grid, so the game actually works.
 function fillBoard() {
-  for (let i = 0; i < heightG * widthG; i++) {
+  for (i = 0; i < heightG * widthG; i++) {
     board.push(0);
   }
 }
@@ -389,7 +389,7 @@ function drawBoard() {
         (j * canWid) / widthG,
         (i * canHei) / heightG,
         canWid / widthG,
-        canHei / heightG,
+        canHei / heightG
       );
       let rad;
       if (board[ind] >= 1) {
@@ -1234,6 +1234,19 @@ $(document).ready(function () {
           gravD = +grav;
           grav = 0;
           zoneLines = 0;
+        }
+      },
+      e.keyCode,
+      e.repeat
+    );
+    //pause keychcek
+    keyCheck(
+      80,
+      function () {
+        if (!stopped) {
+          stopped=true;
+        } else {
+          stopped=false;
         }
       },
       e.keyCode,
