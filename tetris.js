@@ -116,9 +116,9 @@ function preload() {
   canWid = (widthG * 40) / 1.5;
 
   zoneFac = 0.2 / (widthG / 10);
-  
+
   //load our background image into the bg variable
-  bg = loadImage('assets/water.jpg');
+  bg = loadImage("assets/water.jpg");
 }
 
 function randNum(min, max) {
@@ -194,10 +194,10 @@ function colorPick(num) {
       return "rgb(255, 255, 183)";
     }
     if (num == 15) {
-      return "rgb(125,125,125)"
+      return "rgb(125,125,125)";
     }
     if (num == 22) {
-      return "rgb(50,50,50)"
+      return "rgb(50,50,50)";
     }
   } else {
     let tempS = "rgb(";
@@ -254,7 +254,7 @@ function draw() {
   textFont(dv);
   if (!stopped) {
     //draw the background image
-    image(bg, -1740/2, 0, 3480/2, 2160/2);
+    image(bg, -1740 / 2, 0, 3480 / 2, 2160 / 2);
     drawBoard();
     gravity();
 
@@ -358,7 +358,7 @@ function draw() {
     if (zoneCharge >= 4) {
       zoneCharge = 4;
     }
-    
+
     //if the cleared lines equals 10, double the gravity, and add 10 to the display cleared lines
     if (clearLines >= 10) {
       clearLines -= 10;
@@ -369,7 +369,7 @@ function draw() {
     }
   } else {
     //draw a paused signifier over the board if the game is stopped.
-    image(bg, -1740/2, 0, 3480/2, 2160/2);
+    image(bg, -1740 / 2, 0, 3480 / 2, 2160 / 2);
     fill(32, 32, 32);
     textSize(50);
     text("Paused", canWid / 2 - 100, canHei / 2);
@@ -381,7 +381,7 @@ function drawBoard() {
   if (zone && boardStroke < 150) {
     boardStroke++;
   }
-  if (!zone  && boardStroke > 100) {
+  if (!zone && boardStroke > 100) {
     boardStroke--;
   }
 
@@ -390,7 +390,7 @@ function drawBoard() {
   let ind = 1;
   for (let i = 0; i < heightG; i++) {
     for (let j = 0; j < widthG; j++) {
-      noFill()
+      noFill();
       rect(
         (j * canWid) / widthG,
         (i * canHei) / heightG,
@@ -403,7 +403,7 @@ function drawBoard() {
         rad = 5;
       }
       if (board[ind] == 0) {
-        fill('rgba(10, 10, 10, .7)');
+        fill("rgba(10, 10, 10, .7)");
         rad = 5;
       }
       rect(
@@ -462,7 +462,7 @@ function drawGhost() {
   if (ghostColor) {
     fill(colorG(fallingBlock[5]));
   } else {
-    fill('rgba(125,125,125,.5)');
+    fill("rgba(125,125,125,.5)");
   }
   noStroke();
   for (i = 0; i < 4; i++) {
@@ -567,7 +567,7 @@ function gravity() {
         line.push(board[i * widthG + j]);
       }
       for (let j = 0; j < widthG; j++) {
-        if (line[j] == 0 || line[j] > 7 && line[j] < 15) {
+        if (line[j] == 0 || (line[j] > 7 && line[j] < 15)) {
           lineClear = false;
         }
       }
@@ -609,7 +609,7 @@ function gravity() {
       aTexTime = 120;
       if (tSpin) {
         score += 400;
-        el_Garbagio(2, randNum(0 , widthG-1))
+        el_Garbagio(2, randNum(0, widthG - 1));
       }
     }
     if (lines == 2) {
@@ -618,9 +618,9 @@ function gravity() {
       aTexTime = 120;
       if (tSpin) {
         score += 800;
-        el_Garbagio(4, randNum(0 , widthG-1))
+        el_Garbagio(4, randNum(0, widthG - 1));
       } else {
-        el_Garbagio(1, randNum(0 , widthG-1))
+        el_Garbagio(1, randNum(0, widthG - 1));
       }
     }
     if (lines == 3) {
@@ -629,16 +629,16 @@ function gravity() {
       aTexTime = 120;
       if (tSpin) {
         score += 1600;
-        el_Garbagio(6, randNum(0 , widthG-1))
+        el_Garbagio(6, randNum(0, widthG - 1));
       } else {
-        el_Garbagio(2, randNum(0 , widthG-1))
+        el_Garbagio(2, randNum(0, widthG - 1));
       }
     }
     if (lines == 4) {
       score += 1000;
       $("#qwd").show();
       aTexTime = 120;
-      el_Garbagio(4, randNum(0 , widthG-1))
+      el_Garbagio(4, randNum(0, widthG - 1));
     }
   }
 }
@@ -664,7 +664,7 @@ function hardDrop() {
       line.push(board[i * widthG + j]);
     }
     for (let j = 0; j < widthG; j++) {
-      if (line[j] == 0 || line[j] > 7 && line[j] < 15) {
+      if (line[j] == 0 || (line[j] > 7 && line[j] < 15)) {
         lineClear = false;
       }
     }
@@ -708,19 +708,19 @@ function hardDrop() {
     score += 300;
     $("#dob").show();
     aTexTime = 120;
-    el_Garbagio(1, randNum(0 , widthG-1))
+    el_Garbagio(1, randNum(0, widthG - 1));
   }
   if (lines == 3) {
     score += 500;
     $("#trp").show();
     aTexTime = 120;
-    el_Garbagio(2, randNum(0 , widthG-1))
+    el_Garbagio(2, randNum(0, widthG - 1));
   }
   if (lines == 4) {
     score += 1000;
     $("#qwd").show();
     aTexTime = 120;
-    el_Garbagio(4, randNum(0 , widthG-1))
+    el_Garbagio(4, randNum(0, widthG - 1));
   }
 }
 
@@ -962,7 +962,7 @@ function rotCount() {
 function rot180() {
   if (lockRot > 0) {
     lock = 0;
-    lockRot --;
+    lockRot--;
   }
   const { x: rx, y: ry } = fallingBlock[4];
   for (let i = 0; i < 4; i++) {
@@ -992,6 +992,7 @@ function rot180() {
 function keyCheck(key, runfunk, eK, eR) {
   //function for overriding browser DAS, so we can use our own.
   let allowed = true;
+  let justRan = false;
   if (eR != undefined) {
     allowed = !eR;
   }
@@ -999,6 +1000,10 @@ function keyCheck(key, runfunk, eK, eR) {
     return;
   }
   if (eK == key && !stopped) {
+    runfunk();
+    justRan = true;
+  }
+  if (!justRan && key == 80 && stopped) {
     runfunk();
   }
 }
@@ -1142,19 +1147,21 @@ function drawNextQ(sk) {
 
 var prevKey = null;
 
-function el_Garbagio (CLL, openSpot) {if (backfire && !zone) {
-  for (i = 0; i < CLL; i++) {
-    console.log("BACKFIRING ONE LINE");
-    for (j = 0; j < widthG; j++) {
-      board.splice(0,1);
-      if (j != openSpot) {
-        board.push(15);
-      } else {
-        board.push(0);
+function el_Garbagio(CLL, openSpot) {
+  if (backfire && !zone) {
+    for (i = 0; i < CLL; i++) {
+      console.log("BACKFIRING ONE LINE");
+      for (j = 0; j < widthG; j++) {
+        board.splice(0, 1);
+        if (j != openSpot) {
+          board.push(15);
+        } else {
+          board.push(0);
+        }
       }
     }
   }
-}}
+}
 
 $(document).ready(function () {
   $("#setHeight").click(function () {
@@ -1192,12 +1199,12 @@ $(document).ready(function () {
       keyDown = true;
     }
     //180 rotate key check
-    keyCheck (
-      65, 
+    keyCheck(
+      65,
       function () {
         rot180();
-      }, 
-      e.keyCode, 
+      },
+      e.keyCode,
       e.repeat
     );
     //move left key check
@@ -1275,9 +1282,9 @@ $(document).ready(function () {
       80,
       function () {
         if (!stopped) {
-          stopped=true;
+          stopped = true;
         } else {
-          stopped=false;
+          stopped = false;
         }
       },
       e.keyCode,
@@ -1308,7 +1315,9 @@ $(document).ready(function () {
     //update text and elements in the HTML
     $("#score").html("Score: " + Math.floor(score).toLocaleString("de"));
     $("#zoneChargeMet").attr("value", zoneCharge);
-    $("#lines").html("Lines: " + (clearLinesD + clearLines).toLocaleString("de"));
+    $("#lines").html(
+      "Lines: " + (clearLinesD + clearLines).toLocaleString("de")
+    );
     $("#level").html("Level: " + level.toLocaleString("de"));
     if (aTexTime > 0) {
       aTexTime--;
@@ -1338,10 +1347,10 @@ $(document).ready(function () {
       sket.createCanvas(200, 100);
     };
     sket.draw = () => {
-      sket.image(bg, 0, -900, 3480/2, 2160/2);
+      sket.image(bg, 0, -900, 3480 / 2, 2160 / 2);
       if (!stopped) {
-        sket.fill('rgba(10,10,10,.7)');
-        sket.rect(0,0,300,550);
+        sket.fill("rgba(10,10,10,.7)");
+        sket.rect(0, 0, 300, 550);
         sket.fill(200);
         sket.textFont(dv);
         sket.textSize(20);
@@ -1362,10 +1371,10 @@ $(document).ready(function () {
       sket.createCanvas(200, 450);
     };
     sket.draw = () => {
-      sket.image(bg, 0, 0, 3480/2, 2160/2);
+      sket.image(bg, 0, 0, 3480 / 2, 2160 / 2);
       if (!stopped) {
-        sket.fill('rgba(10,10,10,.7)');
-        sket.rect(0,0,300,550);
+        sket.fill("rgba(10,10,10,.7)");
+        sket.rect(0, 0, 300, 550);
         sket.fill(200);
         sket.textFont(dv);
         sket.textSize(20);
