@@ -30,7 +30,7 @@
       <button onclick="if (backfire) {backfire = false;} else {backfire = true;}">Enable/Disable</button>
       <p style="display: inline;">Change garbage backfire multiplier:</p>
       <input type="number" value="1" id="garbBack" />
-      <button onclick="garboMulti = $('#garbBack').val();">Apply</button>
+      <button onclick="garboMulti = +($('#garbBack').val());">Apply</button>
       <h5>Note changing board height and width requires a reload to apply</h5>
       <p style="display: inline">Board Height</p>
       <input type="number" value="20" id="bHi" />

@@ -41,7 +41,7 @@ var gravD;
 var ghostColor = true;
 var boardStroke = 100;
 var backfire = false;
-var garboMuli = 1;
+var garboMulti = 1;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -877,6 +877,7 @@ function reset() {
   zone = false;
   zoneTT = 60;
   clearLines = 0;
+  clearLinesD = 0;
   lines = 0;
   grav = 0.01;
   level = 1;
@@ -1160,7 +1161,7 @@ var prevKey = null;
 function el_Garbagio(CLL, openSpot) {
   let actual = Math.floor(CLL * garboMulti);
   if (backfire && !zone) {
-    for (i = 0; i < CLL; i++) {
+    for (i = 0; i < actual; i++) {
       console.log("BACKFIRING ONE LINE");
       for (j = 0; j < widthG; j++) {
         board.splice(0, 1);
