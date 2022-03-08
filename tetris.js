@@ -431,7 +431,7 @@ function drawPiece() {
     if (!smooth) {
       rect(
         ((fallingBlock[i].x - 1) * canWid) / widthG,
-        ((Math.ceiling(fallingBlock[i].y - 1)) * canHei) / heightG,
+        ((Math.ceil(fallingBlock[i].y - 1)) * canHei) / heightG,
         canWid / widthG,
         canHei / heightG,
         5,
