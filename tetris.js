@@ -42,6 +42,7 @@ var ghostColor = true;
 var boardStroke = 100;
 var backfire = false;
 var garboMulti = 1;
+var smooth = false;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -427,16 +428,29 @@ function drawPiece() {
   strokeWeight(5);
   stroke(100);
   for (let i = 0; i < 4; i++) {
-    rect(
-      ((fallingBlock[i].x - 1) * canWid) / widthG,
-      ((fallingBlock[i].y - 1) * canHei) / heightG,
-      canWid / widthG,
-      canHei / heightG,
-      5,
-      5,
-      5,
-      5
-    );
+    if (!smooth) {
+      rect(
+        ((fallingBlock[i].x - 1) * canWid) / widthG,
+        ((Math.floor(fallingBlock[i].y - 1)) * canHei) / heightG,
+        canWid / widthG,
+        canHei / heightG,
+        5,
+        5,
+        5,
+        5
+      );
+    } else {
+      rect(
+        ((fallingBlock[i].x - 1) * canWid) / widthG,
+        ((fallingBlock[i].y - 1) * canHei) / heightG,
+        canWid / widthG,
+        canHei / heightG,
+        5,
+        5,
+        5,
+        5
+      );
+    }
   }
 }
 
@@ -1343,6 +1357,12 @@ $(document).ready(function () {
       $("#backBut").html("Disable");
     } else {
       $("#backBut").html("Enable");
+    }
+
+    if (smooth) {
+      $("#smoothBut").html("Disable");
+    } else {
+      $("#smoothBut").html("Enable");
     }
 
     if (aTexTime > 0) {
