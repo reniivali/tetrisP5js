@@ -872,6 +872,15 @@ function reset() {
   score = 0;
   heldP = 0;
   stopped = true;
+  zoneCharge = 0;
+  zone = false;
+  zoneTT = 60;
+  clearLines = 0;
+  lines = 0;
+  grav = 0.01;
+  level = 1;
+  gravD = 0.01;
+  dGrav = grav;
   alert("Game Over :(");
 }
 
