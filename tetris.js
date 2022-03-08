@@ -1176,32 +1176,32 @@ function el_Garbagio(CLL, openSpot) {
 }
 
 $(document).ready(function () {
+  //click/change functions for things;
   $("#setHeight").click(function () {
     localStorage.setItem("boardH", $("#bHi").val());
+    alert("board height set!");
   });
 
   $("#setWidth").click(function () {
     localStorage.setItem("boardW", $("#bWi").val());
+    alert("board width set!");
   });
 
-  $("#hideShow").click(function () {
-    if (!hidden) {
-      $(".descCanv").hide();
-      $(".p5Canvas").css("margin-top", "20px");
-      $("#defaultCanvas0").css("margin-left", "-425px");
-      $("#defaultCanvas2").css("margin-left", "230px");
-      $("#defaultCanvas1").css("margin-left", +defLoc - 415 + "px");
-      $("#actTxt").css("margin-left", "10px");
-      hidden = true;
-    } else {
-      $(".descCanv").show();
-      $(".p5Canvas").css("margin-top", "-500px");
-      $("#defaultCanvas0").css("margin-left", "auto");
-      $("#defaultCanvas2").css("margin-left", "650px");
-      $("#defaultCanvas1").css("margin-left", defLoc + "px");
-      $("#actTxt").css("margin-left", "435px");
-      hidden = false;
-    }
+  $("#garbBack").on("input", function () {
+    garboMulti = +($('#garbBack').val());
+  });
+
+  $("#das").on("input", function () {
+    dasA = $('#das').val();
+  });
+
+  $("#arr").on("input", function () {
+    arr = $('#arr').val();
+    arrtemp = $('#arr').val();
+  });
+
+  $("#sdf").on("input", function () {
+    SDF = $('#sdf').val();
   });
 
   //DETECT KEYS
@@ -1327,10 +1327,24 @@ $(document).ready(function () {
     //update text and elements in the HTML
     $("#score").html("Score: " + Math.floor(score).toLocaleString("de"));
     $("#zoneChargeMet").attr("value", zoneCharge);
+    $("#level").html("Level: " + level.toLocaleString("de"));
+    
     $("#lines").html(
       "Lines: " + (clearLinesD + clearLines).toLocaleString("de")
     );
-    $("#level").html("Level: " + level.toLocaleString("de"));
+    
+    if (ghostColor) {
+      $("#colorBut").html("Disable")
+    } else {
+      $("#colorBut").html("Enable")
+    }
+
+    if (backfire) {
+      $("#backBut").html("Disable");
+    } else {
+      $("#backBut").html("Enable");
+    }
+
     if (aTexTime > 0) {
       aTexTime--;
     } else {
@@ -1340,6 +1354,7 @@ $(document).ready(function () {
       $("#trp").hide();
       $("#qwd").hide();
     }
+
     if (zone) {
       $("#zoneL").show();
       $("#zoneL").html("Zone Lines: " + zoneLines);

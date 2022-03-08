@@ -27,10 +27,10 @@
       <h2>Options</h2>
       <h4>Game</h4>
       <p>Enable garbage backfire for an extra challenge!</p>
-      <button onclick="if (backfire) {backfire = false;} else {backfire = true;}">Enable/Disable</button>
+      <button onclick="if (backfire) {backfire = false;} else {backfire = true;}" id="backBut">Enable/Disable</button>
+      <br />
       <p style="display: inline;">Change garbage backfire multiplier:</p>
       <input type="number" value="1" id="garbBack" />
-      <button onclick="garboMulti = +($('#garbBack').val());">Apply</button>
       <h5>Note changing board height and width requires a reload to apply</h5>
       <p style="display: inline">Board Height</p>
       <input type="number" value="20" id="bHi" />
@@ -40,7 +40,8 @@
       <input type="number" value="10" id="bWi" />
       <button id = "setWidth">Set</button>
       <br />
-      <button onclick="if (ghostColor) {ghostColor = false;} else {ghostColor = true}">Disable/Enable ghost block coloring</button>
+      <p style="display: inline;">Ghost Block Coloring</p>
+      <button onclick="if (ghostColor) {ghostColor = false;} else {ghostColor = true}" id = "colorBut">Disable/Enable</button>
       <!-- COMMENTED OUT BECAUSE OF BUGS
       <button onclick="if (!rainbowBlock) {rainbowBlock = true;} else {rainbowBlock = false;}">turn red cycle blocks on/off</button>-->
 
@@ -48,17 +49,12 @@
       <p>Values in frames</p>
       <p style="display: inline">DAS (default: 10):</p>
       <input type="number" value="10" id="das" />
-      <button onclick="dasA = $('#das').val();">apply DAS</button>
       <br />
       <p style="display: inline">ARR (default: 1):</p>
       <input type="number" value="1" id="arr" />
-      <button onclick="arr = $('#arr').val(); arrtemp = $('#arr').val();">
-        apply ARR
-      </button>
       <br />
       <p style="display: inline">SDF (default: 17):</p>
       <input type="number" value="17" id="sdf" />
-      <button onclick="SDF = $('#sdf').val();">apply SDF</button>
       <div id="console"></div>
     </div>
     <div id="holdQ"></div>
