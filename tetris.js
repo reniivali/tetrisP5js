@@ -293,8 +293,8 @@ function draw() {
       }
     }
 
-    drawPiece();
     drawGhost();
+    drawPiece();
 
     //somewhat broken code for animating block colors
     if (rainbowBlock) {
