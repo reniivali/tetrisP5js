@@ -41,6 +41,7 @@ var gravD;
 var ghostColor = true;
 var boardStroke = 100;
 var backfire = false;
+var garboMuli = 1;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -1157,6 +1158,7 @@ function drawNextQ(sk) {
 var prevKey = null;
 
 function el_Garbagio(CLL, openSpot) {
+  let actual = Math.floor(CLL * garboMulti);
   if (backfire && !zone) {
     for (i = 0; i < CLL; i++) {
       console.log("BACKFIRING ONE LINE");
