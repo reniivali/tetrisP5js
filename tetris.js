@@ -1202,7 +1202,7 @@ function el_Garbagio(CLL, openSpot) {
 
 function keySetStart(key) {
   selectKey = key;
-  $("#KD" + key).html("Setting...");
+  $("#KL" + key).html("Setting...");
 }
 
 function keySBR() {$(".setKY").html("Set New");}
@@ -1377,7 +1377,7 @@ $(document).ready(function () {
         keySBR();
       break;
       case 9:
-        keyHD = e.keyCode;
+        keyHL = e.keyCode;
         selectKey = 0;
         keySBR();
       break;
