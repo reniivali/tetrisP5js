@@ -8,14 +8,19 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <div id="actTxt">
-    <button id="pp" onclick="if (!stopped) {stopped=true;} else {stopped=false;}">Play/Pause</button>
+    <button
+      id="pp"
+      onclick="if (!stopped) {stopped=true;} else {stopped=false;}"
+    >
+      Play/Pause
+    </button>
     <!--<button id="hideShow">Hide/Show menu</button>-->
     <h2 id="score">Score: 0</h2>
     <h2 id="lines">Lines: 0</h2>
     <h2 id="level">Level: 1</h2>
     <h4>Zone Charge</h4>
     <progress id="zoneChargeMet" value="0" max="4"></progress>
-    <h4 id="zoneL" style="display: none"> Zone Lines: 0</h4>
+    <h4 id="zoneL" style="display: none">Zone Lines: 0</h4>
     <h2 id="tsp" style="display: none">T-Spin</h2>
     <h2 id="sig" style="display: none">Single</h2>
     <h2 id="dob" style="display: none">Double</h2>
@@ -25,11 +30,28 @@
   <body>
     <div class="descCanv">
       <h2>Options</h2>
+      <h4>Controls</h4>
+      <h5><i>rebind-ability may come in a later update</i></h5>
+      <p>Left: Left Arrow</p>
+      <p>Right: Right Arrow</p>
+      <p>Soft Drop: Down Arrow</p>
+      <p>Hard Drop: Space</p>
+      <p>Rotate Counter-Clockwise: Z</p>
+      <p>Rotate Clockwise: X</p>
+      <p>Rotate 180: A</p>
+      <p>Hold: C</p>
+      <p>Pause: P</p>
+      <br />
       <h4>Game</h4>
       <p>Enable garbage backfire for an extra challenge!</p>
-      <button onclick="if (backfire) {backfire = false;} else {backfire = true;}" id="backBut">Enable/Disable</button>
+      <button
+        onclick="if (backfire) {backfire = false;} else {backfire = true;}"
+        id="backBut"
+      >
+        Enable/Disable
+      </button>
       <br />
-      <p style="display: inline;">Change garbage backfire multiplier:</p>
+      <p style="display: inline">Change garbage backfire multiplier:</p>
       <input type="number" value="1" id="garbBack" />
       <h5>Note changing board height and width requires a reload to apply</h5>
       <p style="display: inline">Board Height</p>
@@ -38,13 +60,23 @@
       <br />
       <p style="display: inline">Board Width</p>
       <input type="number" value="10" id="bWi" />
-      <button id = "setWidth">Set</button>
+      <button id="setWidth">Set</button>
       <br />
-      <p style="display: inline;">Ghost Block Coloring</p>
-      <button onclick="if (ghostColor) {ghostColor = false;} else {ghostColor = true}" id = "colorBut">Disable/Enable</button>
+      <p style="display: inline">Ghost Block Coloring</p>
+      <button
+        onclick="if (ghostColor) {ghostColor = false;} else {ghostColor = true}"
+        id="colorBut"
+      >
+        Disable/Enable
+      </button>
       <br />
-      <p style="display: inline;">Smooth Falling</p>
-      <button onclick="if (smooth) {smooth = false;} else {smooth = true;}" id="smoothBut">Enable/Disable</button>
+      <p style="display: inline">Smooth Falling</p>
+      <button
+        onclick="if (smooth) {smooth = false;} else {smooth = true;}"
+        id="smoothBut"
+      >
+        Enable/Disable
+      </button>
       <!-- COMMENTED OUT BECAUSE OF BUGS
       <button onclick="if (!rainbowBlock) {rainbowBlock = true;} else {rainbowBlock = false;}">turn red cycle blocks on/off</button>-->
 

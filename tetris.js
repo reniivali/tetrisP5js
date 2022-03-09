@@ -431,7 +431,7 @@ function drawPiece() {
     if (!smooth) {
       rect(
         ((fallingBlock[i].x - 1) * canWid) / widthG,
-        ((Math.ceil(fallingBlock[i].y - 1)) * canHei) / heightG,
+        (Math.ceil(fallingBlock[i].y - 1) * canHei) / heightG,
         canWid / widthG,
         canHei / heightG,
         5,
@@ -1202,20 +1202,20 @@ $(document).ready(function () {
   });
 
   $("#garbBack").on("input", function () {
-    garboMulti = +($('#garbBack').val());
+    garboMulti = +$("#garbBack").val();
   });
 
   $("#das").on("input", function () {
-    dasA = $('#das').val();
+    dasA = $("#das").val();
   });
 
   $("#arr").on("input", function () {
-    arr = $('#arr').val();
-    arrtemp = $('#arr').val();
+    arr = $("#arr").val();
+    arrtemp = $("#arr").val();
   });
 
   $("#sdf").on("input", function () {
-    SDF = $('#sdf').val();
+    SDF = $("#sdf").val();
   });
 
   //DETECT KEYS
@@ -1342,15 +1342,15 @@ $(document).ready(function () {
     $("#score").html("Score: " + Math.floor(score).toLocaleString("de"));
     $("#zoneChargeMet").attr("value", zoneCharge);
     $("#level").html("Level: " + level.toLocaleString("de"));
-    
+
     $("#lines").html(
       "Lines: " + (clearLinesD + clearLines).toLocaleString("de")
     );
-    
+
     if (ghostColor) {
-      $("#colorBut").html("Disable")
+      $("#colorBut").html("Disable");
     } else {
-      $("#colorBut").html("Enable")
+      $("#colorBut").html("Enable");
     }
 
     if (backfire) {
