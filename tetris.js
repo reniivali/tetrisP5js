@@ -43,6 +43,17 @@ var boardStroke = 100;
 var backfire = false;
 var garboMulti = 1;
 var smooth = false;
+var selectKey = 0;
+var keyML = 37;
+var keyMR = 39;
+var key1R = 65;
+var keyHD = 32;
+var keySD = 40;
+var keyHL = 65;
+var keyZN = 83;
+var keyPZ = 80;
+var keyRCC = 90;
+var keyRCL = 88;
 var board = ["d"];
 var Tmino = [
   { x: 5, y: 0 },
@@ -1189,6 +1200,13 @@ function el_Garbagio(CLL, openSpot) {
   }
 }
 
+function keySetStart(key) {
+  selectKey = key;
+  $("#KD" + key).html("Setting...");
+}
+
+function keySBR() {$(".setKY").html("Set New");}
+
 $(document).ready(function () {
   //click/change functions for things;
   $("#setHeight").click(function () {
@@ -1221,116 +1239,169 @@ $(document).ready(function () {
   //DETECT KEYS
   window.onkeydown = function (e) {
     //console.log("You pressed key code: " + e.keyCode);
-    if (e.keyCode == 40) {
-      keyDown = true;
+    if (selectKey == 0) {
+      if (e.keyCode == keySD) {
+        keyDown = true;
+      }
+      //180 rotate key check
+      keyCheck(
+        key1R,
+        function () {
+          rot180();
+        },
+        e.keyCode,
+        e.repeat
+      );
+      //move left key check
+      keyCheck(
+        keyML,
+        function () {
+          keyLeft = true;
+          moveL();
+        },
+        e.keyCode,
+        e.repeat
+      );
+      //move right keycheck
+      keyCheck(
+        keyMR,
+        function () {
+          keyRight = true;
+          moveR();
+        },
+        e.keyCode,
+        e.repeat
+      );
+      //hard drop keycheck
+      keyCheck(
+        keyHD,
+        function () {
+          hardDrop();
+        },
+        e.keyCode,
+        e.repeat
+      );
+      //rotate clockwise keycheck
+      keyCheck(
+        keyRCL,
+        function () {
+          rotClock();
+        },
+        e.keyCode,
+        e.repeat
+      );
+      //rotate counter-clockwise keycheck
+      keyCheck(
+        keyRCC,
+        function () {
+          rotCount();
+        },
+        e.keyCode,
+        e.repeat
+      );
+      //hold keycheck
+      keyCheck(
+        keyHL,
+        function () {
+          hold();
+        },
+        e.keyCode,
+        e.repeat
+      );
+      //zone mode keycheck
+      keyCheck(
+        keyZN,
+        function () {
+          if (!zone && zoneCharge > 0) {
+            zone = true;
+            gravD = +grav;
+            grav = 0;
+            zoneLines = 0;
+          }
+        },
+        e.keyCode,
+        e.repeat
+      );
+      //pause keychcek
+      keyCheck(
+        keyPZ,
+        function () {
+          if (!stopped) {
+            stopped = true;
+          } else {
+            stopped = false;
+          }
+        },
+        e.keyCode,
+        e.repeat
+      );
     }
-    //180 rotate key check
-    keyCheck(
-      65,
-      function () {
-        rot180();
-      },
-      e.keyCode,
-      e.repeat
-    );
-    //move left key check
-    keyCheck(
-      37,
-      function () {
-        keyLeft = true;
-        moveL();
-      },
-      e.keyCode,
-      e.repeat
-    );
-    //move right keycheck
-    keyCheck(
-      39,
-      function () {
-        keyRight = true;
-        moveR();
-      },
-      e.keyCode,
-      e.repeat
-    );
-    //hard drop keycheck
-    keyCheck(
-      32,
-      function () {
-        hardDrop();
-      },
-      e.keyCode,
-      e.repeat
-    );
-    //rotate clockwise keycheck
-    keyCheck(
-      88,
-      function () {
-        rotClock();
-      },
-      e.keyCode,
-      e.repeat
-    );
-    //rotate counter-clockwise keycheck
-    keyCheck(
-      90,
-      function () {
-        rotCount();
-      },
-      e.keyCode,
-      e.repeat
-    );
-    //hold keycheck
-    keyCheck(
-      67,
-      function () {
-        hold();
-      },
-      e.keyCode,
-      e.repeat
-    );
-    //zone mode keycheck
-    keyCheck(
-      83,
-      function () {
-        if (!zone && zoneCharge > 0) {
-          zone = true;
-          gravD = +grav;
-          grav = 0;
-          zoneLines = 0;
-        }
-      },
-      e.keyCode,
-      e.repeat
-    );
-    //pause keychcek
-    keyCheck(
-      80,
-      function () {
-        if (!stopped) {
-          stopped = true;
-        } else {
-          stopped = false;
-        }
-      },
-      e.keyCode,
-      e.repeat
-    );
 
     prevKey = e.keyCode;
-  };
+  } else {switch (selectKey) {
+    case 1:
+      keyML = e.keyCode;
+      selectKey = 0;
+      keySBR();
+    break;
+    case 2:
+      keyMR = e.keyCode;
+      selectKey = 0;
+      keySBR();
+    break;
+    case 3:
+      keySD = e.keyCode;
+      selectKey = 0;
+      keySBR();
+    break;
+    case 4:
+      keyHD = e.keyCode;
+      selectKey = 0;
+      keySBR();
+    break;
+    case 5:
+      keyRCC = e.keyCode;
+      selectKey = 0;
+      keySBR();
+    break;
+    case 6:
+      keyRCL = e.keyCode;
+      selectKey = 0;
+      keySBR();
+    break;
+    case 7:
+      key1R = e.keyCode;
+      selectKey = 0;
+      keySBR();
+    break;
+    case 8:
+      keyZN = e.keyCode;
+      selectKey = 0;
+      keySBR();
+    break;
+    case 9:
+      keyHD = e.keyCode;
+      selectKey = 0;
+      keySBR();
+    break;
+    case 10:
+      keyPZ = e.keyCode;
+      selectKey = 0;
+      keySBR();
+    break;
+  }};
 
   //key up events for left, right, and down
   window.onkeyup = function (e) {
-    if (e.keyCode == 40) {
+    if (e.keyCode == keySD) {
       keyDown = false;
     }
-    if (e.keyCode == 37) {
+    if (e.keyCode == keyML) {
       keyLeft = false;
       das = 0;
       arrtmp = arr;
     }
-    if (e.keyCode == 39) {
+    if (e.keyCode == keyMR) {
       keyRight = false;
       das = 0;
       arrtmp = arr;
@@ -1342,6 +1413,16 @@ $(document).ready(function () {
     $("#score").html("Score: " + Math.floor(score).toLocaleString("de"));
     $("#zoneChargeMet").attr("value", zoneCharge);
     $("#level").html("Level: " + level.toLocaleString("de"));
+    if (keyML != 37) {$('#KD1').html("Left: " + keyML);}
+    if (keyMR != 39) {$('#KD2').html("Right: " + keyMR);}
+    if (key1R != 37) {$('#KD7').html("Rotate 180: " + key1R);}
+    if (keyHD != 32) {$('#KD4').html("Hard Drop: " + keyHD);}
+    if (keySD != 40) {$('#KD3').html("Soft Drop: " + keySD);}
+    if (keyHL != 65) {$('#KD9').html("Hold: " + keyHD);}
+    if (keyZN != 83) {$('#KD8').html("Enter Zone Mode: " + keyZL);}
+    if (keyPZ != 37) {$('#KD10').html("Pause: " + keyPZ);}
+    if (keyRCC != 90) {$('#KD5').html("Rotate Counter-Clockwise: " + keyRCC);}
+    if (keyRCL != 88) {$('#KD6').html("Rotate Clockwise: " + keyRCL);}
 
     $("#lines").html(
       "Lines: " + (clearLinesD + clearLines).toLocaleString("de")
