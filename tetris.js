@@ -1205,19 +1205,61 @@ function keySetStart(key) {
   $("#KL" + key).html("Setting...");
 }
 
-function keySBR() {$(".setKY").html("Set New");}
+function keySBR() {
+  $(".setKY").html("Set New");
+}
 
 function setKeyDisp() {
-  if (keyML != 37) {$('#KD1').html("Left: " + keyML);} else {$('#KD1').html("Left: Left Arrow");}
-  if (keyMR != 39) {$('#KD2').html("Right: " + keyMR);} else {$('#KD2').html("Right: Right Arrow");}
-  if (key1R != 65) {$('#KD7').html("Rotate 180: " + key1R);} else {$('#KD7').html("Rotate 180: A");}
-  if (keyHD != 32) {$('#KD4').html("Hard Drop: " + keyHD);} else {$('#KD4').html("Hard Drop: Space");}
-  if (keySD != 40) {$('#KD3').html("Soft Drop: " + keySD);} else {$('#KD3').html("Soft Drop: Down Arrow");}
-  if (keyHL != 65) {$('#KD9').html("Hold: " + keyHD);} else {$('#KD9').html("Hold: C");}
-  if (keyZN != 83) {$('#KD8').html("Enter Zone Mode: " + keyZL);} else {$('#KD8').html("Enter Zone Mode: S");}
-  if (keyPZ != 80) {$('#KD10').html("Pause: " + keyPZ);} else {$('#KD10').html("Pause: P");}
-  if (keyRCC != 90) {$('#KD5').html("Rotate Counter-Clockwise: " + keyRCC);} else {$('#KD5').html("Rotate Counter-Clockwise: Z");}
-  if (keyRCL != 88) {$('#KD6').html("Rotate Clockwise: " + keyRCL);} else {$('#KD6').html("Rotate Clockwise: X");}
+  if (keyML != 37) {
+    $("#KD1").html("Left: " + keyML);
+  } else {
+    $("#KD1").html("Left: Left Arrow");
+  }
+  if (keyMR != 39) {
+    $("#KD2").html("Right: " + keyMR);
+  } else {
+    $("#KD2").html("Right: Right Arrow");
+  }
+  if (key1R != 65) {
+    $("#KD7").html("Rotate 180: " + key1R);
+  } else {
+    $("#KD7").html("Rotate 180: A");
+  }
+  if (keyHD != 32) {
+    $("#KD4").html("Hard Drop: " + keyHD);
+  } else {
+    $("#KD4").html("Hard Drop: Space");
+  }
+  if (keySD != 40) {
+    $("#KD3").html("Soft Drop: " + keySD);
+  } else {
+    $("#KD3").html("Soft Drop: Down Arrow");
+  }
+  if (keyHL != 65) {
+    $("#KD9").html("Hold: " + keyHD);
+  } else {
+    $("#KD9").html("Hold: C");
+  }
+  if (keyZN != 83) {
+    $("#KD8").html("Enter Zone Mode: " + keyZL);
+  } else {
+    $("#KD8").html("Enter Zone Mode: S");
+  }
+  if (keyPZ != 80) {
+    $("#KD10").html("Pause: " + keyPZ);
+  } else {
+    $("#KD10").html("Pause: P");
+  }
+  if (keyRCC != 90) {
+    $("#KD5").html("Rotate Counter-Clockwise: " + keyRCC);
+  } else {
+    $("#KD5").html("Rotate Counter-Clockwise: Z");
+  }
+  if (keyRCL != 88) {
+    $("#KD6").html("Rotate Clockwise: " + keyRCL);
+  } else {
+    $("#KD6").html("Rotate Clockwise: X");
+  }
 }
 
 $(document).ready(function () {
@@ -1354,58 +1396,58 @@ $(document).ready(function () {
           keyML = e.keyCode;
           selectKey = 0;
           keySBR();
-        break;
+          break;
         case 2:
           keyMR = e.keyCode;
           selectKey = 0;
           keySBR();
-        break;
+          break;
         case 3:
           keySD = e.keyCode;
           selectKey = 0;
           keySBR();
-        break;
+          break;
         case 4:
           keyHD = e.keyCode;
           selectKey = 0;
           keySBR();
-        break;
+          break;
         case 5:
           keyRCC = e.keyCode;
           selectKey = 0;
           keySBR();
-        break;
+          break;
         case 6:
           keyRCL = e.keyCode;
           selectKey = 0;
           keySBR();
-        break;
+          break;
         case 7:
           key1R = e.keyCode;
           selectKey = 0;
           keySBR();
-        break;
+          break;
         case 8:
           keyZN = e.keyCode;
           selectKey = 0;
           keySBR();
-        break;
+          break;
         case 9:
           keyHL = e.keyCode;
           selectKey = 0;
           keySBR();
-        break;
+          break;
         case 10:
           keyPZ = e.keyCode;
           selectKey = 0;
           keySBR();
-        break;
+          break;
       }
       setKeyDisp();
     }
 
     prevKey = e.keyCode;
-  }
+  };
 
   //key up events for left, right, and down
   window.onkeyup = function (e) {
