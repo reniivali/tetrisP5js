@@ -1335,61 +1335,61 @@ $(document).ready(function () {
         e.keyCode,
         e.repeat
       );
-    }
+    } else {switch (selectKey) {
+      case 1:
+        keyML = e.keyCode;
+        selectKey = 0;
+        keySBR();
+      break;
+      case 2:
+        keyMR = e.keyCode;
+        selectKey = 0;
+        keySBR();
+      break;
+      case 3:
+        keySD = e.keyCode;
+        selectKey = 0;
+        keySBR();
+      break;
+      case 4:
+        keyHD = e.keyCode;
+        selectKey = 0;
+        keySBR();
+      break;
+      case 5:
+        keyRCC = e.keyCode;
+        selectKey = 0;
+        keySBR();
+      break;
+      case 6:
+        keyRCL = e.keyCode;
+        selectKey = 0;
+        keySBR();
+      break;
+      case 7:
+        key1R = e.keyCode;
+        selectKey = 0;
+        keySBR();
+      break;
+      case 8:
+        keyZN = e.keyCode;
+        selectKey = 0;
+        keySBR();
+      break;
+      case 9:
+        keyHD = e.keyCode;
+        selectKey = 0;
+        keySBR();
+      break;
+      case 10:
+        keyPZ = e.keyCode;
+        selectKey = 0;
+        keySBR();
+      break;
+    }}
 
     prevKey = e.keyCode;
-  } else {switch (selectKey) {
-    case 1:
-      keyML = e.keyCode;
-      selectKey = 0;
-      keySBR();
-    break;
-    case 2:
-      keyMR = e.keyCode;
-      selectKey = 0;
-      keySBR();
-    break;
-    case 3:
-      keySD = e.keyCode;
-      selectKey = 0;
-      keySBR();
-    break;
-    case 4:
-      keyHD = e.keyCode;
-      selectKey = 0;
-      keySBR();
-    break;
-    case 5:
-      keyRCC = e.keyCode;
-      selectKey = 0;
-      keySBR();
-    break;
-    case 6:
-      keyRCL = e.keyCode;
-      selectKey = 0;
-      keySBR();
-    break;
-    case 7:
-      key1R = e.keyCode;
-      selectKey = 0;
-      keySBR();
-    break;
-    case 8:
-      keyZN = e.keyCode;
-      selectKey = 0;
-      keySBR();
-    break;
-    case 9:
-      keyHD = e.keyCode;
-      selectKey = 0;
-      keySBR();
-    break;
-    case 10:
-      keyPZ = e.keyCode;
-      selectKey = 0;
-      keySBR();
-    break;
-  }};
+  }
 
   //key up events for left, right, and down
   window.onkeyup = function (e) {
