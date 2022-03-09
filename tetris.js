@@ -1415,12 +1415,12 @@ $(document).ready(function () {
     $("#level").html("Level: " + level.toLocaleString("de"));
     if (keyML != 37) {$('#KD1').html("Left: " + keyML);}
     if (keyMR != 39) {$('#KD2').html("Right: " + keyMR);}
-    if (key1R != 37) {$('#KD7').html("Rotate 180: " + key1R);}
+    if (key1R != 65) {$('#KD7').html("Rotate 180: " + key1R);}
     if (keyHD != 32) {$('#KD4').html("Hard Drop: " + keyHD);}
     if (keySD != 40) {$('#KD3').html("Soft Drop: " + keySD);}
     if (keyHL != 65) {$('#KD9').html("Hold: " + keyHD);}
     if (keyZN != 83) {$('#KD8').html("Enter Zone Mode: " + keyZL);}
-    if (keyPZ != 37) {$('#KD10').html("Pause: " + keyPZ);}
+    if (keyPZ != 80) {$('#KD10').html("Pause: " + keyPZ);}
     if (keyRCC != 90) {$('#KD5').html("Rotate Counter-Clockwise: " + keyRCC);}
     if (keyRCL != 88) {$('#KD6').html("Rotate Clockwise: " + keyRCL);}
 
