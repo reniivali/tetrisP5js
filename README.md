@@ -2,6 +2,7 @@
 
 <h1> Current Features: </h1>
 <h3> ·NOW FEATURING: the ZONE (yes i stole this from tetris effect don't @ me)<h3>
+ ·Key Rebinding<br>
  ·Wacky T-Spin detection <br>
  ·Next & Hold Queues <br>
  ·Very broken rotation system <br>
@@ -13,5 +14,5 @@
  ·Configurable DAS, SDF, And ARR. <br>
  ·Questionable scoring system. <br>
  ·Colored pieces! <br>
- ·Custom colors coming soon? <br>
+ ·Hopefully the SRS, coming eventually
 <h1> might add more stuff later sometime idk</h1>
