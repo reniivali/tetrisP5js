@@ -1197,7 +1197,7 @@ var prevKey = null;
 function el_Garbagio(CLL, openSpot) {
   let actual = Math.floor(CLL * garboMulti);
   if (garbQ.length > 0) {
-    if (garbQ.length => actual) {
+    if (garbQ.length >= actual) {
       for (i = 0; i < actual; i++) {
         garbQ.splice(0,1);
       }
