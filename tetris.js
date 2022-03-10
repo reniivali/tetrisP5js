@@ -1264,6 +1264,7 @@ function garbPush() {
       garbQ.splice(garbPushL[i], 1);
       garbPushL.splice(0,1);
     }
+    pushReady = false;
   }
 }
 
