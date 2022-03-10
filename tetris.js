@@ -54,7 +54,9 @@ var keyZN = 83;
 var keyPZ = 80;
 var keyRCC = 90;
 var keyRCL = 88;
+var pushReady = false;
 var board = ["d"];
+var garbPushL = [];
 var garbQ = [];
 var Tmino = [
   { x: 5, y: 0 },
@@ -671,6 +673,8 @@ function gravity() {
       aTexTime = 120;
       el_Garbagio(4, randNum(0, widthG - 1));
     }
+
+    garbPush();
   }
 }
 
@@ -753,6 +757,8 @@ function hardDrop() {
     aTexTime = 120;
     el_Garbagio(4, randNum(0, widthG - 1));
   }
+
+  garbPush();
 }
 
 function blockReset(m) {
@@ -1190,6 +1196,19 @@ var prevKey = null;
 
 function el_Garbagio(CLL, openSpot) {
   let actual = Math.floor(CLL * garboMulti);
+  if (garbQ.length > 0) {
+    if (garbQ.length => actual) {
+      for (i = 0; i < actual; i++) {
+        garbQ.splice(0,1);
+      }
+      actual = 0;
+    } else {
+      for (i = 0; i < garbQ.length; i++) {
+        garbQ.splice(0,1);
+        actual--;
+      }
+    }
+  }
   if (backfire && !zone) {
     for (i = 0; i < actual; i++) {
       garbQ.push({os: openSpot, t: 120});
@@ -1224,15 +1243,24 @@ function drawGarbQ() {
 function garbCheck() {
   for (i = 0; i < garbQ.length; i++) {
     if (garbQ[i].t > 0) {garbQ[i].t--;} else {
+      pushReady = true;
+      garbPush.push(i);
+    }
+  }
+}
+
+function garbPush() {
+  if (pushReady) {
+    for (i = 0; i < garbPushL.length; i++) {
       for (j = 0; j < widthG; j++) {
         board.splice(0,1);
-        if (j != +garbQ[i].os) {
+        if (j != +garbQ[garbPushL[i]].os) {
           board.push(15);
         } else {
           board.push(0);
         }
       }
-      garbQ.splice(i,1);
+      garbQ.splice(garbPushL[i], 1);
     }
   }
 }
