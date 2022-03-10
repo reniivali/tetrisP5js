@@ -1254,13 +1254,13 @@ function garbPush() {
     for (i = 0; i < garbPushL.length; i++) {
       for (j = 0; j < widthG; j++) {
         board.splice(0,1);
-        if (j != +garbQ[garbPushL[i]].os) {
+        if (j != +garbQ[0].os) {
           board.push(15);
         } else {
           board.push(0);
         }
       }
-      garbQ.splice(garbPushL[i], 1);
+      garbQ.splice(0, 1);
     }
   }
 }
