@@ -348,7 +348,7 @@ function draw() {
               board.splice(i * widthG + 1, 1);
             }
             for (let j = 0; j < widthG + 0; j++) {
-              board.splice(j, 0, 0);
+              board.splice(1, 0, 0);
             }
             lines++;
           }
@@ -614,7 +614,7 @@ function gravity() {
         }
         if (!zone) {
           for (let j = 0; j < widthG + 0; j++) {
-            board.splice(j, 0, 0);
+            board.splice(1, 0, 0);
           }
           clearLines++;
           zoneCharge += 0.125;
@@ -713,7 +713,7 @@ function hardDrop() {
       }
       if (!zone) {
         for (let j = 0; j < widthG + 0; j++) {
-          board.splice(j, 0, 0);
+          board.splice(1, 0, 0);
         }
         clearLines++;
         zoneCharge += 0.125;
@@ -858,7 +858,7 @@ function blockReset(m) {
               board.splice(i * widthG + 1, 1);
             }
             for (let j = 0; j < widthG + 0; j++) {
-              board.splice(j, 0, 0);
+              board.splice(1, 0, 0);
             }
             lines++;
           }
@@ -1253,7 +1253,7 @@ function garbPush() {
   if (pushReady) {
     for (i = 0; i < garbPushL.length; i++) {
       for (j = 0; j < widthG; j++) {
-        board.splice(0,1);
+        board.splice(1,1);
         if (j != +garbQ[garbPushL[0]].os) {
           board.push(15);
         } else {
