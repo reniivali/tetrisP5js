@@ -1252,7 +1252,7 @@ function garbCheck() {
 function garbPush() {
   if (pushReady) {
     for (i = 0; i < garbPushL.length; i++) {
-      let os = garbQ[garbPushL[i]].os
+      let os = garbQ[0].os
       for (j = 0; j < widthG; j++) {
         board.splice(1,1);
         if (j != os) {
@@ -1261,7 +1261,7 @@ function garbPush() {
           board.push(0);
         }
       }
-      garbQ.splice(garbPushL[i], 1);
+      garbQ.splice(0, 1);
       garbPushL.splice(0,1);
     }
     pushReady = false;
