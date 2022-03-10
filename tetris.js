@@ -1245,6 +1245,7 @@ function garbCheck() {
     if (garbQ[i].t > 0) {garbQ[i].t--;} else {
       pushReady = true;
       garbPushL.push(i);
+      console.log("push is ready, waiting")
     }
   }
 }
@@ -1264,6 +1265,7 @@ function garbPush() {
       garbQ.splice(0, 1);
       garbPushL.splice(0,1);
     }
+    console.log("pushed");
     pushReady = false;
   }
 }
