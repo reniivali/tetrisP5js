@@ -1200,21 +1200,21 @@ function el_Garbagio(CLL, openSpot) {
 function drawGarbQ() {
   noStroke();
   fill("rgba(10, 10, 10, .7)");
-  rect(canWid, 0, 10, canHei);
+  rect(canWid, 0, 20, canHei);
   fill(200,0,0);
   if (garbQ.length > 0) {
     rect(
       canWid,
       canHei - ((garbQ.length*canHei)/heightG),
-      10,
+      20,
       ((garbQ.length*canHei)/heightG)
     )
   }
   noFill();
   stroke(boardStroke);
   strokeWeight(3);
-  rect(canWid, 0, 10, canHei);
-  rect(canWid, 0, 10, canHei, 5,5,5,5);
+  rect(canWid, 0, 20, canHei);
+  rect(canWid, 0, 20, canHei, 5,5,5,5);
 }
 
 function garbCheck() {
@@ -1223,7 +1223,7 @@ function garbCheck() {
       let openSpot = garbQ.splice(i,1)
       for (j = 0; j < widthG; j++) {
         board.splice(0,1);
-        if (j != openSpot.os) {
+        if (j != +openSpot.os) {
           board.push(15);
         } else {
           board.push(0);
