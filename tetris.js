@@ -1205,7 +1205,7 @@ function drawGarbQ() {
   if (garbQ.length > 0) {
     rect(
       canWid,
-      canHei - ((garbQ.length*canHei)/heightG)
+      canHei - ((garbQ.length*canHei)/heightG),
       10,
       ((garbQ.length*canHei)/heightG)
     )
