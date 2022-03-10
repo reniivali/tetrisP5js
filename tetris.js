@@ -1207,8 +1207,12 @@ function drawGarbQ() {
       canWid,
       canHei - ((garbQ.length*canHei)/heightG),
       20,
-      ((garbQ.length*canHei)/heightG)
-    )
+      ((garbQ.length*canHei)/heightG),
+      5,
+      5,
+      5,
+      5
+    );
   }
   noFill();
   stroke(boardStroke);
@@ -1220,10 +1224,10 @@ function drawGarbQ() {
 function garbCheck() {
   for (i = 0; i < garbQ.length; i++) {
     if (garbQ[i].t > 0) {garbQ[i].t--;} else {
-      let openSpot = garbQ.splice(i,1)
+      let openSpot = +garbQ.splice(i,1).os
       for (j = 0; j < widthG; j++) {
         board.splice(0,1);
-        if (j != +openSpot.os) {
+        if (j != +openSpot) {
           board.push(15);
         } else {
           board.push(0);
