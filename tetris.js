@@ -49,7 +49,7 @@ var keyMR = 39;
 var key1R = 65;
 var keyHD = 32;
 var keySD = 40;
-var keyHL = 65;
+var keyHL = 67;
 var keyZN = 83;
 var keyPZ = 80;
 var keyRCC = 90;
@@ -1272,7 +1272,7 @@ function setKeyDisp() {
   } else {
     $("#KD3").html("Soft Drop: Down Arrow");
   }
-  if (keyHL != 65) {
+  if (keyHL != 67) {
     $("#KD9").html("Hold: " + keyHD);
   } else {
     $("#KD9").html("Hold: C");
