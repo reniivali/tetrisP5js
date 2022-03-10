@@ -55,6 +55,7 @@ var keyPZ = 80;
 var keyRCC = 90;
 var keyRCL = 88;
 var board = ["d"];
+var garbQ = [];
 var Tmino = [
   { x: 5, y: 0 },
   { x: 6, y: 0 },
@@ -125,8 +126,8 @@ function preload() {
   if (tempW >= 4 && tempH != null) {
     widthG = tempW;
   }
-  canHei = (heightG * 40) / 1.5;
-  canWid = (widthG * 40) / 1.5;
+  canHei = ((heightG * 40) / 1.5)
+  canWid = ((widthG * 40) / 1.5)
 
   zoneFac = 0.2 / (widthG / 10);
 
@@ -252,12 +253,12 @@ function colorG(num) {
 
 //set up the board canvas
 function setup() {
-  createCanvas(canWid, canHei);
+  createCanvas(canWid + 20, canHei);
   //call a block reset so we actually have a block to start with
   blockReset(true);
   //calculate where the next queue should be, set it to the margin, and store it for later use.
   let calc = (widthG * 40 - 400) / 1.5;
-  calc += 525;
+  calc += 545;
   defLoc = +calc;
   $("#defaultCanvas1").css("margin-left", calc + "px");
 }
@@ -380,6 +381,10 @@ function draw() {
       grav += 0.01;
       dGrav += 0.01;
     }
+
+    garbCheck();
+    drawGarbQ();
+
   } else {
     //draw a paused signifier over the board if the game is stopped.
     image(bg, -1740 / 2, 0, 3480 / 2, 2160 / 2);
@@ -1187,10 +1192,38 @@ function el_Garbagio(CLL, openSpot) {
   let actual = Math.floor(CLL * garboMulti);
   if (backfire && !zone) {
     for (i = 0; i < actual; i++) {
-      console.log("BACKFIRING ONE LINE");
+      garbQ.push({os: openSpot, t: 120});
+    }
+  }
+}
+
+function drawGarbQ() {
+  noStroke();
+  fill("rgba(10, 10, 10, .7)");
+  rect(canWid, 0, 10, canHei);
+  fill(200,0,0);
+  if (garbQ.length > 0) {
+    rect(
+      canWid,
+      canHei - ((garbQ.length*canHei)/heightG)
+      10,
+      ((garbQ.length*canHei)/heightG)
+    )
+  }
+  noFill();
+  stroke(boardStroke);
+  strokeWeight(3);
+  rect(canWid, 0, 10, canHei);
+  rect(canWid, 0, 10, canHei, 5,5,5,5);
+}
+
+function garbCheck() {
+  for (i = 0; i < garbQ.length; i++) {
+    if (garbQ[i].t > 0) {garbQ[i].t--;} else {
+      let openSpot = garbQ.splice(i,1)
       for (j = 0; j < widthG; j++) {
-        board.splice(0, 1);
-        if (j != openSpot) {
+        board.splice(0,1);
+        if (j != openSpot.os) {
           board.push(15);
         } else {
           board.push(0);
