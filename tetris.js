@@ -1244,7 +1244,7 @@ function garbCheck() {
   for (i = 0; i < garbQ.length; i++) {
     if (garbQ[i].t > 0) {garbQ[i].t--;} else {
       pushReady = true;
-      garbPush.push(i);
+      garbPushL.push(i);
     }
   }
 }
