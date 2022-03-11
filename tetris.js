@@ -575,8 +575,9 @@ function gravity() {
     //if the piece has fully locked in, put it into the board, and look for line clears.
     let tSpin = false;
     if (
-      (prevKey == 90 && fallingBlock[5] == 1) ||
-      (prevKey == 88 && fallingBlock[5] == 1)
+      (prevKey == keyRCC && fallingBlock[5] == 1) ||
+      (prevKey == keyRCL && fallingBlock[5] == 1) ||
+      (prevKey == key1R  && fallingBlock[5] == 1)
     ) {
       $("#tsp").show();
       aTexTime = 120;
