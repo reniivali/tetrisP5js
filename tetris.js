@@ -135,6 +135,46 @@ function preload() {
 
   //load our background image into the bg variable
   bg = loadImage("assets/water.jpg");
+
+  //load the locally stored keybinds
+  let tempML = parseInt(localStorage.getItem("keyML"));
+  let tempMR = parseInt(localStorage.getItem("keyMR"));
+  let temp1R = parseInt(localStorage.getItem("key1R"));
+  let tempHD = parseInt(localStorage.getItem("keyHD"));
+  let tempSD = parseInt(localStorage.getItem("keySD"));
+  let tempHL = parseInt(localStorage.getItem("keyHL"));
+  let tempZN = parseInt(localStorage.getItem("keyZN"));
+  let tempPZ = parseInt(localStorage.getItem("keyPZ"));
+  let tempRCC = parseInt(localStorage.getItem("keyRCC"));
+  let tempRCL = parseInt(localStorage.getItem("keyRCL"));
+
+  //if they exist, and are not null, set them to the grabbed local variables
+  if (tempML != null) {keyML = tempML;}
+  if (tempMR != null) {keyMR = tempMR;}
+  if (temp1R != null) {key1R = temp1R;}
+  if (tempHD != null) {keyHD = tempHD;}
+  if (tempSD != null) {keySD = tempSD;}
+  if (tempHL != null) {keyHL = tempHL;}
+  if (tempZN != null) {keyZN = tempZN;}
+  if (tempPZ != null) {keyPZ = tempPZ;}
+  if (tempRCC != null) {keyRCC = tempRCC;}
+  if (tempRCL != null) {keyRCL = tempRCL;}
+
+  setKeyDisp();
+
+  //load the saved settings
+  let tempBackfire = localStorage.getItem("backfire");
+  let tempSmooth = localStorage.getItem("smooth");
+  let tempGarboMulti = localStorage.getItem("garboMulti");
+  let tempGhostColor = localStorage.getItem("ghostColor");
+
+  //if they exist, and are not null, set them to the grabbed local variables
+  if (tempBackfire != null) {backfire = tempBackfire;}
+  if (tempSmooth != null) {smooth = tempSmooth;}
+  if (tempGarboMulti != null) {garboMulti = tempGarboMulti;}
+  if (tempGhostColor != null) {ghostColor = tempGhostColor;}
+
+  $('#garbBack').attr('value', garboMulti);
 }
 
 function randNum(min, max) {
@@ -269,6 +309,8 @@ function draw() {
   //use the custom font loaded in preload()
   textFont(dv);
   if (!stopped) {
+    saveSettings();
+
     //draw the background image
     image(bg, -1740 / 2, 0, 3480 / 2, 2160 / 2);
     drawBoard();
@@ -638,38 +680,38 @@ function gravity() {
     }
 
     if (lines == 1) {
-      score += 200;
+      score += 200 * level;
       $("#sig").show();
       aTexTime = 120;
       if (tSpin) {
-        score += 400;
+        score += 400 * level;
         el_Garbagio(2, randNum(0, widthG - 1));
       }
     }
     if (lines == 2) {
-      score += 300;
+      score += 300 * level;
       $("#dob").show();
       aTexTime = 120;
       if (tSpin) {
-        score += 800;
+        score += 800 * level;
         el_Garbagio(4, randNum(0, widthG - 1));
       } else {
         el_Garbagio(1, randNum(0, widthG - 1));
       }
     }
     if (lines == 3) {
-      score += 500;
+      score += 500 * level;
       $("#trp").show();
       aTexTime = 120;
       if (tSpin) {
-        score += 1600;
+        score += 1600 * level;
         el_Garbagio(6, randNum(0, widthG - 1));
       } else {
         el_Garbagio(2, randNum(0, widthG - 1));
       }
     }
     if (lines == 4) {
-      score += 1000;
+      score += 1000 * level;
       $("#qwd").show();
       aTexTime = 120;
       el_Garbagio(4, randNum(0, widthG - 1));
@@ -736,24 +778,24 @@ function hardDrop() {
     board.push(+tempZonePush.splice(0, 1));
   }
   if (lines == 1) {
-    score += 200;
+    score += 200 * level;
     $("#sig").show();
     aTexTime = 120;
   }
   if (lines == 2) {
-    score += 300;
+    score += 300 * level;
     $("#dob").show();
     aTexTime = 120;
     el_Garbagio(1, randNum(0, widthG - 1));
   }
   if (lines == 3) {
-    score += 500;
+    score += 500 * level;
     $("#trp").show();
     aTexTime = 120;
     el_Garbagio(2, randNum(0, widthG - 1));
   }
   if (lines == 4) {
-    score += 1000;
+    score += 1000 * level;
     $("#qwd").show();
     aTexTime = 120;
     el_Garbagio(4, randNum(0, widthG - 1));
@@ -1331,6 +1373,13 @@ function setKeyDisp() {
   }
 }
 
+function saveSettings() {
+  localStorage.setItem("smooth", smooth);
+  localStorage.setItem("backfire", backfire);
+  localStorage.setItem("garboMulti", garboMulti);
+  localStorage.setItem("ghostColor", ghostColor);
+}
+
 $(document).ready(function () {
   //click/change functions for things;
   $("#setHeight").click(function () {
@@ -1465,51 +1514,61 @@ $(document).ready(function () {
           keyML = e.keyCode;
           selectKey = 0;
           keySBR();
+          localStorage.setItem("keyML", keyML);
           break;
         case 2:
           keyMR = e.keyCode;
           selectKey = 0;
           keySBR();
+          localStorage.setItem("keyMR", keyMR);
           break;
         case 3:
           keySD = e.keyCode;
           selectKey = 0;
           keySBR();
+          localStorage.setItem("keySD", keySD);
           break;
         case 4:
           keyHD = e.keyCode;
           selectKey = 0;
           keySBR();
+          localStorage.setItem("keyHD", keyHD);
           break;
         case 5:
           keyRCC = e.keyCode;
           selectKey = 0;
           keySBR();
+          localStorage.setItem("keyRCC", keyRCC);
           break;
         case 6:
           keyRCL = e.keyCode;
           selectKey = 0;
           keySBR();
+          localStorage.setItem("keyRCL", keyRCL);
           break;
         case 7:
           key1R = e.keyCode;
           selectKey = 0;
           keySBR();
+          localStorage.setItem("key1R", key1R);
           break;
         case 8:
           keyZN = e.keyCode;
           selectKey = 0;
           keySBR();
+          localStorage.setItem("keyZN", keyZN);
           break;
         case 9:
           keyHL = e.keyCode;
           selectKey = 0;
           keySBR();
+          localStorage.setItem("keyHL", keyHL);
           break;
         case 10:
           keyPZ = e.keyCode;
           selectKey = 0;
           keySBR();
+          localStorage.setItem("keyPZ", keyPZ);
           break;
       }
       setKeyDisp();
