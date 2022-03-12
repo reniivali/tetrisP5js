@@ -163,16 +163,34 @@ function preload() {
   setKeyDisp();
 
   //load the saved settings
-  let tempBackfire = localStorage.getItem("backfire");
-  let tempSmooth = localStorage.getItem("smooth");
-  let tempGarboMulti = localStorage.getItem("garboMulti");
-  let tempGhostColor = localStorage.getItem("ghostColor");
+  let tempBackfire = +localStorage.getItem("backfire");
+  let tempSmooth = +localStorage.getItem("smooth");
+  let tempGarboMulti = +localStorage.getItem("garboMulti");
+  let tempGhostColor = +localStorage.getItem("ghostColor");
 
   //if they exist, and are not null, set them to the grabbed local variables
-  if (tempBackfire != null) {backfire = tempBackfire;}
-  if (tempSmooth != null) {smooth = tempSmooth;}
+  if (tempBackfire != null) {
+    if (tempBackfire == 0) {
+      backfire = false;
+    } else {
+      backfire = true;
+    }
+  }
+  if (tempSmooth != null) {
+    if (tempSmooth == 0) {
+      smooth = false;
+    } else {
+      smooth = true;
+    }
+  }
+  if (tempGhostColor != null) {
+    if (tempGhostColor == 0) {
+      ghostColor = false;
+    } else {
+      ghostColor = true;
+    }
+  }
   if (tempGarboMulti != null) {garboMulti = tempGarboMulti;}
-  if (tempGhostColor != null) {ghostColor = tempGhostColor;}
 
   $('#garbBack').attr('value', garboMulti);
 }
@@ -1374,10 +1392,26 @@ function setKeyDisp() {
 }
 
 function saveSettings() {
-  localStorage.setItem("smooth", smooth);
-  localStorage.setItem("backfire", backfire);
+  //smooth - backfire - garbomulti - ghostcolor
+  if (smooth) {
+    localStorage.setItem("smooth", "1");
+  } else {
+    localStorage.setItem("smooth", "0");
+  }
+
+  if (backfire) {
+    localStorage.setItem("backfire", "1");
+  } else {
+    localStorage.setItem("backfire", "0");
+  }
+
+  if (ghostColor) {
+    localStorage.setItem("ghostColor", "1");
+  } else {
+    localStorage.setItem("ghostColor", "0");
+  }
+  
   localStorage.setItem("garboMulti", garboMulti);
-  localStorage.setItem("ghostColor", ghostColor);
 }
 
 $(document).ready(function () {
