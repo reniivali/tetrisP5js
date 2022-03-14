@@ -128,8 +128,8 @@ function preload() {
   if (tempW >= 4 && tempH != null) {
     widthG = tempW;
   }
-  canHei = ((heightG * 40) / 1.5)
-  canWid = ((widthG * 40) / 1.5)
+  canHei = (heightG * 40) / 1.5;
+  canWid = (widthG * 40) / 1.5;
 
   zoneFac = 0.2 / (widthG / 10);
 
@@ -149,16 +149,36 @@ function preload() {
   let tempRCL = parseInt(localStorage.getItem("keyRCL"));
 
   //if they exist, and are not null, set them to the grabbed local variables
-  if (tempML != null) {keyML = tempML;}
-  if (tempMR != null) {keyMR = tempMR;}
-  if (temp1R != null) {key1R = temp1R;}
-  if (tempHD != null) {keyHD = tempHD;}
-  if (tempSD != null) {keySD = tempSD;}
-  if (tempHL != null) {keyHL = tempHL;}
-  if (tempZN != null) {keyZN = tempZN;}
-  if (tempPZ != null) {keyPZ = tempPZ;}
-  if (tempRCC != null) {keyRCC = tempRCC;}
-  if (tempRCL != null) {keyRCL = tempRCL;}
+  if (tempML != null) {
+    keyML = tempML;
+  }
+  if (tempMR != null) {
+    keyMR = tempMR;
+  }
+  if (temp1R != null) {
+    key1R = temp1R;
+  }
+  if (tempHD != null) {
+    keyHD = tempHD;
+  }
+  if (tempSD != null) {
+    keySD = tempSD;
+  }
+  if (tempHL != null) {
+    keyHL = tempHL;
+  }
+  if (tempZN != null) {
+    keyZN = tempZN;
+  }
+  if (tempPZ != null) {
+    keyPZ = tempPZ;
+  }
+  if (tempRCC != null) {
+    keyRCC = tempRCC;
+  }
+  if (tempRCL != null) {
+    keyRCL = tempRCL;
+  }
 
   setKeyDisp();
 
@@ -190,9 +210,11 @@ function preload() {
       ghostColor = true;
     }
   }
-  if (tempGarboMulti != null) {garboMulti = tempGarboMulti;}
+  if (tempGarboMulti != null) {
+    garboMulti = tempGarboMulti;
+  }
 
-  $('#garbBack').attr('value', garboMulti);
+  $("#garbBack").attr("value", garboMulti);
 }
 
 function randNum(min, max) {
@@ -446,7 +468,6 @@ function draw() {
 
     garbCheck();
     drawGarbQ();
-
   } else {
     //draw a paused signifier over the board if the game is stopped.
     image(bg, -1740 / 2, 0, 3480 / 2, 2160 / 2);
@@ -637,7 +658,7 @@ function gravity() {
     if (
       (prevKey == keyRCC && fallingBlock[5] == 1) ||
       (prevKey == keyRCL && fallingBlock[5] == 1) ||
-      (prevKey == key1R  && fallingBlock[5] == 1)
+      (prevKey == key1R && fallingBlock[5] == 1)
     ) {
       $("#tsp").show();
       aTexTime = 120;
@@ -1260,19 +1281,19 @@ function el_Garbagio(CLL, openSpot) {
   if (garbQ.length > 0 && !zone) {
     if (garbQ.length >= actual) {
       for (i = 0; i < actual; i++) {
-        garbQ.splice(0,1);
+        garbQ.splice(0, 1);
       }
       actual = 0;
     } else {
       for (i = 0; i < garbQ.length; i++) {
-        garbQ.splice(0,1);
+        garbQ.splice(0, 1);
         actual--;
       }
     }
   }
   if (backfire && !zone) {
     for (i = 0; i < actual; i++) {
-      garbQ.push({os: openSpot, t: 120});
+      garbQ.push({ os: openSpot, t: 120 });
     }
   }
 }
@@ -1281,13 +1302,13 @@ function drawGarbQ() {
   noStroke();
   fill("rgba(10, 10, 10, .7)");
   rect(canWid, 0, 20, canHei);
-  fill(200,0,0);
+  fill(200, 0, 0);
   if (garbQ.length > 0) {
     rect(
       canWid,
-      canHei - ((garbQ.length*canHei)/heightG),
+      canHei - (garbQ.length * canHei) / heightG,
       20,
-      ((garbQ.length*canHei)/heightG),
+      (garbQ.length * canHei) / heightG,
       5,
       5,
       5,
@@ -1298,12 +1319,14 @@ function drawGarbQ() {
   stroke(boardStroke);
   strokeWeight(3);
   rect(canWid, 0, 20, canHei);
-  rect(canWid, 0, 20, canHei, 5,5,5,5);
+  rect(canWid, 0, 20, canHei, 5, 5, 5, 5);
 }
 
 function garbCheck() {
   for (i = 0; i < garbQ.length; i++) {
-    if (garbQ[i].t > 0) {garbQ[i].t--;} else {
+    if (garbQ[i].t > 0) {
+      garbQ[i].t--;
+    } else {
       pushReady = true;
       garbPushL.push(i);
     }
@@ -1313,9 +1336,9 @@ function garbCheck() {
 function garbPush() {
   if (pushReady) {
     for (i = 0; i < garbPushL.length; i++) {
-      let os = garbQ[0].os
+      let os = garbQ[0].os;
       for (j = 0; j < widthG; j++) {
-        board.splice(1,1);
+        board.splice(1, 1);
         if (j != os) {
           board.push(15);
         } else {
@@ -1323,7 +1346,7 @@ function garbPush() {
         }
       }
       garbQ.splice(0, 1);
-      garbPushL.splice(0,1);
+      garbPushL.splice(0, 1);
       pushReady = false;
     }
   }
@@ -1410,7 +1433,7 @@ function saveSettings() {
   } else {
     localStorage.setItem("ghostColor", "0");
   }
-  
+
   localStorage.setItem("garboMulti", garboMulti);
 }
 
