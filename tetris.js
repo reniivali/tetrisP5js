@@ -150,34 +150,34 @@ function preload() {
   let tempRCL = parseInt(localStorage.getItem("keyRCL"));
 
   //if they exist, and are not null, set them to the grabbed local variables
-  if (tempML != null) {
+  if (tempML != NaN && tempML != undefined) {
     keyML = tempML;
   }
-  if (tempMR != null) {
+  if (tempMR != NaN && tempMR != undefined) {
     keyMR = tempMR;
   }
-  if (temp1R != null) {
+  if (temp1R != NaN && temp1R != undefined) {
     key1R = temp1R;
   }
-  if (tempHD != null) {
+  if (tempHD != NaN && tempHD != undefined) {
     keyHD = tempHD;
   }
-  if (tempSD != null) {
+  if (tempSD != NaN && tempSD != undefined) {
     keySD = tempSD;
   }
-  if (tempHL != null) {
+  if (tempHL != NaN && tempHL != undefined) {
     keyHL = tempHL;
   }
-  if (tempZN != null) {
+  if (tempZN != NaN && tempZN != undefined) {
     keyZN = tempZN;
   }
-  if (tempPZ != null) {
+  if (tempPZ != NaN && tempPZ != undefined) {
     keyPZ = tempPZ;
   }
-  if (tempRCC != null) {
+  if (tempRCC != NaN && tempRCC != undefined) {
     keyRCC = tempRCC;
   }
-  if (tempRCL != null) {
+  if (tempRCL != NaN && tempRCC != undefined) {
     keyRCL = tempRCL;
   }
 
