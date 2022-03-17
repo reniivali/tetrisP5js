@@ -218,7 +218,7 @@ progress::-webkit-progress-value {
 #clickContain {
   position: absolute;
   margin-top: -400px;
-  height: 425px;
+  height: 420px;
   border-style: solid;
   border-color: rgb(100, 100, 100);
   border-width: 3px;
@@ -230,4 +230,6 @@ progress::-webkit-progress-value {
   overflow-y: scroll;
   z-index: 3;
   background-color: rgb(36, 36, 36);
+  margin-left: 435px;
+  width: 400px;
 }
