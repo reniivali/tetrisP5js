@@ -213,3 +213,21 @@ progress::-webkit-progress-value {
   -o-transition: width 1s ease;
   transition: width 1s ease;
 }
+
+/*Clicker*/
+#clickContain {
+  position: absolute;
+  margin-top: -400px;
+  height: 425px;
+  border-style: solid;
+  border-color: rgb(100, 100, 100);
+  border-width: 3px;
+  border-radius: 10px;
+  color: white;
+  padding: 5px;
+  font-family: "DejaVu", monospace;
+  transition: all 0.2s;
+  overflow-y: scroll;
+  z-index: 3;
+  background-color: rgb(36, 36, 36);
+}
