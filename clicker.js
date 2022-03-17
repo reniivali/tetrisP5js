@@ -6,7 +6,7 @@ var open = false;
 //onload
 $(document).ready(function () {
   //onclick handlers
-  $("#clickerContain").click(function () {
+  $("#clickContain").click(function () {
     if (!open) {
       $(this).css("margin-top", "2px;");
       open = true;
@@ -14,7 +14,7 @@ $(document).ready(function () {
   });
 
   $("#clickClose").click(function () {
-    $("#clickerContain").css("margin-top", "-400px;");
+    $("#clickContain").css("margin-top", "-400px;");
     open = false;
   });
 
