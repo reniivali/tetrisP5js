@@ -1,3 +1,4 @@
+//javascript for the TETRIS side of the game
 var hidden = false;
 var bg;
 var heightG = 20;
