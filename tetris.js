@@ -1394,7 +1394,7 @@ function setKeyDisp() {
     $("#KD9").html("Hold: C");
   }
   if (keyZN != 83) {
-    $("#KD8").html("Enter Zone Mode: " + keyZL);
+    $("#KD8").html("Enter Zone Mode: " + keyZN);
   } else {
     $("#KD8").html("Enter Zone Mode: S");
   }
