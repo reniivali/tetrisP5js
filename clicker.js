@@ -3,8 +3,8 @@
 var open = false;
 //functs
 
-//onload
-$(document).ready(function () {
+//onload (will be called in tetris.js)
+function clicker() {
   //onclick handlers
   $("#clickContain").click(function () {
     if (!open) {
@@ -27,4 +27,4 @@ $(document).ready(function () {
     }
   }
   setInterval(update1F, 1000 / 60);
-});
+}

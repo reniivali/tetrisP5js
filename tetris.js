@@ -1438,7 +1438,11 @@ function saveSettings() {
   localStorage.setItem("garboMulti", garboMulti);
 }
 
+//ON LOAD
 $(document).ready(function () {
+  //call the clicker code
+  clicker();
+
   //click/change functions for things;
   $("#setHeight").click(function () {
     localStorage.setItem("boardH", $("#bHi").val());
