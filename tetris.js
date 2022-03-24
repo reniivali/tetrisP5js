@@ -1440,8 +1440,8 @@ function saveSettings() {
 
 //ON LOAD
 $(document).ready(function () {
-  //call the clicker code
-  clicker();
+  //call functions required by the clicker
+  setInterval(update1F, 1000 / 60);
 
   //click/change functions for things;
   $("#setHeight").click(function () {
