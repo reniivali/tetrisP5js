@@ -1440,6 +1440,8 @@ function saveSettings() {
 
 //ON LOAD
 $(document).ready(function () {
+  //load in the clicker script
+  $.getScript("/clicker.js");
   //call functions required by the clicker
   setInterval(update1F, 1000 / 60);
 
