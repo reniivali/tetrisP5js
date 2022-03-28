@@ -1438,10 +1438,34 @@ function saveSettings() {
   localStorage.setItem("garboMulti", garboMulti);
 }
 
-//ON LOAD
+//this is the javascript for the CLICKER side of the game
+//vars
+var open = false;
+//functs
+//onclick handlers
+function openClick() {
+  if (!open) {
+    $(this).css("margin-top", "2px;");
+    open = true;
+  }
+}
+
+function closeClick() {
+  $("#clickContain").css("margin-top", "-400px;");
+  open = false;
+}
+
+//updating elements
+function update1F() {
+  if (open) {
+    $("#clickClose").show();
+  } else {
+    $("#clickClose").hide();
+  }
+}
+
+//ON LOAD (both sides)
 $(document).ready(function () {
-  //load in the clicker script
-  $.getScript("/clicker.js");
   //call functions required by the clicker
   setInterval(update1F, 1000 / 60);
 
