@@ -1440,12 +1440,12 @@ function saveSettings() {
 
 //this is the javascript for the CLICKER side of the game
 //vars
-var open = false;
+var openClick = false;
 //functs
 
 //updating elements
 function update1F() {
-  if (open) {
+  if (openClick) {
     $("#clickClose").show();
   } else {
     $("#clickClose").hide();
@@ -1458,15 +1458,15 @@ $(document).ready(function () {
   setInterval(update1F, 1000 / 60);
 
   $("#clickContain").click(function () {
-    if (!open) {
+    if (!openClick) {
       $(this).css("margin-top", "2px");
-      open = true;
+      openClick = true;
     }
   });
 
   $("#clickClose").click(function () {
     $("#clickContain").css("margin-top", "-400px");
-    open = false;
+    openClick = false;
   });
 
   //click/change functions for things;
