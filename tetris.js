@@ -1442,6 +1442,10 @@ function saveSettings() {
 //vars
 var openClick = false;
 //functs
+function closeClick() {
+  $("#clickContain").css("margin-top", "-400px");
+  openClick = false;
+}
 
 //updating elements
 function update1F() {
