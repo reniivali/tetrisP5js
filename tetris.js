@@ -1468,6 +1468,8 @@ function update1F() {
 $(document).ready(function () {
   //call functions required by the clicker
   setInterval(update1F, 1000 / 60);
+  $("#clickContain").click(openClick);
+  $("#clickClose").click(closeClick);
 
   //click/change functions for things;
   $("#setHeight").click(function () {
