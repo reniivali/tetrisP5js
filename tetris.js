@@ -1459,13 +1459,13 @@ $(document).ready(function () {
 
   $("#clickContain").click(function () {
     if (!open) {
-      $(this).css("margin-top", "2px;");
+      $(this).css("margin-top", "2px");
       open = true;
     }
   });
 
   $("#clickClose").click(function () {
-    $("#clickContain").css("margin-top", "-400px;");
+    $("#clickContain").css("margin-top", "-400px");
     open = false;
   });
 
