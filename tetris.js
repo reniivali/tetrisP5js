@@ -1442,18 +1442,6 @@ function saveSettings() {
 //vars
 var open = false;
 //functs
-//onclick handlers
-function openClick() {
-  if (!open) {
-    $(this).css("margin-top", "2px;");
-    open = true;
-  }
-}
-
-function closeClick() {
-  $("#clickContain").css("margin-top", "-400px;");
-  open = false;
-}
 
 //updating elements
 function update1F() {
@@ -1468,8 +1456,18 @@ function update1F() {
 $(document).ready(function () {
   //call functions required by the clicker
   setInterval(update1F, 1000 / 60);
-  $("#clickContain").click(openClick);
-  $("#clickClose").click(closeClick);
+
+  $("#clickContain").click(function () {
+    if (!open) {
+      $(this).css("margin-top", "2px;");
+      open = true;
+    }
+  });
+
+  $("#clickClose").click(function () {
+    $("#clickContain").css("margin-top", "-400px;");
+    open = false;
+  });
 
   //click/change functions for things;
   $("#setHeight").click(function () {
