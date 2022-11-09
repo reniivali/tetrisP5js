@@ -155,7 +155,7 @@ input {
 }
 
 h2 {
-  padding: 0px;
+  padding: 0;
 }
 
 input:hover {
@@ -184,7 +184,7 @@ button:hover {
 }
 
 progress {
-  margin: 0px auto;
+  margin: 0 auto;
   padding: 2px;
   width: 100%;
   max-width: 500px;

@@ -1,107 +1,107 @@
 //javascript for the TETRIS side of the game
-var hidden = false;
-var bg;
-var heightG = 20;
-var widthG = 10;
-var canHei = (heightG * 40) / 1.5;
-var canWid = (widthG * 40) / 1.5;
-var dGrav = 0.01;
-var grav = 0.01;
-var keyDown = false;
-var sDgrav;
-var SDF = 17;
-var score = 0;
-var lock = 0;
-var lockRot = 10;
-var clearLines = 0;
-var clearLinesD = 0;
-var level = 1;
-var keyLeft = false;
-var keyRight = false;
-var das = 0;
-var dasA = 10;
-var arr = 1;
-var arrtmp = 1;
-var bag = [];
-var bag2 = [];
-var ghostblock = [];
-var stopped = true;
-var heldP = 0;
-var doHold = true;
-var fallingBlock = [];
-var defLoc;
-var rainbowBlock = false;
-var rainbowPlace = 15;
-var zoneCharge = 0;
-var zoneTT = 60;
-var zone = false;
-var zoneLines = 0;
-var zoneLT = 0;
-var zoneFac;
-var gravD;
-var ghostColor = true;
-var boardStroke = 100;
-var backfire = false;
-var garboMulti = 1;
-var smooth = false;
-var selectKey = 0;
-var keyML = 37;
-var keyMR = 39;
-var key1R = 65;
-var keyHD = 32;
-var keySD = 40;
-var keyHL = 67;
-var keyZN = 83;
-var keyPZ = 80;
-var keyRCC = 90;
-var keyRCL = 88;
-var pushReady = false;
-var board = ["d"];
-var garbPushL = [];
-var garbQ = [];
-var Tmino = [
+let hidden = false;
+let bg;
+let heightG = 20;
+let widthG = 10;
+let canHei = (heightG * 40) / 1.5;
+let canWid = (widthG * 40) / 1.5;
+let dGrav = 0.01;
+let grav = 0.01;
+let keyDown = false;
+let sDgrav;
+let SDF = 17;
+let score = 0;
+let lock = 0;
+let lockRot = 10;
+let clearLines = 0;
+let clearLinesD = 0;
+let level = 1;
+let keyLeft = false;
+let keyRight = false;
+let das = 0;
+let dasA = 10;
+let arr = 1;
+let arrtmp = 1;
+let bag = [];
+let bag2 = [];
+let ghostblock = [];
+let stopped = true;
+let heldP = 0;
+let doHold = true;
+let fallingBlock = [];
+let defLoc;
+let rainbowBlock = false;
+let rainbowPlace = 15;
+let zoneCharge = 0;
+let zoneTT = 60;
+let zone = false;
+let zoneLines = 0;
+let zoneLT = 0;
+let zoneFac;
+let gravD;
+let ghostColor = true;
+let boardStroke = 100;
+let backfire = false;
+let garboMulti = 1;
+let smooth = false;
+let selectKey = 0;
+let keyML = 37;
+let keyMR = 39;
+let key1R = 65;
+let keyHD = 32;
+let keySD = 40;
+let keyHL = 67;
+let keyZN = 83;
+let keyPZ = 80;
+let keyRCC = 90;
+let keyRCL = 88;
+let pushReady = false;
+let board = ["d"];
+let garbPushL = [];
+let garbQ = [];
+const Tmino = [
   { x: 5, y: 0 },
   { x: 6, y: 0 },
   { x: 6, y: -1 },
   { x: 7, y: 0 },
 ];
-var Imino = [
+const Imino = [
   { x: 4, y: 0 },
   { x: 5, y: 0 },
   { x: 6, y: 0 },
   { x: 7, y: 0 },
 ];
-var Smino = [
+const Smino = [
   { x: 5, y: 0 },
   { x: 6, y: 0 },
   { x: 6, y: -1 },
   { x: 7, y: -1 },
 ];
-var Zmino = [
+const Zmino = [
   { x: 5, y: -1 },
   { x: 6, y: -1 },
   { x: 6, y: 0 },
   { x: 7, y: 0 },
 ];
-var Lmino = [
+const Lmino = [
   { x: 4, y: 0 },
   { x: 5, y: 0 },
   { x: 6, y: -1 },
   { x: 6, y: 0 },
 ];
-var Jmino = [
+const Jmino = [
   { x: 4, y: 0 },
   { x: 4, y: -1 },
   { x: 5, y: 0 },
   { x: 6, y: 0 },
 ];
-var Omino = [
+const Omino = [
   { x: 5, y: 0 },
   { x: 5, y: -1 },
   { x: 6, y: -1 },
   { x: 6, y: 0 },
 ];
-var aTexTime = 0;
+let aTexTime = 0;
 
 //mostly redundant logging function for printing things to an HTML element for debugging without an inspect menu
 function jql(input) {
@@ -150,7 +150,7 @@ function preload() {
   let tempRCL = parseInt(localStorage.getItem("keyRCL"));
 
   //if they exist, and are not null, set them to the grabbed local variables
-  if (tempML != NaN && tempML != undefined) {
+  if (!isNaN(tempML) && tempML !== undefined) {
     keyML = tempML;
   }
   if (tempMR != NaN && tempMR != undefined) {
